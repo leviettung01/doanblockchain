@@ -1,6 +1,7 @@
 // constants
 import Web3 from "web3";
 import TruffleFactory from "../../contracts/TruffleFactory.json";
+import Marketplace from "../../contracts/MarketPlace.json"
 // log
 import { fetchData} from "../data/dataActions";
 
@@ -46,16 +47,25 @@ export const connect = () => {
           method: "net_version",
         });
         console.log("NetworkID: ",networkId);
-        const TruffleFactoryNetworkData = await TruffleFactory.networks[networkId];
-        if (TruffleFactoryNetworkData) {
-          const truffleFactoryFactory = new web3.eth.Contract(
+
+        const truffleFactoryNetworkData = await TruffleFactory.networks[networkId];
+        const maketNetworkData = await Marketplace.networks[networkId];
+
+        if (truffleFactoryNetworkData && maketNetworkData) {
+          const truffleFactory = new web3.eth.Contract(
             TruffleFactory.abi,
-            TruffleFactoryNetworkData.address
+            truffleFactoryNetworkData.address,
           );
+
+          const marketplace = new web3.eth.Contract(
+            Marketplace.abi,
+            maketNetworkData.address,
+          )
           dispatch( 
             connectSuccess({
               account: accounts[0],
-              TruffleFactory: truffleFactoryFactory,
+              truffleFactory: truffleFactory,
+              marketplace: marketplace,
               web3: web3,
             })
           );

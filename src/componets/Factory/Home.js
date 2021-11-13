@@ -5,7 +5,7 @@ import { fetchData } from "../../redux/data/dataActions";
 import * as s from "../../styles/globalStyles";
 import TruffleRenderer from "../TruffleRenderer";
 import _color from "../../assets/images/bg/_color.png";
-import { BiDna } from "react-icons/bi";
+import { BiDna, BiTimer } from "react-icons/bi";
 import {Link} from "react-router-dom";
 
 const Home = () => {
@@ -15,11 +15,11 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const name = "Truffle";
   
-    console.log(data);
-
+    // console.log(data);
+    
     const mintNFT = (_account,_name) => {
       setLoading(true);
-      blockchain.TruffleFactory.methods
+      blockchain.truffleFactory.methods
         .createRandomTruffle(_name)
         .send({
           from: _account,
@@ -36,17 +36,16 @@ const Home = () => {
         });
     };
 
+    // update account
     useEffect(() => {
-        if (blockchain.account !== "" && blockchain.TruffleFactory !== null) {
+        if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
           dispatch(fetchData(blockchain.account));
         }
-      }, [blockchain.account, blockchain.TruffleFactory, dispatch]);
-      
-    console.log(blockchain.account)
+      }, [blockchain.account, blockchain.truffleFactory, dispatch]);
 
     return (
         <s.Screen image={_color}>
-          {blockchain.account === "" || blockchain.TruffleFactory === null ? (
+          {blockchain.account === "" || blockchain.truffleFactory === null ? (
             <s.Container flex={1} ai={"center"} jc={"center"}>
               <s.TextTitle style={{textAlign: "center", fontSize: "25px"}}>Wellcom to Project Truffle</s.TextTitle>
               <s.TextTitle>Connect to the Game</s.TextTitle>
@@ -117,10 +116,6 @@ const Home = () => {
                 <s.StyledButton
                   style={{pointerEvents: "none"}}
                   disabled={loading ? 1 : 0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFT(blockchain.account, name);
-                  }}
                 >
                   <s.StyledButtonLoading />
                 </s.StyledButton>
@@ -136,25 +131,21 @@ const Home = () => {
                           </Link>
                         </s.StyledImg>
                         <s.SpacerXSmall />
-                        <s.Container >
+                        <s.Container>
                           <s.StyledTextBoxName>
                             <s.TextDescription>{item.name}</s.TextDescription>
-                          </s.StyledTextBoxName>
+                          </s.StyledTextBoxName >
+                          <s.Container>
                             <s.TextDescription>#{item.id}</s.TextDescription>
+                            <s.TextDescription>
+                              <BiTimer style={{fontSize: "14px"}}/> {item.readyTime}
+                            </s.TextDescription>
                             <s.TextDescription><BiDna/> {item.dna}</s.TextDescription>
+                          </s.Container>
                           <s.StyledTextBox>
                             <s.TextDescription>Rarity: {item.rarity}</s.TextDescription>
                             <s.TextDescription>Level: {item.level}</s.TextDescription>
                           </s.StyledTextBox>
-                          {/* <s.StyledButton
-                            disabled={loading ? 1 : 0}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              levelUpZombie(blockchain.account, item.id);
-                            }}
-                          >
-                            Level Up
-                          </s.StyledButton> */}
                         </s.Container>
                       </s.Box>
                     );
@@ -164,14 +155,6 @@ const Home = () => {
               )}
             </s.Container>
           )}
-          <s.Footer>
-            <s.TextSubTitleFooter>
-              Account: {blockchain.account}
-            </s.TextSubTitleFooter>
-            <s.TextSubTitleFooter>
-              Total Truffle in game: {data.allTruffles.length}
-              </s.TextSubTitleFooter>
-          </s.Footer>
         </s.Screen>
       );
 }

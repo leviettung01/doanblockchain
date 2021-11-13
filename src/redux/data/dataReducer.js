@@ -2,6 +2,9 @@ const initialState = {
   loading: false,
   allTruffles: [],
   allOwnerTruffles: [],
+  allMarketItems: [],
+  allOwnerItems: [],
+  listingPrice: "",
   error: false,
   errorMsg: "",
 };
@@ -19,6 +22,9 @@ const dataReducer = (state = initialState, action) => {
         loading: false,
         allTruffles: action.payload.allTruffles,
         allOwnerTruffles: action.payload.allOwnerTruffles,
+        allMarketItems: action.payload.allMarketItems,
+        allOwnerItems: action.payload.allOwnerItems,
+        listingPrice: action.payload.listingPrice,
       };
     case "CHECK_DATA_FAILED":
       return {

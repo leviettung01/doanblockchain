@@ -1,7 +1,8 @@
 const initialState = {
   loading: false,
   account: null,
-  TruffleFactory: null,
+  truffleFactory: null,
+  marketplace: null,
   web3: null,
   errorMsg: "",
 };
@@ -19,7 +20,8 @@ const blockchainReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         account: action.payload.account,
-        TruffleFactory: action.payload.TruffleFactory,
+        truffleFactory: action.payload.truffleFactory,
+        marketplace: action.payload.marketplace,
         web3: action.payload.web3,
       };
     case "CONNECTION_FAILED":

@@ -33,16 +33,35 @@ export const fetchData = (account) => {
     try {
       let allTruffles = await store
         .getState()
-        .blockchain.TruffleFactory.methods.getTruffle()
+        .blockchain.truffleFactory.methods.getTruffle()
         .call();
       let allOwnerTruffles = await store
         .getState()
-        .blockchain.TruffleFactory.methods.getOwnerTruffles(account)
+        .blockchain.truffleFactory.methods.getOwnerTruffles(account)
+        .call();  
+
+      let allMarketItems = await store
+        .getState()
+        .blockchain.marketplace.methods.fetchMarketItems()
         .call();
+
+      let allOwnerItems = await store
+        .getState()
+        .blockchain.marketplace.methods.fetchMyNFTs()
+        .call();
+
+      let listingPrice = await store
+        .getState()
+        .blockchain.marketplace.methods.getListingPrice()
+        .call();
+
       dispatch(
         fetchDataSuccess({
           allTruffles,
           allOwnerTruffles,
+          allMarketItems,
+          allOwnerItems,
+          listingPrice,
         })
       );
     } catch (err) {

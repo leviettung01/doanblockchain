@@ -10,7 +10,6 @@ export const Screen = styled.div`
   display: flex;
   flex-direction: column;
   font-family: var( --font-family-Sora);
-  padding-bottom: 200px;
 `;
 
 // Used for providing space between components
@@ -61,9 +60,9 @@ export const Container = styled.div`
 
 export const InputTransfer = styled.input.attrs({type: "text"})`
   display: inline-block;
-  width: 35%;
+  width: 100%;
   height: 40px;
-  border: 1px solid #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: #333;
   outline: none;
   box-sizing: border-box;
@@ -74,8 +73,7 @@ export const InputTransfer = styled.input.attrs({type: "text"})`
   transition: 0.3s;
 
   &:focus {
-    border-color: #00aec9;
-    box-shadow: 0 0 0 0.2rem rgba(19, 162, 228, 0.25);
+    border-color: #256ce1;
   }
 `;
 
@@ -83,8 +81,6 @@ export const ContainerDetails = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   width: 100%;
   height: 350px;
   padding: 0.8rem 2rem;
@@ -92,11 +88,9 @@ export const ContainerDetails = styled.div`
   border-radius: 0.8rem;
   margin-left: 4rem;
   border: 1px solid #ffffff;
-  /* box-shadow: -15px -15px 15px rgba(255, 255, 255, 0.2),
-    15px  15px 15px rgba(0, 0, 0, 0.1),
-    inset -5px -5px 5px rgba(255, 255, 255, 0.2),
-    inset 5px 5px 5px rgba(0, 0, 0, 0.1)
-  ; */
+  box-shadow: 0 0 1em 1px #fff;
+  /* box-shadow: 15px -15px 15px rgba(255, 255, 255, 0.2) */
+  ;
 `;
 
 export const Box = styled.div`
@@ -108,6 +102,13 @@ export const Box = styled.div`
   color: #ffffff;
   border: 1px solid #ffffff;
   border-radius: 0.8rem;
+`;
+
+export const BoxTab = styled.div`
+  display: inline-block;  
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 `;
 
 export const StyledImg = styled.div`
@@ -133,14 +134,14 @@ export const StyledTextBox = styled.div`
   align-items: center;
 `;
 
-export const StyledTextBoxName = styled.div`
+export const StyledTextBoxName = styled.p`
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
 `;
 
-export const StyledTextBoxNameDetails = styled.div`
+export const StyledTextBoxNameDetails = styled.p`
   display: flex;
   width: 100%;
   justify-content: start;
@@ -156,13 +157,11 @@ export const TextTitle = styled.p`
 `;
 
 export const TextSubTitle = styled.p`
+  width: 100%;
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
-  display: flex;
-  justify-content: flex-start;
-  width: 44%;
-  line-height: 0;
+  line-height: 1;
 `;
 
 export const TextDescription = styled.p`
@@ -200,6 +199,7 @@ export const StyledButton = styled.button`
   font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  outline: none;
   transition: all 0.5s ease-in-out;
 
   &:hover {
@@ -224,6 +224,7 @@ export const StyledButtonTransfer = styled.button`
   letter-spacing: 2px;
   transition: all 0.5s ease-in-out;
   font-weight: 600;
+  outline: none;
   padding: 0 20px;
 
   &:hover {
@@ -240,7 +241,6 @@ export const StyledButtonTransfer = styled.button`
 `;
 
 export const StyledButtonAction= styled.button`
-  display: block;
   height: 40px;
   width: 100%;
   border-radius: 0.4rem;
@@ -253,7 +253,7 @@ export const StyledButtonAction= styled.button`
   letter-spacing: 2px;
   transition: all 0.5s ease-in-out;
   font-weight: 600;
-  padding: 0 50px;
+  outline: none;
 
   &:hover {
     transition: all 0.5s ease-in-out;
@@ -273,6 +273,7 @@ export const StyledButtonLoadingAction = styled.div`
   border-radius: 50%;
   border-top-color: transparent;
   animation: button-loading-spinner 1.2s linear infinite;
+  margin:0 15px;
 
   @keyframes button-loading-spinner {
     to {
@@ -311,16 +312,14 @@ export const MenuTabs = styled.div`
   height: 40px;
   border-bottom: 1px solid #ffffff;
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
 `;
 
 export const Tabs = styled.a`
-  color: #fff;
+  color: #ffffff;
   display: flex;
   align-items: center;
-  padding: 0 19rem 0 1.2rem;
-  height: 100%;
+  justify-content: center;
+  width: 100%;
   cursor: pointer;
   transition: 0.5s;
   font-size: 16px;
@@ -333,7 +332,7 @@ export const Tabs = styled.a`
   }
 
 `;
-
+// footer
 export const Footer = styled.div`
   overflow: hidden;
   display: flex;
@@ -348,3 +347,186 @@ export const Footer = styled.div`
   color: #ffffff;
   padding: 5px 0px;
 `;
+
+//Breed
+export const ContentBreed = styled.div`
+  display: inline-block;
+  justify-content: center;
+  margin: 30px;
+`;
+
+export const BoxBreed = styled.input.attrs({type: "text"})`
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #333;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #fff;
+  transition: 0.3s;
+
+  &:focus {
+    border-color: #256ce1;
+  }
+`
+// export const BoxBreed = styled.input.attrs({type: "text"})`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 234px;
+//   height: 407px;
+//   border: 1px dotted #ffffff;
+//   background-color: transparent;
+//   border-radius: 0.8rem;
+//   cursor: pointer;
+//   opacity: 0.5;
+//   transition: 0.5s ease-in-out;
+
+//   &:hover {
+//     transition: 0.5s ease-in-out;
+//     opacity: 1;
+//   }
+
+//   &::placeholder {
+//     color: #ffffff;
+//     font-size: 14px;
+//     font-weight: 600;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//   }
+// `;
+
+export const TextDescriptionBreed = styled.p`
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+//popup
+export const ShowItems = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  position: fixed;
+  top: -16px;
+  left:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ShowContent = styled.div`
+  position: relative;
+  width: 50%;
+  height: 520px;
+  background-color: #ffffff;
+  border-radius: 0.8rem;
+`;
+
+export const StyledButtonClose = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: 1px solid #333333;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.5s ease-in-out;
+    background: #333333;
+    visibility: none;
+    color: #ffffff;
+  }
+`;
+
+export const TextTitlePopup = styled.p`
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 15px;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export const BoxPopup = styled.div`
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  border: 1px solid #333333;
+  border-radius: 0.8rem;
+`;
+
+export const StyledTextBoxPopup = styled.p`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TextDescriptionPopup = styled.p`
+  color: #333333;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  height: 5px;
+`;
+
+export const StyledImgPopup = styled.div`
+  width: 200px;
+  height: 200px;
+  border: 1px solid #333333;
+  border-radius: 0.8rem;
+  cursor: pointer;
+`;
+//MarketPlace
+export const InputSearch = styled.input.attrs({type: "search"})`
+  width: 40%;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #333;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  padding: 0 20px;
+  font-size: 15px;
+  color: #fff;
+  transition: 0.3s;
+
+  &:focus {
+    border-color: #256ce1;
+  }
+`;
+
+export const ContentMarket = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  top: -100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+
+
+
+
+
+
+
+
+
+

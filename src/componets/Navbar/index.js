@@ -16,7 +16,7 @@ const Navbar = () => {
       }
     }, [account, dispatch]);
   
-    console.log(account);
+    // console.log(account);
     
     const links = blockchain.account !== null
     ? (
