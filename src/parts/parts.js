@@ -10,8 +10,6 @@ import b_8 from "../assets/images/parts/background/7.png";
 import b_9 from "../assets/images/parts/background/8.png";
 import b_10 from "../assets/images/parts/background/9.png";
 import b_11 from "../assets/images/parts/background/10.png";
-import b_12 from "../assets/images/parts/background/11.gif";
-import b_13 from "../assets/images/parts/background/12.gif";
 
 import sk_1 from "../assets/images/parts/skin/0.png";
 import sk_2 from "../assets/images/parts/skin/1.png";
@@ -81,7 +79,7 @@ import ra_17 from "../assets/images/rarity/16.png";
 import ra_18 from "../assets/images/rarity/17.png";
 
 export const parts = {
-  bg: [b_1, b_2, b_3, b_4, b_5, b_6, b_7, b_8, b_9, b_10, b_11, b_12, b_13],
+  bg: [b_1, b_2, b_3, b_4, b_5, b_6, b_7, b_8, b_9, b_10, b_11],
   skin: [sk_1, sk_2, sk_3, sk_4, sk_5, sk_6],
   mouth: [m_1, m_2, m_3, m_4, m_5, m_6],
   mushroomcore: [msc_1, msc_2, msc_3, msc_4, msc_5, msc_6, msc_7, msc_8],

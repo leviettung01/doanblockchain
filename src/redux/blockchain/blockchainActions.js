@@ -1,9 +1,8 @@
 // constants
 import Web3 from "web3";
 import TruffleFactory from "../../contracts/TruffleFactory.json";
-import Marketplace from "../../contracts/MarketPlace.json"
 // log
-import { fetchData} from "../data/dataActions";
+import { fetchData } from "../data/dataActions";
 
 // thêm hành động
 const connectRequest = () => {
@@ -42,30 +41,27 @@ export const connect = () => {
         const accounts = await window.ethereum.request({
           method: "eth_accounts",
         });
+
         console.log("Account: " , accounts[0])
+
         const networkId = await window.ethereum.request({
           method: "net_version",
         });
+        
         console.log("NetworkID: ",networkId);
 
         const truffleFactoryNetworkData = await TruffleFactory.networks[networkId];
-        const maketNetworkData = await Marketplace.networks[networkId];
-
-        if (truffleFactoryNetworkData && maketNetworkData) {
+        
+        if (truffleFactoryNetworkData) {
           const truffleFactory = new web3.eth.Contract(
             TruffleFactory.abi,
             truffleFactoryNetworkData.address,
           );
-
-          const marketplace = new web3.eth.Contract(
-            Marketplace.abi,
-            maketNetworkData.address,
-          )
+          
           dispatch( 
             connectSuccess({
               account: accounts[0],
               truffleFactory: truffleFactory,
-              marketplace: marketplace,
               web3: web3,
             })
           );
@@ -78,7 +74,7 @@ export const connect = () => {
           });
           // Add listeners end
         } else {
-          dispatch(connectFailed("Change network to Ropsten."));
+          dispatch(connectFailed("Change network to Rinkeby."));
         }
       } catch (err) {
         dispatch(connectFailed("Something went wrong."));

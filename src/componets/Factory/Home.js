@@ -5,18 +5,23 @@ import { fetchData } from "../../redux/data/dataActions";
 import * as s from "../../styles/globalStyles";
 import TruffleRenderer from "../TruffleRenderer";
 import _color from "../../assets/images/bg/_color.png";
-import { BiDna, BiTimer } from "react-icons/bi";
+import truffle from "../../assets/images/bg/truffle.png";
+import { BiDna } from "react-icons/bi";
 import {Link} from "react-router-dom";
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+import { store } from 'react-notifications-component';
+import 'animate.css';
 
 const Home = () => {
     const dispatch = useDispatch();
     const blockchain = useSelector((state) => state.blockchain);
     const data = useSelector((state) => state.data);
     const [loading, setLoading] = useState(false);
-    const name = "Truffle";
+    const name = "Magic Truffle";
   
     // console.log(data);
-    
+  
     const mintNFT = (_account,_name) => {
       setLoading(true);
       blockchain.truffleFactory.methods
@@ -28,15 +33,51 @@ const Home = () => {
         .once("error", (err) => {
           setLoading(false);
           console.log(err);
+          ShowError();
         })
         .then((receipt) => {
           setLoading(false);
           console.log(receipt);
           dispatch(fetchData(blockchain.account));
+          ShowSuccess();
         });
     };
 
-    // update account
+    const ShowError = () => {
+      store.addNotification({
+        title: "failed",
+        message: "Transaction failed",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          showIcon: true,
+          onScreen: true,
+        },
+      })
+    }
+
+    const ShowSuccess = () => {
+      store.addNotification({
+        title: "Successful",
+        message: "Create a Successful Truffle",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 3000,
+          showIcon: true,
+          onScreen: true
+        },
+      })
+    }
+
+    // update 
     useEffect(() => {
         if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
           dispatch(fetchData(blockchain.account));
@@ -45,8 +86,10 @@ const Home = () => {
 
     return (
         <s.Screen image={_color}>
+          <ReactNotification />
           {blockchain.account === "" || blockchain.truffleFactory === null ? (
             <s.Container flex={1} ai={"center"} jc={"center"}>
+              <s.ImageHome image={truffle} />
               <s.TextTitle style={{textAlign: "center", fontSize: "25px"}}>Wellcom to Project Truffle</s.TextTitle>
               <s.TextTitle>Connect to the Game</s.TextTitle>
               <s.SpacerSmall />
@@ -67,10 +110,11 @@ const Home = () => {
             <s.Container ai={"center"} >
               {/* Kiểm tra xem owner có sở hữu nấm hay không ? nếu có thì getAllTruffle */}
               {data.allOwnerTruffles.length === 0 ? ( <> 
-              <s.TextTitle style={{textAlign: "center", fontSize: "25px"}}>
+              {/* <ReactNotification /> */}
+              <s.TextTitle style={{textAlign: "center"}}>
                 We noticed that you do not have any Truffle to start with.
               </s.TextTitle>
-              <s.TextTitle style={{textAlign: "center", fontSize: "25px"}}>
+              <s.TextTitle style={{textAlign: "center"}}>
                 Click on the CREATE button below to generate a Truffle, please note this will cost 0.025 ETH
               </s.TextTitle>
               <s.SpacerSmall />
@@ -137,9 +181,16 @@ const Home = () => {
                           </s.StyledTextBoxName >
                           <s.Container>
                             <s.TextDescription>#{item.id}</s.TextDescription>
-                            <s.TextDescription>
-                              <BiTimer style={{fontSize: "14px"}}/> {item.readyTime}
-                            </s.TextDescription>
+                            {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
+                              <s.TextDescription style={{color: "#ffd32a"}}>
+                                Not Ready
+                                {/* {console.log(Math.round(parseInt((item.readyTime - Date.now() / 1000)) / 3600))} */}
+                              </s.TextDescription>
+                            ):(
+                              <s.TextDescription style={{color: "#32ff7e"}}>
+                                Ready breed
+                              </s.TextDescription>
+                            )}
                             <s.TextDescription><BiDna/> {item.dna}</s.TextDescription>
                           </s.Container>
                           <s.StyledTextBox>

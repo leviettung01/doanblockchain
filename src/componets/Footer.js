@@ -1,4 +1,4 @@
-import React, { useEffect , useState} from 'react';
+import React from "react";
 import * as s from "../styles/globalStyles";
 import { useSelector } from "react-redux";
 

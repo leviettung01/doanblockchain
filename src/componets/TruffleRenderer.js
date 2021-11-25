@@ -8,7 +8,7 @@ const TruffleRenderer = ({ truffle = null, width = 200, height = 200, style }) =
   while (dnaStr.length < 16) dnaStr = "0" + dnaStr;
 
   let truffleDeatils = {
-    bg: dnaStr.substring(0, 2) % 13,
+    bg: dnaStr.substring(0, 2) % 11,
     skin: dnaStr.substring(2, 4) % 6,
     mouth: dnaStr.substring(8, 10) % 6,
     mushroomcore: dnaStr.substring(12, 14) % 8,

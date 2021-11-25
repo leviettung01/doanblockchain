@@ -1,14 +1,13 @@
 import React, { useEffect , useState} from 'react';
 import * as s from "../../styles/globalStyles";
 import TruffleRenderer from "../TruffleRenderer";
-import { BiDna, BiTimer } from "react-icons/bi";
+import { BiDna} from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchData} from "../../redux/data/dataActions";
 import { removeData } from '../../redux/data/dataActions';
 import _color from "../../assets/images/bg/_color.png";
 import { useHistory } from "react-router-dom";
-
 
 const Details = () => {
   const dispatch = useDispatch();
@@ -21,63 +20,51 @@ const Details = () => {
   const { id } = useParams();
 
   const [toggleState, setToggleState] = useState(1);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [transfer, setTransfer] = useState();
-  const [sell, setSell] = useState("");
+  const [sell, setSell] = useState();
   let history = useHistory();
 
 
-  const [days,setDays] = useState(0);
-  const [hours,setHours] = useState(0);
-  const [minutes,setMinutes] = useState(0);
-  const [seconds,setSeconds] = useState(0);
+  const [timerDays,setTimerDays] = useState(0);
+  const [timerHours,setTimerHours] = useState(0);
+  const [timerMinutes,setTimerMinutes] = useState(0);
+  const [timerSeconds,setTimerSeconds] = useState(0);
+
+  // const [validationMsg, setValidationMsg] = useState('');
 
   //toggleTab
   const toggleTab = (index) => {
     setToggleState(index);
   }
 
-  // const seconds = Math.round(data.allOwnerTruffles[] - Date.now() / 1000);
-  //string
-
-  // const readyTimes = data.allOwnerTruffles.filter(item => item.id === id ).map(result =>
-  //   Math.round(parseInt(result.readyTime) - Date.now() / 1000)
-  // )
-
-  // console.log(readyTimes)
-  const startCouterTimer = () => {
-    setInterval(() => {
-      const remaining = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-      const readyTimes = data.allOwnerTruffles.filter(item => item.id === id ).map(result =>
-       parseInt(result.readyTime - Date.now() / 1000)
+  useEffect(() => {
+    const startCouterTimer = setInterval(() => {
+      const seconds  = data.allOwnerTruffles.filter(item => item.id === id ).map(result =>
+        // console.log(parseInt(result.readyTime - Date.now() /1000))
+        parseInt(result.readyTime - Date.now() / 1000)
       )
 
-      if (readyTimes < 0) 
-        return remaining;
+      var remaining = {hours: 0, minutes: 0, seconds: 0 };
+      if (seconds < 0) return remaining;
 
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
+      const minutes = `0${Math.floor(seconds / 60)}`;
+      const hours = `0${Math.floor(minutes / 60)}`;
+      const days = `0${Math.floor(hours / 24)}`;
 
       remaining.days = days;
       remaining.hours = hours - remaining.days * 24;
       remaining.minutes = minutes - remaining.days * 24 * 60 - remaining.hours * 60;
       remaining.seconds = seconds - remaining.days * 24 * 60 * 60 - remaining.hours * 60 * 60 - remaining.minutes * 60;
-      
-      setDays(remaining.days)
-      setHours(remaining.hours)
-      setMinutes(remaining.minutes)
-      setSeconds(remaining.seconds)
 
+      setTimerDays(remaining.days)
+      setTimerHours(remaining.hours)
+      setTimerMinutes(remaining.minutes)
+      setTimerSeconds(remaining.seconds)
     }, 1000);
-  }
 
-  useEffect(() => {
-    startCouterTimer();
-    //cleanup
     return () => {
-      clearInterval(startCouterTimer);  
+      clearInterval(startCouterTimer);
     }
   })
 
@@ -102,13 +89,12 @@ const Details = () => {
   };
 
   //sell
-  const sellTruffle = (_account, _nftContract, _tokenId, _price) => {
+  const sellTruffle = (_account, _tokenId, _price) => {
     setLoadingTabSell(true);
-    blockchain.marketplace.methods
-      .createMarketItem(_nftContract, _tokenId, _price)
+    blockchain.truffleFactory.methods
+      .allowBuy( _tokenId, _price)
       .send({
       from: _account,
-      value: blockchain.web3.utils.toWei(`${sell}`, "ether"),
     })
     .once("error", (err) => {
     setLoadingTabSell(false);
@@ -118,8 +104,8 @@ const Details = () => {
     setLoadingTabSell(false);
     console.log(receipt);
     dispatch(fetchData(blockchain.account));
-  });
-};
+    });
+  }
 
   //updateNameZombie
   const updateNameTruffle = (_account, _id, _newName ) => {
@@ -193,12 +179,20 @@ const Details = () => {
                   <s.TextDescription>DadID: {item.dadId}</s.TextDescription>
                   <s.TextDescription>MumID: {item.mumId}</s.TextDescription>
                 </s.StyledTextBox>
-                <s.TextDescription>
-                  <BiTimer style={{fontSize: "20px", flex: 1, display: "flex", marginTop: "4rem"}} />
-                    {days}:{hours}:{minutes}:{seconds} 
-                </s.TextDescription>
-                <s.Container ai={"center"} jc={"space-around"} fd={"row"} style={{marginTop: "6rem"}} >
-                  <s.StyledButtonAction style={{marginRight: "5px"}}>
+                <s.BoxTimerCouter>
+                  {timerDays !== 0 && timerHours !== 0 && timerMinutes !== 0 && timerSeconds !== 0 ? (
+                  <s.TextDescriptionDetail style={{color: "#ffd32a"}}>
+                      {timerDays}:{timerHours}:{timerMinutes}:{timerSeconds} 
+                  </s.TextDescriptionDetail>
+                  ) : (
+                    <s.TextDescriptionDetail style={{color: "#32ff7e"}}>
+                      Ready Breed
+                    </s.TextDescriptionDetail>
+                  )}
+                </s.BoxTimerCouter>
+                <s.Container ai={"center"} jc={"space-around"} fd={"row"}>
+                  <s.StyledButtonAction style={{marginRight: "5px"}}
+                  >
                     Breed
                   </s.StyledButtonAction>
                   {!loading &&
@@ -224,7 +218,7 @@ const Details = () => {
                 </s.Container>
               </s.ContainerDetails>
             </s.Container>
-            {/* tabbar    */}
+            {/* Tabbar    */}
             <s.SpacerSuperLarge/>
             <s.Container ai={"center"}>
               <s.MenuTabs >
@@ -253,7 +247,8 @@ const Details = () => {
                 <s.BoxTab>
                   <s.TextSubTitle >Enter the amount you want to sell</s.TextSubTitle>
                   <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                    <s.InputTransfer 
+                    <s.InputTransferNumber
+                      required
                       placeholder={"Price must be at least 1 wei"} 
                       style={{marginRight: "5px"}}
                       onChange={e => setSell(e.target.value)}
@@ -262,8 +257,9 @@ const Details = () => {
                     {!loadingTabSell &&
                     <s.StyledButtonTransfer
                         disabled={loadingTabSell ? 1: 0}
-                        onClick={() => {
-                          sellTruffle(blockchain.account, blockchain.account, item.id, sell);
+                        
+                        onClick={(e) => {
+                          sellTruffle(blockchain.account, item.id, sell);
                         }}
                     >
                       Sell
@@ -277,7 +273,6 @@ const Details = () => {
                       <s.StyledButtonLoadingAction/>
                     </s.StyledButtonTransfer>
                     }
-                    {/* <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>my popup</Popup>  */}
                   </s.Container>
                 </s.BoxTab>
               </s.Container>
@@ -288,10 +283,13 @@ const Details = () => {
                   <s.TextSubTitle >Change this truffle name</s.TextSubTitle>
                   <s.Container  fd={"row"} ai={"center"} jc={"center"}>
                     <s.InputTransfer 
-                      placeholder={"Mickey"} 
+                      required
+                      placeholder={"Any name... "} 
                       style={{marginRight: "5px"}}
-                      onChange={e => setName(e.target.value)}
                       value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
                     />
                     {!loadingTabUpdate &&
                     <s.StyledButtonTransfer
@@ -323,8 +321,10 @@ const Details = () => {
                     <s.InputTransfer 
                       placeholder={"0x92Da0E5C9D58AcCDCA6E280a2F632B23D9aA0705"} 
                       style={{marginRight: "5px"}}
-                      onChange={e => setTransfer(e.target.value)}
                       value={transfer}
+                      required
+                      onChange={(e) => 
+                        setTransfer(e.target.value)}
                     />
                     {!loadingTabTransfer &&
                     <s.StyledButtonTransfer
@@ -344,7 +344,6 @@ const Details = () => {
                       <s.StyledButtonLoadingAction/>
                     </s.StyledButtonTransfer>
                     }
-                    {console.log("độ dài sau khi gửi = " + data.allOwnerTruffles.filter(item => item.id === id ).length)}
                   </s.Container>
                 </s.BoxTab>
               </s.Container>

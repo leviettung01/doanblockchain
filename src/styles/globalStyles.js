@@ -10,6 +10,15 @@ export const Screen = styled.div`
   display: flex;
   flex-direction: column;
   font-family: var( --font-family-Sora);
+  padding-bottom: 3rem;
+`;
+
+export const ImageHome = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 55%;
+  min-height: 300px;
 `;
 
 // Used for providing space between components
@@ -77,6 +86,25 @@ export const InputTransfer = styled.input.attrs({type: "text"})`
   }
 `;
 
+export const InputTransferNumber = styled.input.attrs({type: "number"})`
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #333;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #fff;
+  transition: 0.3s;
+
+  &:focus {
+    border-color: #256ce1;
+  }
+`;
+
 export const ContainerDetails = styled.div`
   display: flex;
   flex: 1;
@@ -94,27 +122,41 @@ export const ContainerDetails = styled.div`
 `;
 
 export const Box = styled.div`
-  display: inline-block;
+  display: block;
   justify-content: center;
   align-items: center;
   width: auto;
   height: auto;
   color: #ffffff;
-  border: 1px solid #ffffff;
+  border: 2px solid #ffffff;
   border-radius: 0.8rem;
+  transition: 0.2s;
+
+  &:hover {
+    transform: translateY(-0.5%);
+    box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.3)
+  }
 `;
 
 export const BoxTab = styled.div`
-  display: inline-block;  
+  display: block;  
+  /* justify-content: center;
+  align-items: center; */
+  width: 50%;
+`;
+
+export const BoxTimerCouter = styled.div`
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  color: #ffffff;
+  /* border: 1px solid #ffffff; */
 `;
 
 export const StyledImg = styled.div`
   width: 200px;
   height: 200px;
-  border: 1px solid #ffffff;
+  border: 2px solid #ffffff;
   border-radius: 0.8rem;
   cursor: pointer;
 `;
@@ -146,14 +188,13 @@ export const StyledTextBoxNameDetails = styled.p`
   width: 100%;
   justify-content: start;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 `;
 
 export const TextTitle = styled.p`
   color: #ffffff;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 600;
-  line-height: 0px;
 `;
 
 export const TextSubTitle = styled.p`
@@ -177,7 +218,6 @@ export const TextDescriptionDetail = styled.p`
   font-size: 30px;
   letter-spacing: 0.8px;
   font-weight: 600;
-  height: 5px;
 `;
 
 export const StyledClickable = styled.div`
@@ -351,11 +391,33 @@ export const Footer = styled.div`
 //Breed
 export const ContentBreed = styled.div`
   display: inline-block;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: 30px;
 `;
 
-export const BoxBreed = styled.input.attrs({type: "text"})`
+export const ContainerBreed = styled.div`
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const BoxBreed = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 232px;
+  height: 437px;
+  border: 1px dotted #ffffff;
+  background-color: transparent;
+  border-radius: 0.8rem;
+  opacity: 0.5;
+  margin-top: 15px;
+`
+
+export const CustomSelect = styled.select`
   display: inline-block;
   width: 100%;
   height: 40px;
@@ -367,12 +429,23 @@ export const BoxBreed = styled.input.attrs({type: "text"})`
   padding: 0 10px;
   font-size: 15px;
   color: #fff;
-  transition: 0.3s;
-
-  &:focus {
-    border-color: #256ce1;
-  }
+  cursor: pointer;
 `
+export const CustomOption = styled.option`
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #333;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 0.4rem;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+`
+
 // export const BoxBreed = styled.input.attrs({type: "text"})`
 //   display: flex;
 //   justify-content: center;
