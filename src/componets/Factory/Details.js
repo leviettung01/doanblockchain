@@ -17,21 +17,20 @@ const Details = () => {
   const [loadingTabUpdate, setLoadingTabUpdate] = useState(false);
   const [loadingTabTransfer, setLoadingTabTransfer] = useState(false);
   const [loadingTabSell, setLoadingTabSell] = useState(false);
+  const [loadingUnSell, setLoadingUnSell] = useState(false);
   const { id } = useParams();
 
   const [toggleState, setToggleState] = useState(1);
   const [name, setName] = useState('');
   const [transfer, setTransfer] = useState();
   const [sell, setSell] = useState();
-  let history = useHistory();
 
+  let history = useHistory();
 
   const [timerDays,setTimerDays] = useState(0);
   const [timerHours,setTimerHours] = useState(0);
   const [timerMinutes,setTimerMinutes] = useState(0);
   const [timerSeconds,setTimerSeconds] = useState(0);
-
-  // const [validationMsg, setValidationMsg] = useState('');
 
   //toggleTab
   const toggleTab = (index) => {
@@ -95,6 +94,7 @@ const Details = () => {
       .allowBuy( _tokenId, _price)
       .send({
       from: _account,
+      value: blockchain.web3.utils.toWei("0.001","ether")
     })
     .once("error", (err) => {
     setLoadingTabSell(false);
@@ -106,6 +106,25 @@ const Details = () => {
     dispatch(fetchData(blockchain.account));
     });
   }
+
+    //unsell
+    const UnSellTruffle = (_account, _tokenId) => {
+      setLoadingUnSell(true);
+      blockchain.truffleFactory.methods
+      .disallowBuy( _tokenId)
+      .send({
+          from: _account,
+      })
+      .once("error", (err) => {
+      setLoadingUnSell(false);
+      console.log(err);
+      })
+      .then((receipt) => {
+      setLoadingUnSell(false);
+      console.log(receipt);
+      dispatch(fetchData(blockchain.account));
+      });
+    }
 
   //updateNameZombie
   const updateNameTruffle = (_account, _id, _newName ) => {
@@ -156,7 +175,7 @@ const Details = () => {
 
   return (
       <s.Screen image={_color} >
-        {data.allOwnerTruffles.filter(item => item.id === id ).map((item, index)  => (
+        {data.allTruffles.filter(item => item.id === id ).map((item, index)  => (
           <s.Container key={index} style={{ padding:"10px 100px"}}>
             <s.StyledTextBoxNameDetails>
               <s.TextDescriptionDetail>
@@ -186,7 +205,7 @@ const Details = () => {
                   </s.TextDescriptionDetail>
                   ) : (
                     <s.TextDescriptionDetail style={{color: "#32ff7e"}}>
-                      Ready Breed
+                      Breed Ready
                     </s.TextDescriptionDetail>
                   )}
                 </s.BoxTimerCouter>
@@ -245,35 +264,76 @@ const Details = () => {
               {toggleState === 1 ? (
               <s.Container  ai={"center"} style={{marginTop: "5rem"}}>
                 <s.BoxTab>
-                  <s.TextSubTitle >Enter the amount you want to sell</s.TextSubTitle>
-                  <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                    <s.InputTransferNumber
-                      required
-                      placeholder={"Price must be at least 1 wei"} 
-                      style={{marginRight: "5px"}}
-                      onChange={e => setSell(e.target.value)}
-                      value={sell}
-                    />
-                    {!loadingTabSell &&
-                    <s.StyledButtonTransfer
-                        disabled={loadingTabSell ? 1: 0}
-                        
-                        onClick={(e) => {
-                          sellTruffle(blockchain.account, item.id, sell);
-                        }}
-                    >
-                      Sell
-                    </s.StyledButtonTransfer>
-                    }
-                    {loadingTabSell &&
-                    <s.StyledButtonTransfer
-                        disabled={loadingTabSell ? 1: 0}
-                        style={{pointerEvents: "none"}} 
-                    >
-                      <s.StyledButtonLoadingAction/>
-                    </s.StyledButtonTransfer>
-                    }
-                  </s.Container>
+                  {data.allOwnerTruffles.filter(item => item.id === id ).map(result => result.sell) <= 0 ? (
+                    <>
+                    <s.TextSubTitle >Enter the amount you want to sell</s.TextSubTitle>
+                    <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                        <s.InputTransferNumber
+                          required
+                          placeholder={"Price must be at least 1 wei"} 
+                          style={{marginRight: "5px"}}
+                          onChange={e => setSell(e.target.value)}
+                          value={sell}
+                        />
+                      {timerDays === 0 && timerHours === 0 && timerMinutes === 0 && timerSeconds === 0 ? (
+                        <s.Container>
+                        {!loadingTabSell &&
+                        <s.StyledButtonTransfer
+                            disabled={loadingTabSell ? 1: 0}
+                            onClick={() => {
+                              sellTruffle(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
+                              setSell('');
+                            }}
+                        >
+                          Sell
+                        </s.StyledButtonTransfer>
+                        }
+                        {loadingTabSell &&
+                        <s.StyledButtonTransfer
+                            disabled={loadingTabSell ? 1: 0}
+                            style={{pointerEvents: "none"}} 
+                        >
+                          <s.StyledButtonLoadingAction/>
+                        </s.StyledButtonTransfer>
+                        }
+                        </s.Container>
+                      ) : (
+                        <s.Container>
+                          {!loadingTabSell &&
+                          <s.StyledButtonTransfer
+                            style={{pointerEvents: "none", opacity: 0.5}} 
+                          >
+                            Sell
+                          </s.StyledButtonTransfer>
+                          }
+                        </s.Container>
+                      )}
+                    </s.Container>
+                    </>
+                  ) : (
+                    <s.Container fd={"column"} ai={"center"} jc={"center"}>
+                      <s.TextTitle>The product has been sold on the Market !</s.TextTitle>
+                      <s.TextTitle>Click the button below to Remove from sale</s.TextTitle>
+                      {!loadingUnSell &&
+                      <s.StyledButtonUnsale
+                          disabled={loadingTabSell ? 1: 0}
+                          onClick={() => {
+                            UnSellTruffle(blockchain.account, item.id);
+                          }}
+                      >
+                        Remove from sale
+                      </s.StyledButtonUnsale>
+                      }
+                      {loadingUnSell &&
+                      <s.StyledButtonUnsale
+                          disabled={loadingUnSell ? 1: 0}
+                          style={{pointerEvents: "none"}} 
+                      >
+                        <s.StyledButtonLoadingRemove/>
+                      </s.StyledButtonUnsale>
+                      }
+                    </s.Container>
+                  )}
                 </s.BoxTab>
               </s.Container>
               ): (null)}
@@ -296,6 +356,7 @@ const Details = () => {
                         disabled={loadingTabUpdate ? 1: 0}
                         onClick={() => {
                           updateNameTruffle(blockchain.account, item.id, name);
+                          setName('');
                         }}
                     >
                       Update
@@ -331,6 +392,7 @@ const Details = () => {
                       disabled={loadingTabTransfer ? 1: 0}
                       onClick={() => {
                         transferToken(blockchain.account, blockchain.account, transfer, item.id);
+                        setTransfer('');
                       }}
                     >
                       Transfer

@@ -64,7 +64,7 @@ const Home = () => {
       store.addNotification({
         title: "Successful",
         message: "Create a Successful Truffle",
-        type: "success",
+        type: "default",
         insert: "top",
         container: "top-right",
         animationIn: ["animate__animated", "animate__fadeIn"],
@@ -82,7 +82,7 @@ const Home = () => {
         if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
           dispatch(fetchData(blockchain.account));
         }
-      }, [blockchain.account, blockchain.truffleFactory, dispatch]);
+    }, [blockchain.account, blockchain.truffleFactory, dispatch]);
 
     return (
         <s.Screen image={_color}>

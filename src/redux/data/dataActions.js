@@ -39,11 +39,17 @@ export const fetchData = (account) => {
         .getState()
         .blockchain.truffleFactory.methods.getOwnerTruffles(account)
         .call();  
+      
+      let getAllIitemSell = await store
+        .getState()
+        .blockchain.truffleFactory.methods.getAllTruffleSell()
+        .call();
 
       dispatch(
         fetchDataSuccess({
           allTruffles,
           allOwnerTruffles,
+          getAllIitemSell
         })
       );
     } catch (err) {

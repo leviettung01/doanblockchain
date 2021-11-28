@@ -191,6 +191,13 @@ export const StyledTextBoxNameDetails = styled.p`
   margin-bottom: 20px;
 `;
 
+export const StyledTextBoxPrice = styled.p`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TextTitle = styled.p`
   color: #ffffff;
   font-size: 25px;
@@ -280,6 +287,36 @@ export const StyledButtonTransfer = styled.button`
   } */
 `;
 
+export const StyledButtonUnsale = styled.button`
+  display: block;
+  height: 40px;
+  width: auto;
+  border-radius: 0.4rem;
+  border: 1px solid #ffd32a;
+  background: none;
+  color: #ffd32a;
+  cursor: pointer;
+  font-family: var( --font-family-Sora);
+  font-size: 12px;
+  letter-spacing: 2px;
+  transition: all 0.5s ease-in-out;
+  font-weight: 600;
+  outline: none;
+  padding: 0 20px;
+
+  &:hover {
+    transition: all 0.5s ease-in-out;
+    background: #ffd32a;
+    visibility: none;
+    color:#010606;
+  }
+
+  /* &:disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  } */
+`;
+
 export const StyledButtonAction= styled.button`
   height: 40px;
   width: 100%;
@@ -310,6 +347,25 @@ export const StyledButtonLoadingAction = styled.div`
   height: 20px;
   background: transparent;
   border: 4px dotted #3498db;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: button-loading-spinner 1.2s linear infinite;
+  margin:0 15px;
+
+  @keyframes button-loading-spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`
+
+export const StyledButtonLoadingRemove = styled.div`
+  display: inline-block;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 4px dotted #ffd32a;
   border-radius: 50%;
   border-top-color: transparent;
   animation: button-loading-spinner 1.2s linear infinite;
