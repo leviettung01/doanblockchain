@@ -1,61 +1,37 @@
 import React, { useState, useEffect} from 'react';
 import * as s from "../../styles/globalStyles";
-import _color from "../../assets/images/bg/_color.png";
+import _bg from "../../assets/images/bg/_bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData} from "../../redux/data/dataActions";
 import {Link} from "react-router-dom";
 import TruffleRenderer from "../TruffleRenderer";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const Marketplace = () => {
     const dispatch = useDispatch();
     const data = useSelector((state) => state.data);
     const blockchain = useSelector((state) => state.blockchain);
 
-    const [loadingBuy, setLoadingBuy] = useState(false);
+    const [toggleState, setToggleState] = useState(1);
 
-    let history = useHistory();
-
-    //sell
-    const BuyTruffle = (_account, _tokenId, _price) => {
-        setLoadingBuy(true);
-        blockchain.truffleFactory.methods
-        .buy( _tokenId)
-        .send({
-            from: _account,
-            value: blockchain.web3.utils.toWei(_price,"ether"),
-        })
-        .once("error", (err) => {
-        setLoadingBuy(false);
-        console.log(err);
-        })
-        .then((receipt) => {
-        setLoadingBuy(false);
-        console.log(receipt);
-        dispatch(fetchData(blockchain.account));
-        history.push("/");
-        });
+    //toggleTab
+    const toggleTab = (index) => {
+      setToggleState(index);
     }
 
-    
-    //unsell
-    const UnSellTruffle = (_account, _tokenId) => {
-      setLoadingBuy(true);
-      blockchain.truffleFactory.methods
-      .disallowBuy( _tokenId)
-      .send({
-          from: _account,
-      })
-      .once("error", (err) => {
-      setLoadingBuy(false);
-      console.log(err);
-      })
-      .then((receipt) => {
-      setLoadingBuy(false);
-      console.log(receipt);
-      dispatch(fetchData(blockchain.account));
+    const [priceList, setPriceList] = useState(data.allTruffles.filter(item => item.sell > 0));
+
+    const sortByPrice = () => {
+      const sorted = priceList.sort((a, b) => {
+        return b.sell - a.sell;
       });
-    }
+      setPriceList(sorted);
+    };
+
+    useEffect(() => {
+      if(toggleState === 3)
+        sortByPrice()
+    },)
 
     useEffect(() => {
       if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
@@ -64,86 +40,175 @@ const Marketplace = () => {
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
 
     return (
-        <s.Screen image={_color}>
-            <s.Container flex={1} ai={"center"} jc={"flex-start"} style={{ marginTop: "30px"}}>
-                <s.InputSearch
+        <s.Screen >
+            <s.Container flex={1} ai={"center"} jc={"flex-start"} style={{paddingTop: "3rem", marginTop: "4.5rem"}}>
+                {/* <s.InputSearch
                     style={{marginBottom: "30px"}}
                     placeholder="Search..."
                     autofocus
                     required
-                />
-                <s.Container jc={"center"} fd={"row"} style={{flexWrap: "wrap"}}>
-                {data.getAllIitemSell.map((item, index) => {
-                    return (
-                      <s.Box key={index} style={{ padding: "15px", margin:"15px"}}>
+                /> */}
+                <s.ContainerTabBar>
+                  <s.MenuTabsHome>
+                    <s.TabHome
+                      className={toggleState === 1 ? "active-tab" : null}
+                      onClick={() => toggleTab(1)}
+                    >
+                      All {toggleState === 1 ? '(' + data.allTruffles.filter(item => item.sell > 0).length + ')' : null}
+                    </s.TabHome>
+                    <s.TabHome
+                      className={toggleState === 2 ? "active-tab" : null}
+                      onClick={() => toggleTab(2)}
+                    >
+                      My Items {toggleState === 2 ? '(' + data.allOwnerTruffles.filter(item => item.sell > 0).length + ')' : null}
+                    </s.TabHome>
+                    <s.TabHome
+                      className={toggleState === 3 ? "active-tab" : null}
+                      onClick={() => toggleTab(3)}
+                    >
+                      Price {toggleState === 3 ? '(' + data.allTruffles.filter(item => item.sell > 0).length  + ')' : null}
+                    </s.TabHome>
+                  </s.MenuTabsHome>
+                </s.ContainerTabBar>
+                {/* toggle 1 */}
+                {toggleState === 1 ? (
+                  <s.ContainerHome jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap", margin: "27px "}}>
+                    {data.allOwnerTruffles.filter(item => item.sell > 0).length === 0 ? (
+                      <s.Container flex={1} ai={"center"} jc={"center"}>
+                        <s.TextTitle>
+                          We can't find the items on sale.
+                        </s.TextTitle>
+                        <s.TextSubTitleHome>
+                          try reloading the page !
+                        </s.TextSubTitleHome>
+                        <s.SpacerSmall />
+                      </s.Container>
+                    ) : (
+                    <s.ContainerHome flex={1} jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap"}}>
+                      {/* <s.TextSubTitle> Results: 1-20 of {data.allTruffles.filter(item => item.sell > 0).length}</s.TextSubTitle> */}
+                    {data.allTruffles.filter(item => item.sell > 0).map((item) => {
+                      return (
+                        <s.Box style={{ padding: "18px", margin:"15px"}}>
+                          <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                          </s.StyledImg>
+                          <s.Container>
+                              <s.StyledTextBox>
+                                <s.TextDescription>{item.name}</s.TextDescription>
+                                <s.TextSubTitle>Price</s.TextSubTitle>
+                              </s.StyledTextBox>
+                              <s.StyledTextBox>
+                                <s.TextDescription>#{item.id}</s.TextDescription>
+                                <s.StyledButtonPrice>
+                                  <s.TextDescription className="StyledHoverTitle">{blockchain.web3.utils.fromWei(item.sell,"ether")} ETH</s.TextDescription>
+                                </s.StyledButtonPrice>
+                              </s.StyledTextBox>  
+                              <s.StyledTextBoxBoder>
+                              <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
+                              <s.TextSubTitle>Level: <span style={{color: "#ffffff"}}>{item.level}</span></s.TextSubTitle>
+                            </s.StyledTextBoxBoder>
+                          </s.Container>
+                        </s.Box>
+                      );
+                    })}
+                    </s.ContainerHome>
+                  )}
+                  </s.ContainerHome> 
+                ) : (null)}
+                {/* toggle 2 */}
+                {toggleState === 2 ? (
+                  <s.ContainerHome jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap", margin: "27px "}}>
+                    {data.allOwnerTruffles.filter(item => item.sell > 0).length === 0 ? (
+                      <s.Container flex={1} ai={"center"} jc={"center"}>
+                        <s.TextTitle>
+                          We can't find the items on sale.
+                        </s.TextTitle>
+                        <s.TextSubTitleHome>
+                          try reloading the page !
+                        </s.TextSubTitleHome>
+                        <s.SpacerSmall />
+                      </s.Container>
+                    ) : (
+                    <s.ContainerHome flex={1} jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap"}}>
+                    {data.allOwnerTruffles.filter(item => item.sell > 0).map((item) => {
+                      return (
+                        <s.Box style={{ padding: "18px", margin:"15px"}}>
+                          <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                          </s.StyledImg>
+                          <s.Container>
+                              <s.StyledTextBox>
+                                <s.TextDescription>{item.name}</s.TextDescription>
+                                <s.TextSubTitle>Price</s.TextSubTitle>
+                              </s.StyledTextBox>
+                              <s.StyledTextBox>
+                                <s.TextDescription>#{item.id}</s.TextDescription>
+                                <s.StyledButtonPrice>
+                                  <s.TextDescription className="StyledHoverTitle">{blockchain.web3.utils.fromWei(item.sell,"ether")} ETH</s.TextDescription>
+                                </s.StyledButtonPrice>
+                              </s.StyledTextBox>  
+                              <s.StyledTextBoxBoder>
+                              <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
+                              <s.TextSubTitle>Level: <span style={{color: "#ffffff"}}>{item.level}</span></s.TextSubTitle>
+                            </s.StyledTextBoxBoder>
+                          </s.Container>
+                        </s.Box>
+                      );
+                    })}
+                    </s.ContainerHome>
+                  )}
+                  </s.ContainerHome> 
+                ) : (null)}
+                {/* toggle 3 */}
+                {toggleState === 3 ? (
+                  <s.ContainerHome jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap", margin: "27px "}}>
+                    {data.allTruffles.filter(item => item.sell > 0).length === 0 ? (
+                      <s.Container flex={1} ai={"center"} jc={"center"}>
+                        <s.TextTitle>
+                          We can't find the items on sale.
+                        </s.TextTitle>
+                        <s.TextSubTitleHome>
+                          try reloading the page !
+                        </s.TextSubTitleHome>
+                        <s.SpacerSmall />
+                      </s.Container>
+                    ) : (
+                    <s.ContainerHome flex={1} jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap"}}>
+                    {priceList.map((item) => {
+                      return (
+                        <s.Box style={{ padding: "18px", margin:"15px"}}>
                         <s.StyledImg>
                           <Link to={`/details/${item.id}`} >
                             <TruffleRenderer truffle={item}/>
                           </Link>
                         </s.StyledImg>
-                        <s.SpacerXSmall />
                         <s.Container>
-                          <s.StyledTextBoxName>
-                            <s.TextDescription>{item.name}</s.TextDescription>
-                          </s.StyledTextBoxName >
-                          <s.StyledTextBox>
-                            <s.TextDescription>Rarity: {item.rarity}</s.TextDescription>
-                            <s.TextDescription>Level: {item.level}</s.TextDescription>
-                          </s.StyledTextBox>
-                          <s.StyledTextBox>
-                            <s.TextDescription>#{item.id}</s.TextDescription>
-                            <s.TextDescription>
-                              Price: {blockchain.web3.utils.fromWei(item.sell,"ether")} ETH
-                            </s.TextDescription>
-                          </s.StyledTextBox>
+                            <s.StyledTextBox>
+                              <s.TextDescription>{item.name}</s.TextDescription>
+                              <s.TextSubTitle>Price</s.TextSubTitle>
+                            </s.StyledTextBox>
+                            <s.StyledTextBox>
+                              <s.TextDescription>#{item.id}</s.TextDescription>
+                              <s.StyledButtonPrice>
+                                <s.TextDescription className="StyledHoverTitle">{blockchain.web3.utils.fromWei(item.sell,"ether")} ETH</s.TextDescription>
+                              </s.StyledButtonPrice>
+                            </s.StyledTextBox>  
+                            <s.StyledTextBoxBoder>
+                            <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
+                            <s.TextSubTitle>Level: <span style={{color: "#ffffff"}}>{item.level}</span></s.TextSubTitle>
+                          </s.StyledTextBoxBoder>
                         </s.Container>
-                        {blockchain.account === item.currentOwner.toLowerCase() ? (
-                          <s.StyledTextBoxPrice>
-                            {!loadingBuy &&
-                            <s.StyledButtonUnsale
-                                disabled={loadingBuy ? 1: 0}
-                                onClick={() => {
-                                    UnSellTruffle(blockchain.account, item.id);
-                                }}
-                            >
-                                Remove from sale
-                            </s.StyledButtonUnsale>
-                            }
-                            {loadingBuy &&
-                            <s.StyledButtonTransfer
-                                disabled={loadingBuy ? 1: 0}
-                                style={{pointerEvents: "none"}} 
-                            >
-                            <s.StyledButtonLoadingAction/>
-                            </s.StyledButtonTransfer>
-                            }
-                          </s.StyledTextBoxPrice>
-                        ) : (
-                          <s.StyledTextBoxPrice>
-                            {!loadingBuy &&
-                            <s.StyledButtonTransfer
-                                disabled={loadingBuy ? 1: 0}
-                                onClick={() => {
-                                    BuyTruffle(blockchain.account, item.id, blockchain.web3.utils.fromWei(item.sell, "ether"));
-                                }}
-                            >
-                                Buy now
-                            </s.StyledButtonTransfer>
-                            }
-                            {loadingBuy &&
-                            <s.StyledButtonTransfer
-                                disabled={loadingBuy ? 1: 0}
-                                style={{pointerEvents: "none"}} 
-                            >
-                            <s.StyledButtonLoadingAction/>
-                            </s.StyledButtonTransfer>
-                            }
-                          </s.StyledTextBoxPrice>
-                        )}
                       </s.Box>
-                    );
-                })}
-                </s.Container>
+                      );
+                    })}
+                    </s.ContainerHome>
+                  )}
+                  </s.ContainerHome> 
+                ) : (null)}
             </s.Container>
         </s.Screen>
     )

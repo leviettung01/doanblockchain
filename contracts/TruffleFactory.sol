@@ -41,7 +41,6 @@ contract TruffleFactory is ERC721, Ownable {
         address currentOwner;
         address previousOwner;
         uint32 readyTime;
-        uint256 birth;
         uint8 dadId;
         uint8 mumId;
         uint256 sell;
@@ -97,7 +96,6 @@ contract TruffleFactory is ERC721, Ownable {
             randRarity,
             msg.sender,
             address(0),
-            uint32(block.timestamp),
             uint32(block.timestamp),
             dadId,
             mumId,
@@ -231,6 +229,7 @@ contract TruffleFactory is ERC721, Ownable {
         require(msg.value == breedFee);
         Truffle storage myTruffle = truffles[_truffleId];
         Truffle storage myTargetDna = truffles[_targetDna];
+        require(_truffleId != _targetDna);
         require(ownerOf(_truffleId) == msg.sender);
         require(ownerOf(_targetDna) == msg.sender);
         require(_isReady(myTruffle),"Breed not ready !");
@@ -416,8 +415,6 @@ contract TruffleFactory is ERC721, Ownable {
     }
 
     function getAllTruffleSell() public view returns (Truffle[] memory) {
-        //uint currentIndex = 0;
-        //uint totalItemCount = _tokenIds.current();
         uint256 counter = 0;
         uint256 itemCount = 0;
         for (uint256 i = 0; i < truffles.length; i++) {

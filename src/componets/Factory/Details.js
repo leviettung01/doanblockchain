@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchData} from "../../redux/data/dataActions";
 import { removeData } from '../../redux/data/dataActions';
-import _color from "../../assets/images/bg/_color.png";
+import _bg from "../../assets/images/bg/_color.png";
 import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Details = () => {
   const dispatch = useDispatch();
@@ -21,9 +22,9 @@ const Details = () => {
   const { id } = useParams();
 
   const [toggleState, setToggleState] = useState(1);
+  const [sell, setSell] = useState();
   const [name, setName] = useState('');
   const [transfer, setTransfer] = useState();
-  const [sell, setSell] = useState();
 
   let history = useHistory();
 
@@ -32,10 +33,37 @@ const Details = () => {
   const [timerMinutes,setTimerMinutes] = useState(0);
   const [timerSeconds,setTimerSeconds] = useState(0);
 
+  const [Endurance, setEndurance] = useState(0);
+
   //toggleTab
   const toggleTab = (index) => {
     setToggleState(index);
   }
+
+  //cooldowns
+  useEffect(() => {
+    const Rarity  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
+      result.rarity
+    )
+
+    const levelUp  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
+      result.level
+    )
+
+    if(Rarity < 50 && levelUp <=0 ) 
+      setEndurance(24)
+    else if(Rarity < 50 && levelUp > 0 )
+      setEndurance(24 - (0.5*levelUp))  
+    else if(Rarity >= 50 && Rarity < 75 )
+      setEndurance(18)
+    else if(Rarity >= 50 && Rarity < 75 && levelUp > 0)
+      setEndurance(18 - (0.5*levelUp))
+    else if(Rarity >= 75)
+      setEndurance(12)
+    else if(Rarity >= 75 && levelUp > 0)
+    setEndurance(12 - (0.5*levelUp))
+  },[data.allOwnerTruffles, id])
+
 
   useEffect(() => {
     const startCouterTimer = setInterval(() => {
@@ -65,7 +93,7 @@ const Details = () => {
     return () => {
       clearInterval(startCouterTimer);
     }
-  })
+  },)
 
   // levelUpTruffle
   const levelUpTruffle = (_account, _id) => {
@@ -174,50 +202,59 @@ const Details = () => {
   }, [blockchain.account, dispatch, id])
 
   return (
-      <s.Screen image={_color} >
-        {data.allTruffles.filter(item => item.id === id ).map((item, index)  => (
-          <s.Container key={index} style={{ padding:"10px 100px"}}>
+      <s.Screen image={_bg}>
+        {data.allTruffles.filter(item => item.id === id ).map((item)  => (
+          <s.Container 
+            key={item.id} 
+            ai={"center"}
+            style={{ margin:"74px 0px 50px 0px"}}
+          >
+            <s.ContainerDetails>
             <s.StyledTextBoxNameDetails>
               <s.TextDescriptionDetail>
-                Truffles ID: #{item.id}
+                Truffles ID: {item.id}
               </s.TextDescriptionDetail>
             </s.StyledTextBoxNameDetails>
-            <s.Container jc={"space-between"} ai={"center"} fd={"row"}> 
+            <s.Container jc={"space-between"} ai={"flex-start"} fd={"row"}> 
               <s.StyledImgDetails>       
-                <TruffleRenderer truffle={item} style={{with: "350px", height: "350px"}} />
+                  <TruffleRenderer truffle={item} style={{height: "400px", with: "400px"}} />
               </s.StyledImgDetails>
    
-              <s.ContainerDetails>
-                <s.TextTitle>{item.name}</s.TextTitle>
-                <s.TextDescription><BiDna/> {item.dna}</s.TextDescription>
-                <s.StyledTextBox >
-                  <s.TextDescription>Rarity: {item.rarity}</s.TextDescription>
-                  <s.TextDescription>Level: {item.level}</s.TextDescription>
-                </s.StyledTextBox>
-                <s.StyledTextBox >
-                  <s.TextDescription>DadID: {item.dadId}</s.TextDescription>
-                  <s.TextDescription>MumID: {item.mumId}</s.TextDescription>
-                </s.StyledTextBox>
+              <s.BoxDetails>
+                  <s.TextTitle>{item.name}</s.TextTitle>  
+                <s.TextTitleDetails><BiDna/> {item.dna}</s.TextTitleDetails> 
+                <s.TextDescription>DadID: {item.dadId}</s.TextDescription>
+                <s.TextDescription>MumID: {item.mumId}</s.TextDescription>
                 <s.BoxTimerCouter>
                   {timerDays !== 0 && timerHours !== 0 && timerMinutes !== 0 && timerSeconds !== 0 ? (
-                  <s.TextDescriptionDetail style={{color: "#ffd32a"}}>
-                      {timerDays}:{timerHours}:{timerMinutes}:{timerSeconds} 
-                  </s.TextDescriptionDetail>
+                    <s.TextTitle style={{color: "#ffd32a"}}>
+                        {timerHours}h{timerMinutes}m{timerSeconds}s
+                    </s.TextTitle>
                   ) : (
-                    <s.TextDescriptionDetail style={{color: "#32ff7e"}}>
+                    <s.TextTitle style={{color: "#e96bd4"}}>
                       Breed Ready
-                    </s.TextDescriptionDetail>
+                    </s.TextTitle>
                   )}
                 </s.BoxTimerCouter>
+                <s.StyledTextBoxAround>
+                  <s.TextTitleDetails>Rarity</s.TextTitleDetails>
+                  <s.TextTitleDetails>Endurance </s.TextTitleDetails>
+                  <s.TextTitleDetails>Level</s.TextTitleDetails>
+                </s.StyledTextBoxAround>
+                <s.StyledTextBoxAround >
+                  <s.TextTitle>{item.rarity}</s.TextTitle>
+                  <s.TextTitle>{Endurance} Hrs</s.TextTitle>
+                  <s.TextTitle>{item.level}</s.TextTitle>
+                </s.StyledTextBoxAround>
                 <s.Container ai={"center"} jc={"space-around"} fd={"row"}>
-                  <s.StyledButtonAction style={{marginRight: "5px"}}
-                  >
-                    Breed
-                  </s.StyledButtonAction>
+                    <s.StyledButtonAction style={{marginRight: "15px"}}
+                    >
+                      <a href="/breed"> Breed</a>
+                    </s.StyledButtonAction>
                   {!loading &&
                   <s.StyledButtonAction 
-                    style={{marginLeft: "5px"}}
                     disabled={loading ? 1: 0}
+                    style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
                     onClick={(e) => {
                       e.preventDefault();
                       levelUpTruffle(blockchain.account, item.id);
@@ -231,12 +268,40 @@ const Details = () => {
                     style={{pointerEvents: "none"}}
                     disabled={loading ? 1: 0}
                   >
-                    <s.StyledButtonLoadingAction/>
+                    <s.StyledButtonLoading/>
                   </s.StyledButtonAction>
                   }
                 </s.Container>
-              </s.ContainerDetails>
+              </s.BoxDetails>
             </s.Container>
+            {/* {test} */}
+                {/* {console.log(item.dadId)}
+              <s.Container jc={"center"}  style={{flexWrap: "wrap"}}>
+                    {data.allTruffles.filter(item => item.id === item.dadId).map((item) => {
+                      return (
+                        <s.Box key={item.id} style={{ padding: "15px", margin:"15px"}}>
+                          <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                          </s.StyledImg>
+                        </s.Box>
+                      );
+                    })}
+                  </s.Container> 
+                  <s.Container jc={"center"}style={{flexWrap: "wrap"}}>
+                    {data.allTruffles.filter(item => item.id === item.mumId).map((item) => {
+                      return (
+                        <s.Box key={item.id} style={{ padding: "15px", margin:"15px"}}>
+                          <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                          </s.StyledImg>
+                        </s.Box>
+                      );
+                    })}
+                  </s.Container>  */}
             {/* Tabbar    */}
             <s.SpacerSuperLarge/>
             <s.Container ai={"center"}>
@@ -261,53 +326,42 @@ const Details = () => {
                 </s.Tabs>
               </s.MenuTabs>
             </s.Container>
-              {toggleState === 1 ? (
-              <s.Container  ai={"center"} style={{marginTop: "5rem"}}>
+              {toggleState === 1 ? (  
+              <s.Container  ai={"center"} style={{marginTop: "6rem"}}>
                 <s.BoxTab>
                   {data.allOwnerTruffles.filter(item => item.id === id ).map(result => result.sell) <= 0 ? (
                     <>
-                    <s.TextSubTitle >Enter the amount you want to sell</s.TextSubTitle>
+                    <s.TextSubTitleDetail>Enter the amount you want to sell (ETH)</s.TextSubTitleDetail>
                     <s.Container fd={"row"} ai={"center"} jc={"center"}>
                         <s.InputTransferNumber
                           required
                           placeholder={"Price must be at least 1 wei"} 
-                          style={{marginRight: "5px"}}
+                          style={{marginRight: "10px"}}
                           onChange={e => setSell(e.target.value)}
                           value={sell}
                         />
-                      {timerDays === 0 && timerHours === 0 && timerMinutes === 0 && timerSeconds === 0 ? (
-                        <s.Container>
-                        {!loadingTabSell &&
-                        <s.StyledButtonTransfer
-                            disabled={loadingTabSell ? 1: 0}
-                            onClick={() => {
-                              sellTruffle(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
-                              setSell('');
-                            }}
-                        >
-                          Sell
-                        </s.StyledButtonTransfer>
-                        }
-                        {loadingTabSell &&
-                        <s.StyledButtonTransfer
-                            disabled={loadingTabSell ? 1: 0}
-                            style={{pointerEvents: "none"}} 
-                        >
-                          <s.StyledButtonLoadingAction/>
-                        </s.StyledButtonTransfer>
-                        }
-                        </s.Container>
-                      ) : (
-                        <s.Container>
-                          {!loadingTabSell &&
-                          <s.StyledButtonTransfer
-                            style={{pointerEvents: "none", opacity: 0.5}} 
-                          >
-                            Sell
-                          </s.StyledButtonTransfer>
-                          }
-                        </s.Container>
-                      )}
+                      <s.Container>
+                      {!loadingTabSell &&
+                      <s.StyledButtonTransfer
+                          disabled={loadingTabSell ? 1: 0}
+                          style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
+                          onClick={() => {
+                            sellTruffle(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
+                            setSell('');
+                          }}
+                      >
+                        Sell
+                      </s.StyledButtonTransfer>
+                      }
+                      {loadingTabSell &&
+                      <s.StyledButtonTransfer
+                          disabled={loadingTabSell ? 1: 0}
+                          style={{pointerEvents: "none"}} 
+                      >
+                        <s.StyledButtonLoading/>
+                      </s.StyledButtonTransfer>
+                      }
+                      </s.Container>
                     </s.Container>
                     </>
                   ) : (
@@ -329,7 +383,7 @@ const Details = () => {
                           disabled={loadingUnSell ? 1: 0}
                           style={{pointerEvents: "none"}} 
                       >
-                        <s.StyledButtonLoadingRemove/>
+                        <s.StyledButtonLoading/>
                       </s.StyledButtonUnsale>
                       }
                     </s.Container>
@@ -338,14 +392,14 @@ const Details = () => {
               </s.Container>
               ): (null)}
               {toggleState === 2 ? (
-              <s.Container  flex={1} fd={"column"} ai={"center"}  style={{marginTop: "5rem"}}>
+              <s.Container  flex={1} fd={"column"} ai={"center"}  style={{marginTop: "6rem"}}>
                 <s.BoxTab>
-                  <s.TextSubTitle >Change this truffle name</s.TextSubTitle>
+                  <s.TextSubTitleDetail>Change this truffle name</s.TextSubTitleDetail>
                   <s.Container  fd={"row"} ai={"center"} jc={"center"}>
                     <s.InputTransfer 
                       required
-                      placeholder={"Any name... "} 
-                      style={{marginRight: "5px"}}
+                      placeholder={"Bob"} 
+                      style={{marginRight: "10px"}}
                       value={name}
                       onChange={(e) => {
                         setName(e.target.value);
@@ -354,6 +408,7 @@ const Details = () => {
                     {!loadingTabUpdate &&
                     <s.StyledButtonTransfer
                         disabled={loadingTabUpdate ? 1: 0}
+                        style={item.level >= 2 && item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 ? {} : {pointerEvents: "none", opacity: "0.5"}}
                         onClick={() => {
                           updateNameTruffle(blockchain.account, item.id, name);
                           setName('');
@@ -367,7 +422,7 @@ const Details = () => {
                         disabled={loadingTabUpdate ? 1: 0}
                         style={{pointerEvents: "none"}} 
                     >
-                      <s.StyledButtonLoadingAction/>
+                      <s.StyledButtonLoading/>
                     </s.StyledButtonTransfer>
                     }
                   </s.Container>
@@ -375,13 +430,13 @@ const Details = () => {
               </s.Container>
               ): (null)}
               {toggleState === 3 ? (
-              <s.Container  ai={"center"} style={{marginTop: "5rem"}}>
+              <s.Container  ai={"center"} style={{marginTop: "6rem"}}>
                 <s.BoxTab>
-                  <s.TextSubTitle >Transfer this Truffle to someone</s.TextSubTitle>
+                  <s.TextSubTitleDetail>Transfer this Truffle to someone</s.TextSubTitleDetail>
                   <s.Container  fd={"row"} ai={"center"} jc={"center"}>
                     <s.InputTransfer 
                       placeholder={"0x92Da0E5C9D58AcCDCA6E280a2F632B23D9aA0705"} 
-                      style={{marginRight: "5px"}}
+                      style={{marginRight: "10px"}}
                       value={transfer}
                       required
                       onChange={(e) => 
@@ -390,6 +445,7 @@ const Details = () => {
                     {!loadingTabTransfer &&
                     <s.StyledButtonTransfer
                       disabled={loadingTabTransfer ? 1: 0}
+                      style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0 ? {marginRight: "5px"} : {marginRight: "5px", pointerEvents: "none", opacity: "0.5"}} 
                       onClick={() => {
                         transferToken(blockchain.account, blockchain.account, transfer, item.id);
                         setTransfer('');
@@ -403,13 +459,14 @@ const Details = () => {
                       disabled={loadingTabTransfer ? 1: 0}
                       style={{pointerEvents: "none"}} 
                     >
-                      <s.StyledButtonLoadingAction/>
+                      <s.StyledButtonLoading/>
                     </s.StyledButtonTransfer>
                     }
                   </s.Container>
                 </s.BoxTab>
               </s.Container>
               ): (null)}
+              </s.ContainerDetails>
             </s.Container>
         ))}
       </s.Screen>

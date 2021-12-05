@@ -1,20 +1,16 @@
 import React from "react";
 import * as s from "../styles/globalStyles";
-import { useSelector } from "react-redux";
 
 const Footer = () => {
-    const data = useSelector((state) => state.data);
-    const blockchain = useSelector((state) => state.blockchain);
 
     return (
-        <s.Footer>
-            <s.TextSubTitleFooter>
-              Account: {blockchain.account}
-            </s.TextSubTitleFooter>
-            <s.TextSubTitleFooter>
-              Total Truffle in game: {data.allTruffles.length}
-              </s.TextSubTitleFooter>
-        </s.Footer>
+      <s.Container style={{ backgroundColor: "#25272E", position: "relative", zIndex: "2"}} jc={"center"} ai={"center"}>
+        <s.Containerfooter>
+            
+            <s.TextSubTitleFooterContent>@2021 Truffle,All Rights Reserved</s.TextSubTitleFooterContent>
+            <s.TextSubTitleFooterContent>Made with ♡ Hoang&Hai</s.TextSubTitleFooterContent>
+        </s.Containerfooter>
+      </s.Container>
     )
 }
 

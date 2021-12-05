@@ -3,34 +3,40 @@ import styled from 'styled-components';
 import { FaBars } from 'react-icons/fa';
 
 export const Nav = styled.nav`
-  background: #000;
   height: 60px;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem calc((100vw - 1000px) / 2);
+  padding: 1rem calc((100vw - 1400px) / 2);
   z-index: 10;
-  font-family: "Sora", sans-serif;
-  /* Third Nav */
-  /* justify-content: flex-start; */
+  font-family: var( --font-family-Sora);
+  font-weight: 500;
+  font-size: 18px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #1A1A22;
 `;
 
 export const NavLink = styled(Link)`
-  color: #fff;
+  color: #ffffff;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   height: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
   &.active {
-    color: #15cdfc;
+    color: rgb(254, 22, 229, 0.8);
   }
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: #15cdfc;
+    color: rgb(254, 22, 229, 0.8);
   }
 `;
 
@@ -52,7 +58,6 @@ export const NavMenu = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-right: -24px;
   width: 75%;
   @media screen and (max-width: 768px) {
     display: none;
@@ -62,25 +67,29 @@ export const NavMenu = styled.div`
 export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
-  margin-right: 24px;
+  margin-left: 10px;
   @media screen and (max-width: 768px) {
     display: none;
   }
 `;
 
 export const NavBtnLink = styled(Link)`
-  border-radius: 4px;
-  background: #256ce1;
+  display: flex;
+  align-items: center;
+  border-radius: 0.4rem;
   padding: 10px 22px;
   color: #fff;
-  outline: none;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  margin-left: 24px;
+  margin-right: 23px;
+  border: 1px solid rgb(254, 22, 229);
+  background: rgb(254, 22, 229, 0.2);
+
   &:hover {
     transition: all 0.2s ease-in-out;
+    border: 1px solid rgb(255, 255, 255);
     background: #fff;
     color: #010606;
   }

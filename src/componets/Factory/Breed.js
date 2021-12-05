@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import * as s from "../../styles/globalStyles";
-import _color from "../../assets/images/bg/_color.png";
+import _bg from "../../assets/images/bg/_color.png";
 import { fetchData } from "../../redux/data/dataActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TruffleRenderer from "../TruffleRenderer";
 import { BiDna } from "react-icons/bi";
 import {Link} from "react-router-dom";
+import ToggleShowBreed from "../ToggleShowBreed";
 
 const Breed = () => {
     const dispatch = useDispatch();
@@ -16,8 +17,13 @@ const Breed = () => {
     const [itemTarget, setItemTarget] = useState();
 
     const [loadingBreed, setLoadingBreed] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     let history = useHistory();
+
+    const openModal = () => {
+        setShowModal(prev => !prev)
+    }
 
     //Breed
     const Breeding = (_account, _id, _targetId) => {
@@ -46,106 +52,107 @@ const Breed = () => {
             dispatch(fetchData(blockchain.account));
         }
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
+    
+    console.log(itemBreed !== itemTarget)
 
     return (
-        <s.Screen image={_color}>
-            <s.Container ai={"center"}>
+        <s.Screen image={_bg}>
+            <s.Container ai={"center"} style={{margin: "5.6rem 0"}}>
                 <s.TextDescriptionDetail>Breed Truffles</s.TextDescriptionDetail>
-                <s.TextDescription>These two lovely truffles will soon be parentsl</s.TextDescription>
+                <s.TextTitle>These two lovely truffles will soon be parentsl</s.TextTitle>
                 <s.Container fd={"row"} jc={"center"} >
                     <s.ContentBreed>
                         <s.TextDescriptionBreed>Dame</s.TextDescriptionBreed>
                         <s.TextDescriptionBreed>This Truffles will be preggers</s.TextDescriptionBreed>
-                        <s.CustomSelect 
-                            onChange={e => setItemBreed(e.target.value)}
+                        {/* <s.CustomSelect 
+                            onChange={(e) => 
+                                setItemBreed(e.target.value)}
                         >
-                        {data.allOwnerTruffles.map((item) =>
+                        {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 ).map((item) =>
                             <s.CustomOption value={item.id}>{item.id}</s.CustomOption>
                         )}
-                        </s.CustomSelect>
+                        </s.CustomSelect> */}
                         
                         {itemBreed !== undefined ? (
                         <>
-                        {data.allOwnerTruffles.filter(item => item.id === itemBreed).map((item, index)  => (
-                        <s.Box key={index} style={{ padding: "15px", marginTop:"15px"}} >
+                        {data.allOwnerTruffles.filter(item => item.id === itemBreed).map((item)  => (
+                        <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
                             <s.StyledImg>
-                                <Link to={`/details/${item.id}`} >
+                            <Link to={`/details/${item.id}`} >
                                 <TruffleRenderer truffle={item}/>
-                                </Link>
+                            </Link>
                             </s.StyledImg>
-                            <s.SpacerXSmall />
                             <s.Container>
-                                <s.StyledTextBoxName>
                                 <s.TextDescription>{item.name}</s.TextDescription>
-                                </s.StyledTextBoxName >
-                                <s.Container>
+                            <s.Container>
                                 <s.TextDescription>#{item.id}</s.TextDescription>
                                 {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
-                                    <s.TextDescription style={{color: "#ffd32a"}}>
-                                        Not Ready
-                                    </s.TextDescription>
-                                    ):(
-                                    <s.TextDescription style={{color: "#32ff7e"}}>
-                                        Ready breed
-                                    </s.TextDescription>
+                                <s.TextSubTitle style={{color: "#ffd32a"}}>
+                                    Not Ready
+                                </s.TextSubTitle>
+                                ):(
+                                <s.TextSubTitle style={{color: "#e96bd4"}}>
+                                    Breed ready
+                                </s.TextSubTitle>
                                 )}
-                                <s.TextDescription><BiDna/> {item.dna}</s.TextDescription>
-                                </s.Container>
-                                <s.StyledTextBox>
-                                <s.TextDescription>Rarity: {item.rarity}</s.TextDescription>
-                                <s.TextDescription>Level: {item.level}</s.TextDescription>
-                                </s.StyledTextBox>
+                                <s.TextSubTitle><BiDna/> {item.dna}</s.TextSubTitle>
+                            </s.Container>
+                            <s.StyledTextBoxBoder>
+                                <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
+                                <s.TextSubTitle>Level: <span style={{color: "#ffffff"}}>{item.level}</span></s.TextSubTitle>
+                            </s.StyledTextBoxBoder>
                             </s.Container>
                         </s.Box>
                         ))}
                         </>
                         ) : (
-                            <s.BoxBreed> 
+                            <s.BoxBreed > 
                                 <s.TextDescription>Select your Truffle</s.TextDescription>
-                            </s.BoxBreed>
+                            </s.BoxBreed >
                         )}
+                        <s.StyledButtonAction onClick={openModal}>Open</s.StyledButtonAction>
+                        <ToggleShowBreed data={data.allOwnerTruffles} showModal={showModal} setShowModal={setShowModal} setItemBreed={setItemBreed}>
+                            <s.StyledButtonAction>Selected</s.StyledButtonAction>
+                        </ToggleShowBreed>
                     </s.ContentBreed>
                     <s.ContentBreed>
                         <s.TextDescriptionBreed>Sire</s.TextDescriptionBreed>
                         <s.TextDescriptionBreed>This Truffles will be the sire</s.TextDescriptionBreed>
-                        <s.CustomSelect 
+                        {/* <s.CustomSelect 
                             onChange={e => setItemTarget(e.target.value)}
                         >
-                        {data.allOwnerTruffles.map((item) => 
-                            <s.CustomOption value={item.id}>{item.id}</s.CustomOption>
+                        {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
+                            <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
                         )}
-                        </s.CustomSelect>
+                        </s.CustomSelect> */}
                         {itemTarget !== undefined ? (
                         <>
-                        {data.allOwnerTruffles.filter(item => item.id === itemTarget ).map((item, index)  => (
-                        <s.Box key={index} style={{ padding: "15px", marginTop:"15px"}}>
+                        {data.allOwnerTruffles.filter(item => item.id === itemTarget).map((item)  => (
+                        <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
                             <s.StyledImg>
-                                <Link to={`/details/${item.id}`} >
+                            <Link to={`/details/${item.id}`} >
                                 <TruffleRenderer truffle={item}/>
-                                </Link>
+                            </Link>
                             </s.StyledImg>
-                            <s.SpacerXSmall />
                             <s.Container>
-                                <s.StyledTextBoxName>
                                 <s.TextDescription>{item.name}</s.TextDescription>
-                                </s.StyledTextBoxName >
-                                <s.Container>
+                            <s.Container>
                                 <s.TextDescription>#{item.id}</s.TextDescription>
                                 {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
-                                <s.TextDescription style={{color: "#ffd32a"}}>
+                                <s.TextSubTitle style={{color: "#ffd32a"}}>
                                     Not Ready
-                                </s.TextDescription>
+                                </s.TextSubTitle>
                                 ):(
-                                <s.TextDescription style={{color: "#32ff7e"}}>
-                                    Ready breed
-                                </s.TextDescription>
+                                <s.TextSubTitle style={{color: "#e96bd4"}}>
+                                    Breed ready
+                                </s.TextSubTitle>
                                 )}
-                                <s.TextDescription><BiDna/> {item.dna}</s.TextDescription>
-                                </s.Container>
-                                <s.StyledTextBox>
-                                <s.TextDescription>Rarity: {item.rarity}</s.TextDescription>
-                                <s.TextDescription>Level: {item.level}</s.TextDescription>
-                                </s.StyledTextBox>
+                                <s.TextSubTitle><BiDna/> {item.dna}</s.TextSubTitle>
+                            </s.Container>
+                            <s.StyledTextBoxBoder>
+                                <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
+                                <s.TextSubTitle>Level: <span style={{color: "#ffffff"}}>{item.level}</span></s.TextSubTitle>
+                            </s.StyledTextBoxBoder>
                             </s.Container>
                         </s.Box>
                         ))}
@@ -157,9 +164,15 @@ const Breed = () => {
                         )}
                     </s.ContentBreed>
                 </s.Container>
+                {itemBreed === itemTarget && itemBreed !== undefined && itemTarget !== undefined ?(
+                    <s.TextTitle style={{color: "#eb4d4b"}}>Breeds cannot be the same</s.TextTitle>
+                ): (
+                    null
+                )}
                 <s.TextDescription>Birthing fee: 0.01 ETH</s.TextDescription>
                 {!loadingBreed && 
-                <s.StyledButtonTransfer style={{marginTop: "20px"}}
+                <s.StyledButtonTransfer 
+                    style={itemBreed !== itemTarget ? {marginTop: "20px"} : {marginTop: "20px", pointerEvents: "none", opacity: "0.5"}}
                     disabled={loadingBreed ? 1: 0}
                     onClick={() =>
                         Breeding(blockchain.account, itemBreed, itemTarget)
@@ -169,15 +182,13 @@ const Breed = () => {
                 </s.StyledButtonTransfer>
                 }
                 {loadingBreed &&
-                <s.StyledButtonTransfer style={{marginTop: "20px"}}
+                <s.StyledButtonTransfer 
+                    style={{marginTop: "20px", pointerEvents: "none"}}
                     disabled={loadingBreed ? 1: 0}
                 >
-                    <s.StyledButtonLoadingAction/>
+                    <s.StyledButtonLoading/>
                 </s.StyledButtonTransfer>
                 }
-                {/* <s.ShowItems>
-                    <s.ShowContent></s.ShowContent>
-                </s.ShowItems> */}
             </s.Container>
         </s.Screen>
     )

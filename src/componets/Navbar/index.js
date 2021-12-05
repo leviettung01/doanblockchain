@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { connect } from '../../redux/blockchain/blockchainActions';
 import { useEffect } from "react";
 import { fetchData } from "../../redux/data/dataActions"
+import { IoWalletOutline } from "react-icons/io5";
+import _logo from "../../assets/images/bg/_logo.png"
 
 const Navbar = () => {
   const blockchain = useSelector((state) => state.blockchain);
@@ -31,19 +33,21 @@ const Navbar = () => {
     <>
     <Nav>
       <NavLink to='/' exact>
-        <h1>Logo</h1>
+        <img src={_logo} alt="Logo" style={{height: "110px", backgroundSize: "cover", backgroundPosition: "cover"}} />
       </NavLink>
       <Bars />
       <NavMenu>
         {links}
-      </NavMenu>
         {blockchain.account !== null ? (
-          <NavBtn>
-          <NavBtnLink to='/'  
+        <NavBtn>
+          <NavBtnLink 
+            to="/"
+            style={{pointerEvents: "none"}}
             onClick={(e) => {
               e.preventDefault();
               dispatch(connect());
-            }}>
+            }}
+          >
             {account.substring(0, 4)}....
             {account.substring(account.length - 4)}
           </NavBtnLink>
@@ -55,10 +59,12 @@ const Navbar = () => {
               e.preventDefault();
               dispatch(connect());
             }}>
-            Start
+            <IoWalletOutline style={{paddingRight: "10px"}}/>
+            Wallet Connect
           </NavBtnLink>
         </NavBtn>
         )}
+      </NavMenu>
     </Nav>
   </>
   );
