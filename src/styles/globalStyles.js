@@ -19,14 +19,6 @@ export const Screen = styled.div`
   }
 `;
 
-export const ImageHome = styled.div`
-  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
-  background-size: cover;
-  background-position: center;
-  width: 55%;
-  min-height: 300px;
-`;
-
 export const ImageToggle = styled.div`
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
@@ -43,6 +35,13 @@ export const ImageToggleRender = styled.div`
   height: 200px;
 `;
 
+export const ImageToggleBreed = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 100px;
+`;
 
 export const AnimationData = styled.div`
   height: 300px;
@@ -247,6 +246,10 @@ export const InputTransfer = styled.input.attrs({type: "text"})`
   padding: 0 10px;
   font-size: 16px;
   color: #fff;
+
+  &:focus {
+    border-color: rgb(254, 22, 229);
+  }
 `;
 
 export const InputTransferNumber = styled.input.attrs({type: "number"})`
@@ -261,6 +264,10 @@ export const InputTransferNumber = styled.input.attrs({type: "number"})`
   padding: 0 10px;
   font-size: 16px;
   color: #fff;
+
+  &:focus {
+    border-color: rgb(254, 22, 229);
+  }
 `;
 // Details
 export const StyledTextBox = styled.div`
@@ -274,6 +281,7 @@ export const TextDescriptionDetail = styled.p`
   color: #ffffff;
   font-size: 30px;
   letter-spacing: 0.8px;
+  line-height: 0;
   font-weight: 600;
 `;
 
@@ -328,12 +336,32 @@ export const ContainerDetails = styled.div`
   ;
 `;
 
-export const StyledButtonAction= styled.button`
+export const StyledButtonAction = styled.button`
   width: 100%;
   height: 45px;
   border-radius: 0.4rem;
   border: 1px solid #fff;
   background: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-family-Rubik);
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  border: 1px solid rgb(254, 22, 229);
+  background-color: rgb(254, 22, 229, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const StyledButtonActionDetails = styled.button`
+  width: auto;
+  height: 45px;
+  border-radius: 0.4rem;
+  border: 1px solid #fff;
+  background: none;
+  padding: 0 15px;
   color: #fff;
   cursor: pointer;
   font-family: var(--font-family-Rubik);
@@ -391,7 +419,24 @@ export const StyledButtonTransfer = styled.button`
   font-weight: 600;
   outline: none;
   padding: 0 20px;
+`;
 
+export const StyledButtonBack = styled.button`
+  display: flex;
+  height: 45px;
+  width: auto;
+  align-items: center;
+  border-radius: 0.4rem;
+  border: 1px solid rgb(254, 22, 229);
+  background-color: rgb(254, 22, 229, 0.2);
+  color: #fff;
+  cursor: pointer;
+  font-family: var( --font-family-Sora);
+  font-size: 18px;
+  transition: all 0.5s ease-in-out;
+  font-weight: 600;
+  outline: none;
+  padding: 0 20px;
 `;
 //
 export const Box = styled.div`
@@ -451,8 +496,9 @@ export const StyledTextBoxName = styled.p`
 
 export const StyledTextBoxNameDetails = styled.p`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  justify-content: start;
   align-items: center;
   margin-bottom: 20px;
 `;
@@ -478,6 +524,14 @@ export const TextSubTitle = styled.p`
   line-height: 2px;
 `;
 
+export const TextDescriptionBreed = styled.p`
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
 export const TextDescription = styled.p`
   color: #ffffff;
   font-size: 14px;
@@ -487,9 +541,9 @@ export const TextDescription = styled.p`
 
 export const TextTitleHome = styled.p`
   color: #ffffff;
-  font-size: 50px;
+  font-size: 40px;
   letter-spacing: 0.8px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: var(--font-family-Sora);
   line-height: 0px;
 `;
@@ -517,8 +571,35 @@ export const StyledButton = styled.span`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.1px;
-  border: 1px solid rgb(254, 22, 229);
+  border: 1px solid rgb(254, 22, 229);  
   background-color: rgb(254, 22, 229, 0.2);
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #fff;
+    background: #fff;
+    color: #000000;
+  }
+`;
+
+export const StyledButtonBreedShow = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  height: 44px;
+  width: 15%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  font-family: var( --font-family-Sora);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  border: 1px solid rgb(255, 255, 255);  
+  background-color: rgb(255, 255, 255, 0.4);
 
   &:hover {
     transition: all 0.2s ease-in-out;
@@ -537,7 +618,6 @@ export const StyledButtonPrice = styled.span`
   padding: 0 10px;
   color: #fff;
   border: none;
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   font-family: var( --font-family-Sora);
@@ -554,7 +634,7 @@ export const StyledButtonHome = styled.span`
   justify-content: center;
   align-items: center;
   height: 42px;
-  width: 9%;
+  width: auto;
   border-radius: 0.4rem;
   padding: 0 18px;
   color: #fff;
@@ -633,7 +713,7 @@ export const TextSubTitleFooterContent = styled.p`
 
 //navbarHome
 export const MenuTabsHome = styled.div`
-  width: 30%;
+  width: 35%;
   height: 40px;
   display: flex;
 `;
@@ -660,41 +740,134 @@ export const TabHome = styled.a`
   }
 
 `;
+//Game
+export const ContainerGame = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  width: 70%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+  padding: 15px;
+`;
+
+export const ContainerRarityGame = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  width: 100%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  background-color: #373943;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+  padding: 15px;
+`;
+
+export const ContentGame = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  width: auto;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+  padding: 15px;
+`;
+
+export const ImageCamp = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 540px;
+  height: 616px;
+`;
+
+export const TextDescriptionGame = styled.p`
+  color: #ffffff;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  font-weight: 400;
+`;
+
+export const TextTitleGame = styled.p`
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 600;
+`;
 
 //Breed
 export const ContentBreed = styled.div`
-  display: inline-block;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 30px;
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  width: auto;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  background-color: #373943;
+  box-sizing: border-box;
+  border-radius: 0.8rem;
+  padding: 15px;
 `;
 
 export const ContainerBreed = styled.div`
-  display: inline-block;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  width: auto;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  background-color: #373943;
+  border-radius: 0.8rem;
+  padding: 15px;
 `;
 
 export const BoxBreed = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 236px;
-  height: 431px;
-  border: 1px dotted #ffffff;
+  width: 232px;
+  height: 427px;
+  border: 2px dashed rgba(255, 255, 255, 1);
   background-color: transparent;
   border-radius: 0.8rem;
-  opacity: 0.5;
   margin-top: 15px;
+`
+
+export const BoxBuy = styled.div`
+  border: 1px solid rgb(254, 22, 229);
+  background-color: rgb(254, 22, 229, 0.2);
+  border-radius: 0.8rem;
+  padding-Top: 20px; 
 `
 
 export const CustomSelect = styled.select`
   display: inline-block;
-  width: 100%;
+  width: 236px;
   height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 1);
   background: #333;
   outline: none;
   box-sizing: border-box;
@@ -719,12 +892,65 @@ export const CustomOption = styled.option`
   cursor: pointer;
 `
 
-export const TextDescriptionBreed = styled.p`
-  display: flex;
-  justify-content: center;
-  color: #ffffff;
+export const TextSubTitleBuy = styled.p`
+  color: rgb(255, 255, 255, 0.6);
   font-size: 18px;
+  font-weight: 400;
+`;
+
+export const TextTitleBuy = styled.p`
+  color: rgb(255, 255, 255, 1);
+  font-size: 30px;
   font-weight: 600;
+  line-height: 0;
+`;
+
+export const TextName = styled.p`
+  color: rgb(255, 255, 255, 1);
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 0;
+`;
+
+export const TextTableEvent = styled.td`
+  color: rgb(255, 255, 255, 1);
+  font-size: 18px;
+  font-weight: 400;
+  padding: 20px 25px;
+`;
+
+export const StyledTableRow = styled.tr`
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(254, 22, 229, 0.2);
+  }
+`;
+
+
+export const TextTableName = styled.th`
+  color: rgb(255, 255, 255, 1);
+  font-size: 18px;
+  font-weight: 400;
+  padding: 10px 25px;
+`;
+
+export const StyledTable = styled.table`
+  border-collapse: collapse;
+  box-shadow: 0 5px 10px rgb(0, 0, 0, 0.6);
+  border-radius: 0.8rem;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+`;
+
+export const StyledTableContent = styled.thead`   
+  background-color: rgb(254, 22, 229, 0.4); 
+  border-radius: 0.8rem 0.8rem 0 0;
+  box-shadow: 0 5px 10px rgb(0, 0, 0, 0.4);
+  align-items: center;
+  width:100%;
+  color: #fff;
+  height: 30px;
 `;
 
 //popup
@@ -811,7 +1037,7 @@ export const StyledImgPopup = styled.div`
 export const InputSearch = styled.input.attrs({type: "search"})`
   width: 40%;
   height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 1);
   background: #333;
   outline: none;
   box-sizing: border-box;
@@ -822,7 +1048,7 @@ export const InputSearch = styled.input.attrs({type: "search"})`
   transition: 0.3s;
 
   &:focus {
-    border-color: #256ce1;
+    border-color: rgb(254, 22, 229);
   }
 `;
 

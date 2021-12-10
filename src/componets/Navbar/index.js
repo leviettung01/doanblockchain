@@ -25,6 +25,7 @@ const Navbar = () => {
       <>
         <NavLink to="/" exact activeStyle>My Truffle</NavLink>
         <NavLink to="/breed" activeStyle>Breed</NavLink>
+        <NavLink to="/game" activeStyle>Game</NavLink>
         <NavLink to="/marketplace" activeStyle>Marketplace</NavLink>
       </>
     ) : null

@@ -1,16 +1,16 @@
 import { useEffect, useState, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { connect } from "../../redux/blockchain/blockchainActions";
-import { fetchData } from "../../redux/data/dataActions";
-import * as s from "../../styles/globalStyles";
-import _bg from "../../assets/images/bg/_bg.png";
-import reveal from "../../assets/images/bg/reveal.png";
+import { connect } from "../redux/blockchain/blockchainActions";
+import { fetchData } from "../redux/data/dataActions";
+import * as s from "../styles/globalStyles";
+import _bg from "../assets/images/bg/_bg.png"
+import _reveal from "../assets/images/bg/reveal.png";
 import { CgAddR } from "react-icons/cg";
 import Confetti from 'react-confetti'
-import RenderSell from "../RenderSell";
-import RenderAll from "../RenderAll";
-import RenderStatus from "../RenderStatus";
-import Pagination from "../Pagination";
+import RenderSell from "../componets/RenderSell";
+import RenderAll from "../componets/RenderAll";
+import RenderStatus from "../componets/RenderStatus";
+import Pagination from "../componets/Pagination";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const Home = () => {
     const [toggleState, setToggleState] = useState(1);
 
     const name = "Magic Truffle";
+    const nameFree = "Free Truffle";
 
     const confettiRef = useRef(null);
   
@@ -33,8 +34,6 @@ const Home = () => {
     const indexOfLastItem = currentPage * pageNumberLimit;
     const indexOfFirstItem = indexOfLastItem - pageNumberLimit;
     const currentItems = data.allOwnerTruffles.slice(indexOfFirstItem, indexOfLastItem);
-    const currentItemsSell = data.allOwnerTruffles.filter(item => item.sell > 0).slice(indexOfFirstItem, indexOfLastItem);
-    const currentItemsStatus = data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).slice(indexOfFirstItem, indexOfLastItem);
 
     //change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber); 
@@ -56,7 +55,67 @@ const Home = () => {
         setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
       }
     }
-  
+    //{state sell my truffle}
+    const [currentPage1, setCurrentPage1] = useState(1);
+    const [pageNumberLimit1] = useState(5);
+    const [maxPageNumberLimit1, setmaxPageNumberLimit1] = useState(5);
+    const [minPageNumberLimit1, setminPageNumberLimit1] = useState(0);
+
+    //GetCurrentItems
+    const indexOfLastItem1 = currentPage1 * pageNumberLimit1;
+    const indexOfFirstItem1 = indexOfLastItem1 - pageNumberLimit1;
+    const currentItemsSell = data.allOwnerTruffles.filter(item => item.sell > 0).slice(indexOfFirstItem1, indexOfLastItem1);
+    //change page
+    const paginate1 = (pageNumber) => setCurrentPage1(pageNumber); 
+
+    //NextPage
+    const handleNextbtn1 = () => {
+      setCurrentPage1(currentPage1 + 1);
+      if(currentPage1 + 1 > maxPageNumberLimit1) {
+        setmaxPageNumberLimit1(maxPageNumberLimit1 + pageNumberLimit1);
+        setminPageNumberLimit1(minPageNumberLimit1 + pageNumberLimit1);
+      }
+    }
+
+    //PrevPage
+    const handlePrevbtn1 = () => {
+      setCurrentPage1(currentPage1 - 1);
+      if((currentPage1 - 1) % pageNumberLimit1 === 0) {
+        setmaxPageNumberLimit1(maxPageNumberLimit1 - pageNumberLimit1);
+        setminPageNumberLimit1(minPageNumberLimit1 - pageNumberLimit1);
+      }
+    }
+    // {state price}
+    const [currentPage2, setCurrentPage2] = useState(1);
+    const [pageNumberLimit2] = useState(5);
+    const [maxPageNumberLimit2, setmaxPageNumberLimit2] = useState(5);
+    const [minPageNumberLimit2, setminPageNumberLimit2] = useState(0);
+
+    //GetCurrentItems
+    const indexOfLastItem2 = currentPage2 * pageNumberLimit2;
+    const indexOfFirstItem2 = indexOfLastItem2 - pageNumberLimit2;
+    const currentItemsStatus = data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).slice(indexOfFirstItem2, indexOfLastItem2);
+    //change page
+    const paginate2 = (pageNumber) => setCurrentPage2(pageNumber); 
+
+    //NextPage
+    const handleNextbtn2 = () => {
+      setCurrentPage2(currentPage2 + 1);
+      if(currentPage2 + 1 > maxPageNumberLimit2) {
+        setmaxPageNumberLimit2(maxPageNumberLimit2 + pageNumberLimit2);
+        setminPageNumberLimit2(minPageNumberLimit2 + pageNumberLimit2);
+      }
+    }
+
+    //PrevPage
+    const handlePrevbtn2 = () => {
+      setCurrentPage2(currentPage2 - 1);
+      if((currentPage2 - 1) % pageNumberLimit2 === 0) {
+        setmaxPageNumberLimit1(maxPageNumberLimit2 - pageNumberLimit2);
+        setminPageNumberLimit1(minPageNumberLimit2 - pageNumberLimit2);
+      }
+    }
+    //Fee = 0.025
     const mintNFT = (_account,_name) => {
       setLoading(true);
       setLoadingShow(false);
@@ -65,6 +124,26 @@ const Home = () => {
         .send({
           from: _account,
           value: blockchain.web3.utils.toWei("0.025", "ether"),
+        })
+        .once("error", (err) => {
+          setLoading(false);
+          console.log(err);
+        })
+        .then((receipt) => {
+          setLoading(false);
+          console.log(receipt);
+          dispatch(fetchData(blockchain.account));
+          setLoadingShow(true);
+        });
+    };
+    // Fee = 0
+    const mintNFTFree = (_account,_name) => {
+      setLoading(true);
+      setLoadingShow(false);
+      blockchain.truffleFactory.methods
+        .createRandomTruffleFree(_name)
+        .send({
+          from: _account,
         })
         .once("error", (err) => {
           setLoading(false);
@@ -104,17 +183,19 @@ const Home = () => {
         height={900}
         width={1900}
       />
-      <s.ImageToggle image={reveal} />
+      <s.ImageToggle image={_reveal} />
       <s.TextTitle>
         Congratulations, you now own a Truffle. Click Close to return.
       </s.TextTitle>
-      <s.StyledButton
-        onClick={() => {
-          setLoadingShow(false);
-        }}
-      >
-        Close
-      </s.StyledButton>
+      <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
+        <s.StyledButton
+          onClick={() => {
+            setLoadingShow(false);
+          }}
+        >
+          Close
+        </s.StyledButton>
+      </s.Container>
       </s.Containertoggle>
       
       <s.Screen image={_bg} className={loadingShow === true ? "blur" : null} >
@@ -163,26 +244,65 @@ const Home = () => {
                 Ready {toggleState === 3 ? '(' + data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).length + ')' : null}
               </s.TabHome>
             </s.MenuTabsHome>
-            {!loading &&
-            <s.StyledButtonHome
-              disabled={loading ? 1 : 0}
-              style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {}}
-              onClick={(e) => {
-                e.preventDefault();
-                mintNFT(blockchain.account, name);
-              }}
-            >
-              <CgAddR style={{paddingRight: "10px"}}/> New truffle
-            </s.StyledButtonHome>
-            }
-            {loading &&
-            <s.StyledButtonHome
-              style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {pointerEvents: "none"}}
-              disabled={loading ? 1 : 0}
-            >
-              <s.StyledButtonLoading />
-            </s.StyledButtonHome>
-            }
+            {data.allOwnerTruffles.length < 2 ? (
+            <>
+              {/* //Free */}
+              {!loading &&
+                <s.StyledButtonHome
+                  disabled={loading ? 1 : 0}
+                  style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {}}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    mintNFTFree(blockchain.account, nameFree);
+                  }}
+                >
+                  <CgAddR style={{paddingRight: "10px"}}/> Free truffle ({data.allOwnerTruffles.length}/4)
+                </s.StyledButtonHome>
+                }
+                {loading &&
+                <s.StyledButtonHome
+                  style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {pointerEvents: "none"}}
+                  disabled={loading ? 1 : 0}
+                >
+                  <s.StyledButtonLoading />
+                </s.StyledButtonHome>
+              }
+            </>
+            ) : (
+            <>
+              {data.allOwnerTruffles.length < 4 ? (
+                <>
+                {/* Fee */}
+                {!loading &&
+                  <s.StyledButtonHome
+                    disabled={loading ? 1 : 0}
+                    style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {}}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      mintNFT(blockchain.account, name);
+                    }}
+                  >
+                    <CgAddR style={{paddingRight: "10px"}}/> New truffle ({data.allOwnerTruffles.length}/4)
+                  </s.StyledButtonHome>
+                  }
+                  {loading &&
+                  <s.StyledButtonHome
+                    style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {pointerEvents: "none"}}
+                    disabled={loading ? 1 : 0}
+                  >
+                    <s.StyledButtonLoading />
+                  </s.StyledButtonHome>
+                }
+                </>
+              ):(
+                <s.TextDescription
+                  style={{pointerEvents: "none"}}
+                >
+                  Total truffle in game: {data.allTruffles.length}
+                </s.TextDescription>
+              )}
+            </>
+            )}
           </s.ContainerTabBar>
           {toggleState === 1 ? (
           <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
@@ -201,13 +321,16 @@ const Home = () => {
                 <s.TextSubTitleHome>
                   Click on the CREATE button below to generate a Truffle.
                 </s.TextSubTitleHome>
+                <s.TextSubTitleHome>
+                  (You get the first two free CREATE, but will limit some things)
+                </s.TextSubTitleHome>
                 <s.SpacerSmall />
                 {!loading &&
                 <s.StyledButton
                   disabled={loading ? 1 : 0}
                   onClick={(e) => {
                     e.preventDefault();
-                    mintNFT(blockchain.account, name);
+                    mintNFTFree(blockchain.account, nameFree);
                   }}
                 >
                   Create
@@ -290,14 +413,14 @@ const Home = () => {
           ) : (
           <>
             <Pagination 
-              pageNumberLimit={pageNumberLimit} 
+              pageNumberLimit={pageNumberLimit1} 
               totalItems={data.allOwnerTruffles.filter(item => item.sell > 0).length} 
-              paginate={paginate} 
-              currentPage={currentPage} 
-              handleNextbtn={handleNextbtn}
-              handlePrevbtn={handlePrevbtn}
-              maxPageNumberLimit={maxPageNumberLimit}
-              minPageNumberLimit={minPageNumberLimit}
+              paginate={paginate1} 
+              currentPage={currentPage1} 
+              handleNextbtn={handleNextbtn1}
+              handlePrevbtn={handlePrevbtn1}
+              maxPageNumberLimit={maxPageNumberLimit1}
+              minPageNumberLimit={minPageNumberLimit1}
             />
             {data.allOwnerTruffles.filter(item => item.sell > 0).length ? (
               <RenderSell data={currentItemsSell} blockchain={blockchain} loading={loading}/>
@@ -361,14 +484,14 @@ const Home = () => {
             ) : (
             <>
               <Pagination 
-                pageNumberLimit={pageNumberLimit} 
+                pageNumberLimit={pageNumberLimit2} 
                 totalItems={data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).length} 
-                paginate={paginate} 
-                currentPage={currentPage} 
-                handleNextbtn={handleNextbtn}
-                handlePrevbtn={handlePrevbtn}
-                maxPageNumberLimit={maxPageNumberLimit}
-                minPageNumberLimit={minPageNumberLimit}
+                paginate={paginate2} 
+                currentPage={currentPage2} 
+                handleNextbtn={handleNextbtn2}
+                handlePrevbtn={handlePrevbtn2}
+                maxPageNumberLimit={maxPageNumberLimit2}
+                minPageNumberLimit={minPageNumberLimit2}
               />
               <RenderStatus data={currentItemsStatus} loading={loading}/>
             </>

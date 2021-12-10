@@ -4,7 +4,7 @@ import * as s from "../styles/globalStyles";
 const Pagination = ({pageNumberLimit, totalItems, paginate, handleNextbtn, handlePrevbtn, currentPage, maxPageNumberLimit, minPageNumberLimit}) => {
     const pageNumber = [];
 
-    for(let i= 1; i <= Math.ceil(totalItems / pageNumberLimit); i ++) {
+    for(let i = 1; i <= Math.ceil(totalItems / pageNumberLimit); i ++) {
         pageNumber.push(i);
     }
 
@@ -27,15 +27,15 @@ const Pagination = ({pageNumberLimit, totalItems, paginate, handleNextbtn, handl
             </s.Container>
             <s.Container fd={"row"}>
                 <s.TextDescriptionPage
-                    style={{marginRight: "15px"}}
-                    className={currentPage <= 1 ? "disable" : null}
+                    style={{marginRight: "15px", cursor: "pointer"}}
+                    className={currentPage <= 1 ? "disable" : ""}
                     onClick={handlePrevbtn}
                     disabled={currentPage === pageNumber[0] ? true : false}
                 >
                     Previous
                 </s.TextDescriptionPage>
                 <s.TextDescriptionPage
-                    className={currentPage >= pageNumber.length ? "disable" : null}
+                    className={currentPage >= pageNumber.length ? "disable" : ""}
                     onClick={handleNextbtn}
                     disabled={currentPage === pageNumber[pageNumber.length - 1] ? true : false}
                 >

@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './componets/Navbar/index';
-import Home from './componets/Factory/Home';
-import Marketplace from './componets/Factory/Marketplace';
-import Breed from './componets/Factory/Breed';
-import Details from './componets/Factory/Details';
+import Home from './page/Home';
+import Marketplace from './page/Marketplace';
+import Breed from './page/Breed';
+import Details from './page/Details';
+import Game from './page/Game'
 import Footer from './componets/Footer';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Route path='/' exact component={Home} />
       <Route path='/breed' component={Breed} />
       <Route path='/marketplace' component={Marketplace} />
+      <Route path='/game' component={Game} />
       <Route path="/details/:id?" component={Details} />
       <Route>404 Not Found!</Route>
     </Switch>
