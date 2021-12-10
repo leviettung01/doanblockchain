@@ -22,6 +22,7 @@ const Admin = () => {
     const [updateSellFee, setUpdateSellFee] = useState();
 
     const [toggleState, setToggleState] = useState(1);
+    const [toggleStateUpdate, setToggleStateUpdate] = useState(1);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -30,6 +31,10 @@ const Admin = () => {
 
     const toggleTab = (index) => {
         setToggleState(index);
+    }
+
+    const toggleTabUpdate = (index) => {
+        setToggleStateUpdate(index);
     }
 
     console.log(data.mintFee)
@@ -163,7 +168,7 @@ const Admin = () => {
 
     return (
         <s.Screen image={_bg}>
-            <s.Container flex={1} ai={"center"} jc={"flex-start"} style={{paddingTop: "3rem", marginTop: "4.5rem"}}>
+            <s.Container ai={"center"} jc={"flex-start"} style={{paddingTop: "3rem", marginTop: "4.5rem"}}>
             <s.ContainerTabBar>
                   <s.MenuTabsHome>
                     <s.TabHome
@@ -312,159 +317,212 @@ const Admin = () => {
                   </s.ContainerHome> 
                 ) : (null)}
                 {toggleState === 3 ? (
-                  <s.ContainerHome jc={"center"} ai={"center"} style={{margin: "27px "}}>
+                <s.ContainerHome flex={1} jd={"row"} jc={"flex-start"} ai={"center"} style={{margin: "27px "}}>
+                    <s.TextTitle style={{marginBottom: "100px "}}>
+                        Update transaction fee
+                    </s.TextTitle>
+                    <s.Container ai={"center"}>
+                        <s.MenuTabs >
+                        <s.Tabs 
+                            className={toggleStateUpdate === 1 ? "active-tab" : null}
+                            onClick={() => toggleTabUpdate(1)}
+                        >
+                            Mint
+                        </s.Tabs>
+                        <s.Tabs 
+                            className={toggleStateUpdate === 2 ? "active-tab" : null}
+                            onClick={() => toggleTabUpdate(2)}
+                        >
+                            level Up
+                        </s.Tabs>
+                        <s.Tabs 
+                            className={toggleStateUpdate === 3 ? "active-tab" : null}
+                            onClick={() => toggleTabUpdate(3)}
+                        >
+                            Breed
+                        </s.Tabs>
+                        <s.Tabs 
+                            className={toggleStateUpdate === 4 ? "active-tab" : null}
+                            onClick={() => toggleTabUpdate(4)}
+                        >
+                            Sell
+                        </s.Tabs>
+                        </s.MenuTabs>
+                    </s.Container>
                     {/* //mint */}
-                    <form style={{margin: "20px 0"}}>
-                        <s.TextSubTitleDetail>Enter the mint fee you want to change (ETH)</s.TextSubTitleDetail>
-                        <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                            <s.InputTransferNumber
-                            required
-                            placeholder={"Fee must be at least 1 wei"} 
-                            style={{marginRight: "10px"}}
-                            onChange={e => setUpdateMintFee(e.target.value)}
-                            value={updateMintFee}
-                        />
-
-                        <s.Container>
-                          {!loadingMintFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingMintFee ? 1: 0}
-                              style={updateMintFee > 0  && updateMintFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
-                              onClick={() => {
-                                UpdateMintFee(blockchain.account, blockchain.web3.utils.toWei(updateMintFee, "ether"));
-                                setUpdateMintFee('');
-                              }}
-                          >
-                            Update
-                          </s.StyledButtonTransfer>
-                          }
-                          {loadingMintFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingMintFee ? 1: 0}
-                              style={{pointerEvents: "none"}} 
-                          >
-                            <s.StyledButtonLoading/>
-                          </s.StyledButtonTransfer>
-                          }
+                    {toggleStateUpdate === 1 ? (
+                        <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
+                        <s.BoxTab>
+                            <form style={{margin: "20px 0"}}>
+                                <s.TextSubTitleDetail>Enter the mint fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                                    <s.InputTransferNumber
+                                    required
+                                    placeholder={"Fee must be at least 1 wei"} 
+                                    style={{marginRight: "10px"}}
+                                    onChange={e => setUpdateMintFee(e.target.value)}
+                                    value={updateMintFee}
+                                />
+                                <s.Container>
+                                {!loadingMintFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingMintFee ? 1: 0}
+                                    style={updateMintFee > 0  && updateMintFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
+                                    onClick={() => {
+                                        UpdateMintFee(blockchain.account, blockchain.web3.utils.toWei(updateMintFee, "ether"));
+                                        setUpdateMintFee('');
+                                    }}
+                                >
+                                    Update
+                                </s.StyledButtonTransfer>
+                                }
+                                {loadingMintFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingMintFee ? 1: 0}
+                                    style={{pointerEvents: "none"}} 
+                                >
+                                    <s.StyledButtonLoading/>
+                                </s.StyledButtonTransfer>
+                                }
+                                </s.Container>
+                                </s.Container>
+                                {updateMintFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
+                            </form>
+                        </s.BoxTab>
                         </s.Container>
+                    ): (null)}
+                    {/* levelUp */}
+                    {toggleStateUpdate === 2 ? (
+                        <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
+                        <s.BoxTab>
+                            <form style={{margin: "20px 0"}}>
+                                <s.TextSubTitleDetail>Enter the levelup fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                                    <s.InputTransferNumber
+                                    required
+                                    placeholder={"Fee must be at least 1 wei"} 
+                                    style={{marginRight: "10px"}}
+                                    onChange={e => setUpdateLevelFee(e.target.value)}
+                                    value={updateLevelFee}
+                                />
 
-                        </s.Container>
-                        {updateMintFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
-                    </form>
-                    {/* //levelUp */}
-                    <form style={{margin: "20px 0"}}>
-                        <s.TextSubTitleDetail>Enter the levelup fee you want to change (ETH)</s.TextSubTitleDetail>
-                        <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                            <s.InputTransferNumber
-                            required
-                            placeholder={"Fee must be at least 1 wei"} 
-                            style={{marginRight: "10px"}}
-                            onChange={e => setUpdateLevelFee(e.target.value)}
-                            value={updateLevelFee}
-                        />
+                                <s.Container>
+                                {!loadingLevelFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingLevelFee ? 1: 0}
+                                    style={updateLevelFee > 0  && updateLevelFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
+                                    onClick={() => {
+                                        UpdateLevelFee(blockchain.account, blockchain.web3.utils.toWei(updateLevelFee, "ether"));
+                                        setUpdateLevelFee('');
+                                    }}
+                                >
+                                    Update
+                                </s.StyledButtonTransfer>
+                                }
+                                {loadingLevelFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingLevelFee ? 1: 0}
+                                    style={{pointerEvents: "none"}} 
+                                >
+                                    <s.StyledButtonLoading/>
+                                </s.StyledButtonTransfer>
+                                }
+                                </s.Container>
 
-                        <s.Container>
-                          {!loadingLevelFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingLevelFee ? 1: 0}
-                              style={updateLevelFee > 0  && updateLevelFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
-                              onClick={() => {
-                                UpdateLevelFee(blockchain.account, blockchain.web3.utils.toWei(updateLevelFee, "ether"));
-                                setUpdateLevelFee('');
-                              }}
-                          >
-                            Update
-                          </s.StyledButtonTransfer>
-                          }
-                          {loadingLevelFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingLevelFee ? 1: 0}
-                              style={{pointerEvents: "none"}} 
-                          >
-                            <s.StyledButtonLoading/>
-                          </s.StyledButtonTransfer>
-                          }
+                                </s.Container>
+                                {updateLevelFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
+                            </form>
+                        </s.BoxTab>
                         </s.Container>
+                    ): (null)}
+                    {/* breed */}
+                    {toggleStateUpdate === 3 ? (
+                        <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
+                        <s.BoxTab>
+                            <form style={{margin: "20px 0"}}>
+                                <s.TextSubTitleDetail>Enter the breed fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                                    <s.InputTransferNumber
+                                    required
+                                    placeholder={"Fee must be at least 1 wei"} 
+                                    style={{marginRight: "10px"}}
+                                    onChange={e => setUpdateBreedFee(e.target.value)}
+                                    value={updateBreedFee}
+                                />
 
-                        </s.Container>
-                        {updateMintFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
-                    </form>
-                    {/* breedFee */}
-                    <form style={{margin: "20px 0"}}>
-                        <s.TextSubTitleDetail>Enter the breed fee you want to change (ETH)</s.TextSubTitleDetail>
-                        <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                            <s.InputTransferNumber
-                            required
-                            placeholder={"Fee must be at least 1 wei"} 
-                            style={{marginRight: "10px"}}
-                            onChange={e => setUpdateBreedFee(e.target.value)}
-                            value={updateBreedFee}
-                        />
+                                <s.Container>
+                                {!loadingBreedFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingBreedFee ? 1: 0}
+                                    style={updateBreedFee > 0  && updateBreedFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
+                                    onClick={() => {
+                                        UpdateBreedFee(blockchain.account, blockchain.web3.utils.toWei(updateBreedFee, "ether"));
+                                        setUpdateBreedFee('');
+                                    }}
+                                >
+                                    Update
+                                </s.StyledButtonTransfer>
+                                }
+                                {loadingBreedFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingBreedFee ? 1: 0}
+                                    style={{pointerEvents: "none"}} 
+                                >
+                                    <s.StyledButtonLoading/>
+                                </s.StyledButtonTransfer>
+                                }
+                                </s.Container>
 
-                        <s.Container>
-                          {!loadingBreedFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingBreedFee ? 1: 0}
-                              style={updateBreedFee > 0  && updateBreedFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
-                              onClick={() => {
-                                UpdateBreedFee(blockchain.account, blockchain.web3.utils.toWei(updateBreedFee, "ether"));
-                                setUpdateBreedFee('');
-                              }}
-                          >
-                            Update
-                          </s.StyledButtonTransfer>
-                          }
-                          {loadingBreedFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingBreedFee ? 1: 0}
-                              style={{pointerEvents: "none"}} 
-                          >
-                            <s.StyledButtonLoading/>
-                          </s.StyledButtonTransfer>
-                          }
+                                </s.Container>
+                                {updateBreedFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
+                            </form>
+                        </s.BoxTab>
                         </s.Container>
+                    ): (null)}
+                    {/* sell */}
+                    {toggleStateUpdate === 4 ? (
+                        <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
+                        <s.BoxTab>
+                            <form style={{margin: "20px 0"}}>
+                                <s.TextSubTitleDetail>Enter the sell fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                                    <s.InputTransferNumber
+                                    required
+                                    placeholder={"Fee must be at least 1 wei"} 
+                                    style={{marginRight: "10px"}}
+                                    onChange={e => setUpdateSellFee(e.target.value)}
+                                    value={updateSellFee}
+                                />
 
-                        </s.Container>
-                        {updateMintFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
-                    </form>
-                    {/* sellFee */}
-                    <form style={{margin: "20px 0"}}>
-                        <s.TextSubTitleDetail>Enter the sell fee you want to change (ETH)</s.TextSubTitleDetail>
-                        <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                            <s.InputTransferNumber
-                            required
-                            placeholder={"Fee must be at least 1 wei"} 
-                            style={{marginRight: "10px"}}
-                            onChange={e => setUpdateSellFee(e.target.value)}
-                            value={updateSellFee}
-                        />
+                                <s.Container>
+                                {!loadingSellFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingSellFee ? 1: 0}
+                                    style={updateSellFee > 0  && updateSellFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
+                                    onClick={() => {
+                                        UpdateSellFee(blockchain.account, blockchain.web3.utils.toWei(updateSellFee, "ether"));
+                                        setUpdateSellFee('');
+                                    }}
+                                >
+                                    Update
+                                </s.StyledButtonTransfer>
+                                }
+                                {loadingSellFee &&
+                                <s.StyledButtonTransfer
+                                    disabled={loadingSellFee ? 1: 0}
+                                    style={{pointerEvents: "none"}} 
+                                >
+                                    <s.StyledButtonLoading/>
+                                </s.StyledButtonTransfer>
+                                }
+                                </s.Container>
 
-                        <s.Container>
-                          {!loadingSellFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingSellFee ? 1: 0}
-                              style={updateSellFee > 0  && updateSellFee < 10 ? {} : {pointerEvents: "none", opacity: "0.5"}}
-                              onClick={() => {
-                                UpdateSellFee(blockchain.account, blockchain.web3.utils.toWei(updateSellFee, "ether"));
-                                setUpdateSellFee('');
-                              }}
-                          >
-                            Update
-                          </s.StyledButtonTransfer>
-                          }
-                          {loadingSellFee &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingSellFee ? 1: 0}
-                              style={{pointerEvents: "none"}} 
-                          >
-                            <s.StyledButtonLoading/>
-                          </s.StyledButtonTransfer>
-                          }
+                                </s.Container>
+                                {updateSellFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
+                            </form>
+                        </s.BoxTab>
                         </s.Container>
-
-                        </s.Container>
-                        {updateMintFee > 10 ? (<s.TextDescription>fee is too big !</s.TextDescription>) : (null)}
-                    </form>
+                    ): (null)}
                   </s.ContainerHome> 
                 ) : (null)}
             </s.Container>
