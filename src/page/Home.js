@@ -23,6 +23,8 @@ const Home = () => {
     const name = "Magic Truffle";
     const nameFree = "Free Truffle";
 
+    // console.log(data.admin.toLowerCase() === blockchain.account)
+
     const confettiRef = useRef(null);
   
     const [currentPage, setCurrentPage] = useState(1);
@@ -116,6 +118,8 @@ const Home = () => {
       }
     }
     //Fee = 0.025
+    const mintFee = (data.mintFee / 1000000000000000000).toString();
+    
     const mintNFT = (_account,_name) => {
       setLoading(true);
       setLoadingShow(false);
@@ -123,7 +127,7 @@ const Home = () => {
         .createRandomTruffle(_name)
         .send({
           from: _account,
-          value: blockchain.web3.utils.toWei("0.025", "ether"),
+          value: blockchain.web3.utils.toWei(mintFee, "ether"),
         })
         .once("error", (err) => {
           setLoading(false);
@@ -298,7 +302,7 @@ const Home = () => {
                 <s.TextDescription
                   style={{pointerEvents: "none"}}
                 >
-                  Total truffle in game: {data.allTruffles.length}
+                  Total truffle in game: {data.allTruffles.length}/1000
                 </s.TextDescription>
               )}
             </>

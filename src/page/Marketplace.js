@@ -135,7 +135,6 @@ const Marketplace = () => {
     }
 
     const [priceList, setPriceList] = useState(data.allTruffles.filter(item => item.sell > 0));
-    console.log(priceList)
     //price list
     const sortByPrice = () => {
       const sorted = priceList.sort((a, b) => {
@@ -144,14 +143,17 @@ const Marketplace = () => {
       setPriceList(sorted);
     };
 
+    //sort
     useEffect(() => {
       sortByPrice()
     },)
 
+    //search
     const handleChange = (e) => {
       setSearchTerm(e.target.value)
     }
 
+    //find search id
     useEffect(() => {
       const results = data.allTruffles.filter(item =>
           item.id.includes(searchTerm)
@@ -159,6 +161,7 @@ const Marketplace = () => {
       setSearchResults(results);
     }, [data.allTruffles, searchTerm])
 
+    //update account
     useEffect(() => {
       if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
         dispatch(fetchData(blockchain.account));
@@ -297,15 +300,15 @@ const Marketplace = () => {
                   </s.ContainerHome> 
                 ) : (null)}
                 {/* toggle 4 */}
-                {toggleState === 4? (
+                {toggleState === 4 ? (
                   <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
-                    {data.allTruffles.filter(item => item.sell > 0).length === 0 ? (
+                    {data.allTruffles.length === 0 ? (
                       <s.Container flex={1} ai={"center"} jc={"center"}>
-                        <s.TextTitle>
-                          We can't find the items on Active.
+                        <s.TextTitle>                        
+                            There are currently no tokens for sale on the market
                         </s.TextTitle>
                         <s.TextSubTitleHome>
-                          try reloading the page !
+                            try reloading the page !
                         </s.TextSubTitleHome>
                         <s.SpacerSmall />
                       </s.Container>
@@ -319,6 +322,22 @@ const Marketplace = () => {
                           <s.TextTableName>Previous Owner</s.TextTableName>
                           <s.TextTableName>Time</s.TextTableName>
                         </s.StyledTableContent>
+                        {searchResults != null ? (
+                        <>  
+                         {searchResults.filter(item => item.sell > 0).map((item) => {
+                          return (
+                            <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
+                                <s.TextTableEvent>{item.id}</s.TextTableEvent>
+                                <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                                <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
+                                <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
+                                <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
+                            </s.StyledTableRow>
+                          )
+                        })}
+                        </>
+                        ) : (
+                        <>
                         {data.allTruffles.filter(item => item.sell > 0).map((item) => {
                           return (
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
@@ -330,6 +349,8 @@ const Marketplace = () => {
                             </s.StyledTableRow>
                           )
                         })}
+                        </>
+                        )}
                       </s.StyledTable>
                     </s.Container>
                     )}

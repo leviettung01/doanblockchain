@@ -25,6 +25,7 @@ const Breed = () => {
     const confettiRef = useRef(null);
 
     //Breed
+    const breedFee = (data.breedFee / 1000000000000000000).toString();
     const Breeding = (_account, _id, _targetId) => {
         setLoadingBreed(true);
         setLoadingShow(false);
@@ -32,7 +33,7 @@ const Breed = () => {
           .BreedAndMultiply(_id, _targetId)
           .send({
             from: _account,
-            value: blockchain.web3.utils.toWei("0.01", "ether"),
+            value: blockchain.web3.utils.toWei(breedFee, "ether"),
           })
         .once("error", (err) => {
         setLoadingBreed(false);

@@ -3,6 +3,11 @@ const initialState = {
   allTruffles: [],
   allOwnerTruffles: [],
   getAllIitemSell: [],
+  admin: "",
+  mintFee: 0,
+  levelUpFee: 0,
+  sellFee: 0,
+  breedFee: 0,
   error: false,
   errorMsg: "",
 };
@@ -21,6 +26,11 @@ const dataReducer = (state = initialState, action) => {
         allTruffles: action.payload.allTruffles,
         allOwnerTruffles: action.payload.allOwnerTruffles,
         getAllIitemSell: action.payload.getAllIitemSell,
+        admin: action.payload.admin,
+        mintFee: action.payload.mintFee,
+        levelUpFee: action.payload.levelUpFee,
+        sellFee: action.payload.sellFee,
+        breedFee: action.payload.breedFee,
       };
     case "CHECK_DATA_FAILED":
       return {

@@ -6,10 +6,12 @@ import { useEffect } from "react";
 import { fetchData } from "../../redux/data/dataActions"
 import { IoWalletOutline } from "react-icons/io5";
 import _logo from "../../assets/images/bg/_logo.png"
+import dataReducer from '../../redux/data/dataReducer';
 
 const Navbar = () => {
-  const blockchain = useSelector((state) => state.blockchain);
   const dispatch = useDispatch();
+  const blockchain = useSelector((state) => state.blockchain);
+  const data = useSelector((state) => state.data);
   const account = blockchain.account;
 
     useEffect(() => {
@@ -20,13 +22,19 @@ const Navbar = () => {
   
     // console.log(account);
     
-    const links = blockchain.account !== null
+    const links = account !== null
     ? (
       <>
         <NavLink to="/" exact activeStyle>My Truffle</NavLink>
         <NavLink to="/breed" activeStyle>Breed</NavLink>
         <NavLink to="/game" activeStyle>Game</NavLink>
         <NavLink to="/marketplace" activeStyle>Marketplace</NavLink>
+      </>
+    ) : null
+    const admin = account === data.admin.toLowerCase() 
+    ? (
+      <>
+        <NavLink to="/admin" activeStyle>Admin</NavLink>
       </>
     ) : null
 
@@ -38,6 +46,7 @@ const Navbar = () => {
       </NavLink>
       <Bars />
       <NavMenu>
+        {admin}
         {links}
         {blockchain.account !== null ? (
         <NavBtn>

@@ -45,11 +45,41 @@ export const fetchData = (account) => {
         .blockchain.truffleFactory.methods.getAllTruffleSell()
         .call();
 
+      let admin = await store
+        .getState()
+        .blockchain.truffleFactory.methods.admin()
+        .call();
+
+      let mintFee = await store
+      .getState()
+      .blockchain.truffleFactory.methods.getFee()
+      .call();
+
+      let levelUpFee = await store
+      .getState()
+      .blockchain.truffleFactory.methods.getleveUpFee()
+      .call();
+
+      let sellFee = await store
+      .getState()
+      .blockchain.truffleFactory.methods.getFeeSell()
+      .call();
+
+      let breedFee = await store
+      .getState()
+      .blockchain.truffleFactory.methods.getFeeBreed()
+      .call();
+
       dispatch(
         fetchDataSuccess({
           allTruffles,
           allOwnerTruffles,
-          getAllIitemSell
+          getAllIitemSell,
+          admin,
+          mintFee,
+          levelUpFee,
+          sellFee,
+          breedFee
         })
       );
     } catch (err) {

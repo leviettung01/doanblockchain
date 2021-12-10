@@ -19,6 +19,7 @@ contract TruffleFactory is ERC721, Ownable {
     uint256 sellFee = 0.001 ether;
     uint256 randNonce = 0;
     uint256 lostTime = 30 minutes;
+    uint256 quantilyLimit;
     uint32[3] public cooldowns = [
         uint32(12 hours),
         uint32(18 hours),
@@ -56,12 +57,16 @@ contract TruffleFactory is ERC721, Ownable {
         return fee;
     }
 
-    function FreeLeveUp() public view returns (uint256) {
+    function getleveUpFee() public view returns (uint256) {
         return levelUpFee;
     }
 
     function getFeeBreed() public view returns (uint256) {
         return breedFee;
+    }
+
+    function getFeeSell() public view returns (uint256) {
+        return sellFee;
     }
 
     function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
@@ -119,6 +124,8 @@ contract TruffleFactory is ERC721, Ownable {
             }
         }
         require(counter < 2);
+        quantilyLimit = _tokenIds.current();
+        require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
         uint256 newDna = randDna - (randDna % 100) + randMod(4) + 1;
         _createTruffle(_name, newDna, 0, 0);
@@ -134,6 +141,8 @@ contract TruffleFactory is ERC721, Ownable {
             }
         }
         require(counter < 4);
+        quantilyLimit = _tokenIds.current();
+        require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
         uint256 newDna = randDna - randDna % 100 + randMod(20) + 10;
         _createTruffle(_name, newDna, 0, 0);
@@ -168,12 +177,20 @@ contract TruffleFactory is ERC721, Ownable {
         return randomNum2 % _modulus;
     }
 
-    function updateFee(uint256 _fee) external onlyOwner {
+    function updateFee(uint256 _fee) external onlyOwner{
         fee = _fee;
     }
 
-    function updateFeeLevelUp(uint256 _feeLevelUp) external onlyOwner {
+    function updateFeeLevelUp(uint256 _feeLevelUp) external onlyOwner{
         levelUpFee = _feeLevelUp;
+    }
+
+    function updateFeeBreed(uint256 _feeBreed) external onlyOwner{
+        breedFee = _feeBreed;
+    }
+
+    function updateFeeSell(uint256 _feeSell) external onlyOwner{
+        sellFee = _feeSell;
     }
 
     function withdraw() external payable onlyOwner {

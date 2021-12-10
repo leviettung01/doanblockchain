@@ -144,6 +144,7 @@ const Details = () => {
     }
   };
 
+  const levelUpFee = (data.levelUpFee / 1000000000000000000).toString();
   // levelUpTruffle
   const levelUpTruffle = (_account, _id) => {
       setLoading(true);
@@ -152,7 +153,7 @@ const Details = () => {
         .levelUp(_id)
         .send({
         from: _account,
-        value: blockchain.web3.utils.toWei("0.001", "ether"),
+        value: blockchain.web3.utils.toWei(levelUpFee, "ether"),
       })
       .once("error", (err) => {
       setLoading(false);
@@ -167,6 +168,7 @@ const Details = () => {
   };
 
   //sell
+  const sellFee = (data.sellFee / 1000000000000000000).toString();
   const sellTruffle = (_account, _tokenId, _price) => {
     setLoadingTabSell(true);
     setLoadingShow(false);
@@ -174,7 +176,7 @@ const Details = () => {
       .allowBuy( _tokenId, _price)
       .send({
       from: _account,
-      value: blockchain.web3.utils.toWei("0.001","ether")
+      value: blockchain.web3.utils.toWei(sellFee,"ether")
     })
     .once("error", (err) => {
       setLoadingTabSell(false);
@@ -294,6 +296,7 @@ const Details = () => {
     });
   };
 
+  //update account
   useEffect(() => {
     if(id && id !== "") 
     dispatch(fetchData(blockchain.account))
