@@ -136,6 +136,7 @@ const Marketplace = () => {
 
     const [priceList, setPriceList] = useState(data.allTruffles.filter(item => item.sell > 0));
     //price list
+
     const sortByPrice = () => {
       const sorted = priceList.sort((a, b) => {
         return b.sell - a.sell;
@@ -143,9 +144,11 @@ const Marketplace = () => {
       setPriceList(sorted);
     };
 
+    console.log(priceList)
+
     //sort
     useEffect(() => {
-      sortByPrice()
+        sortByPrice()
     },)
 
     //search
@@ -204,7 +207,7 @@ const Marketplace = () => {
                       onChange={handleChange}
                     />
                 </s.ContainerTabBar>
-                {/* toggle 1 */}
+                {/* All  */}
                 {toggleState === 1 ? (
                   <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
                     {data.allTruffles.filter(item => item.sell > 0).length === 0 ? (
@@ -237,7 +240,7 @@ const Marketplace = () => {
                     )}
                   </s.ContainerHome> 
                 ) : (null)}
-                {/* toggle 2 */}
+                {/* my item */}
                 {toggleState === 2 ? (
                   <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
                     {data.allOwnerTruffles.filter(item => item.sell > 0).length === 0 ? (
@@ -266,7 +269,7 @@ const Marketplace = () => {
                     )}
                   </s.ContainerHome> 
                 ) : (null)}
-                {/* toggle 3 */}
+                {/*price > */}
                 {toggleState === 3 ? (
                   <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
                     {data.allTruffles.filter(item => item.sell > 0).length === 0 ? (
@@ -290,16 +293,12 @@ const Marketplace = () => {
                           maxPageNumberLimit={maxPageNumberLimit2}
                           minPageNumberLimit={minPageNumberLimit2}
                         />
-                        {searchResults != null ? (
-                          <RenderSell data={searchResults} blockchain={blockchain}/>
-                        ):(
                           <RenderSell data={priceList.slice(indexOfFirstItem2, indexOfLastItem2)} blockchain={blockchain}/>
-                        )}
                       </>
                     )}
                   </s.ContainerHome> 
                 ) : (null)}
-                {/* toggle 4 */}
+                {/* activity */}
                 {toggleState === 4 ? (
                   <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
                     {data.allTruffles.length === 0 ? (

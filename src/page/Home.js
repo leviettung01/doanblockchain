@@ -1,512 +1,211 @@
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { connect } from "../redux/blockchain/blockchainActions";
 import { fetchData } from "../redux/data/dataActions";
+import { connect } from "../redux/blockchain/blockchainActions";
 import * as s from "../styles/globalStyles";
-import _bg from "../assets/images/bg/_bg.png"
-import _reveal from "../assets/images/bg/reveal.png";
-import { CgAddR } from "react-icons/cg";
-import Confetti from 'react-confetti'
-import RenderSell from "../componets/RenderSell";
-import RenderAll from "../componets/RenderAll";
-import RenderStatus from "../componets/RenderStatus";
-import Pagination from "../componets/Pagination";
+import _bg from "../assets/images/bg/_bg.png";
+import _truffle from "../assets/images/bg/truffle.png";
+import _center from "../assets/images/bg/center.png";
+import _center1 from "../assets/images/bg/center1.png";
+import _m1 from "../assets/images/bg/m1.png";
+import _m2 from "../assets/images/bg/m2.png";
+import _m3 from "../assets/images/bg/m3.png";
+import _m4 from "../assets/images/bg/m4.png";
+import _m5 from "../assets/images/bg/m5.png";
+import _m6 from "../assets/images/bg/m6.png";
+import _m7 from "../assets/images/bg/m7.png";
+import _m8 from "../assets/images/bg/m8.png";
+import _m9 from "../assets/images/bg/m9.png";
+import _m10 from "../assets/images/bg/m10.png";
+import { NavLink as Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { FaFacebookSquare } from "react-icons/fa";
 
 const Home = () => {
     const dispatch = useDispatch();
     const blockchain = useSelector((state) => state.blockchain);
-    const data = useSelector((state) => state.data);
-    const [loading, setLoading] = useState(false);
-    const [loadingShow, setLoadingShow] = useState(false);
-    const [toggleState, setToggleState] = useState(1);
 
-    const name = "Magic Truffle";
-    const nameFree = "Free Truffle";
+    const [products] = useState([_m1, _m2, _m3, _m4, _m5, _m6, _m7, _m8, _m9, _m10]);
+    const [productIndex, setProductIndex] = useState(0);
 
-    // console.log(data.admin.toLowerCase() === blockchain.account)
+    let firstFourProducts = products.slice(productIndex, productIndex + 4);
 
-    const confettiRef = useRef(null);
-  
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageNumberLimit] = useState(5);
-    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
-    const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
-
-    //GetCurrentItems
-    const indexOfLastItem = currentPage * pageNumberLimit;
-    const indexOfFirstItem = indexOfLastItem - pageNumberLimit;
-    const currentItems = data.allOwnerTruffles.slice(indexOfFirstItem, indexOfLastItem);
-
-    //change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber); 
-
-    //NextPage
-    const handleNextbtn = () => {
-      setCurrentPage(currentPage + 1);
-      if(currentPage + 1 > maxPageNumberLimit) {
-        setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-        setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-      }
-    }
-
-    //PrevPage
-    const handlePrevbtn = () => {
-      setCurrentPage(currentPage - 1);
-      if((currentPage - 1) % pageNumberLimit === 0) {
-        setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-        setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-      }
-    }
-    //{state sell my truffle}
-    const [currentPage1, setCurrentPage1] = useState(1);
-    const [pageNumberLimit1] = useState(5);
-    const [maxPageNumberLimit1, setmaxPageNumberLimit1] = useState(5);
-    const [minPageNumberLimit1, setminPageNumberLimit1] = useState(0);
-
-    //GetCurrentItems
-    const indexOfLastItem1 = currentPage1 * pageNumberLimit1;
-    const indexOfFirstItem1 = indexOfLastItem1 - pageNumberLimit1;
-    const currentItemsSell = data.allOwnerTruffles.filter(item => item.sell > 0).slice(indexOfFirstItem1, indexOfLastItem1);
-    //change page
-    const paginate1 = (pageNumber) => setCurrentPage1(pageNumber); 
-
-    //NextPage
-    const handleNextbtn1 = () => {
-      setCurrentPage1(currentPage1 + 1);
-      if(currentPage1 + 1 > maxPageNumberLimit1) {
-        setmaxPageNumberLimit1(maxPageNumberLimit1 + pageNumberLimit1);
-        setminPageNumberLimit1(minPageNumberLimit1 + pageNumberLimit1);
-      }
-    }
-
-    //PrevPage
-    const handlePrevbtn1 = () => {
-      setCurrentPage1(currentPage1 - 1);
-      if((currentPage1 - 1) % pageNumberLimit1 === 0) {
-        setmaxPageNumberLimit1(maxPageNumberLimit1 - pageNumberLimit1);
-        setminPageNumberLimit1(minPageNumberLimit1 - pageNumberLimit1);
-      }
-    }
-    // {state price}
-    const [currentPage2, setCurrentPage2] = useState(1);
-    const [pageNumberLimit2] = useState(5);
-    const [maxPageNumberLimit2, setmaxPageNumberLimit2] = useState(5);
-    const [minPageNumberLimit2, setminPageNumberLimit2] = useState(0);
-
-    //GetCurrentItems
-    const indexOfLastItem2 = currentPage2 * pageNumberLimit2;
-    const indexOfFirstItem2 = indexOfLastItem2 - pageNumberLimit2;
-    const currentItemsStatus = data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).slice(indexOfFirstItem2, indexOfLastItem2);
-    //change page
-    const paginate2 = (pageNumber) => setCurrentPage2(pageNumber); 
-
-    //NextPage
-    const handleNextbtn2 = () => {
-      setCurrentPage2(currentPage2 + 1);
-      if(currentPage2 + 1 > maxPageNumberLimit2) {
-        setmaxPageNumberLimit2(maxPageNumberLimit2 + pageNumberLimit2);
-        setminPageNumberLimit2(minPageNumberLimit2 + pageNumberLimit2);
-      }
-    }
-
-    //PrevPage
-    const handlePrevbtn2 = () => {
-      setCurrentPage2(currentPage2 - 1);
-      if((currentPage2 - 1) % pageNumberLimit2 === 0) {
-        setmaxPageNumberLimit1(maxPageNumberLimit2 - pageNumberLimit2);
-        setminPageNumberLimit1(minPageNumberLimit2 - pageNumberLimit2);
-      }
-    }
-    //Fee = 0.025
-    const mintFee = (data.mintFee / 1000000000000000000).toString();
-    
-    const mintNFT = (_account,_name) => {
-      setLoading(true);
-      setLoadingShow(false);
-      blockchain.truffleFactory.methods
-        .createRandomTruffle(_name)
-        .send({
-          from: _account,
-          value: blockchain.web3.utils.toWei(mintFee, "ether"),
-        })
-        .once("error", (err) => {
-          setLoading(false);
-          console.log(err);
-        })
-        .then((receipt) => {
-          setLoading(false);
-          console.log(receipt);
-          dispatch(fetchData(blockchain.account));
-          setLoadingShow(true);
-        });
+    const nextProduct = () => {
+        const lastProductIndex = products.length - 1;
+        const resetProductIndex = productIndex === lastProductIndex;
+        const index = resetProductIndex ? 0 : productIndex + 1;
+        setProductIndex(index);
     };
-    // Fee = 0
-    const mintNFTFree = (_account,_name) => {
-      setLoading(true);
-      setLoadingShow(false);
-      blockchain.truffleFactory.methods
-        .createRandomTruffleFree(_name)
-        .send({
-          from: _account,
-        })
-        .once("error", (err) => {
-          setLoading(false);
-          console.log(err);
-        })
-        .then((receipt) => {
-          setLoading(false);
-          console.log(receipt);
-          dispatch(fetchData(blockchain.account));
-          setLoadingShow(true);
-        });
+    const prevProduct = () => {
+        const lastProductIndex = products.length - 1;
+        const resetProductIndex = productIndex === 0;
+        const index = resetProductIndex ? lastProductIndex : productIndex - 1;
+        setProductIndex(index);
     };
-
-    //toggleTab
-    const toggleTab = (index) => {
-      setToggleState(index);
-    }
 
     // update 
     useEffect(() => {
-        if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
-          dispatch(fetchData(blockchain.account));
-        }
+      if (blockchain.account !== "" && blockchain.truffleFactory !== null) {
+        dispatch(fetchData(blockchain.account));
+      }
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
 
     return (
-      <>
-      {/* handShow */}
-      <s.Containertoggle 
-      ref={confettiRef}
-      className={loadingShow === true ? "active-tab" : null}
-      >
-      <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-      />
-      <s.ImageToggle image={_reveal} />
-      <s.TextTitle>
-        Congratulations, you now own a Truffle. Click Close to return.
-      </s.TextTitle>
-      <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
-        <s.StyledButton
-          onClick={() => {
-            setLoadingShow(false);
-          }}
-        >
-          Close
-        </s.StyledButton>
-      </s.Container>
-      </s.Containertoggle>
-      
-      <s.Screen image={_bg} className={loadingShow === true ? "blur" : null} >
-        {blockchain.account === "" || blockchain.truffleFactory === null ? (
-          <s.Container flex={1} ai={"center"} jc={"center"}>
-            <s.BoxHome>
-              <s.TextTitleHome>Collectible.</s.TextTitleHome>
-              <s.TextTitleHome>Breedable.</s.TextTitleHome>
-              <s.TextTitleHome>Adorable.</s.TextTitleHome> 
-              <s.TextSubTitleHome>collect and breed digital truffles.</s.TextSubTitleHome>
-              <s.SpacerSmall />
-              <s.StyledButton 
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(connect());
-                }}
-              >
-                Start Collectible
-              </s.StyledButton>
-              <s.SpacerXSmall />
-              {blockchain.errorMsg !== "" ? (
-                <s.TextDescription>{blockchain.errorMsg}</s.TextDescription>
-              ) : null}
-            </s.BoxHome>
-          </s.Container>
-        ) : (
-        <s.Container jc={"center"} ai={"center"} style={{paddingTop: "3rem", marginTop: "4.5rem"}}>
-          <s.ContainerTabBar>
-            <s.MenuTabsHome>
-              <s.TabHome
-                className={toggleState === 1 ? "active-tab" : null}
-                onClick={() => toggleTab(1)}
-              >
-                All {toggleState === 1 ? '(' + data.allOwnerTruffles.length + ')' : null}
-              </s.TabHome>
-              <s.TabHome
-                className={toggleState === 2 ? "active-tab" : null}
-                onClick={() => toggleTab(2)}
-              >
-                On Sell {toggleState === 2 ? '(' + data.allOwnerTruffles.filter(item => item.sell > 0).length + ')' : null}
-              </s.TabHome>
-              <s.TabHome
-                className={toggleState === 3 ? "active-tab" : null}
-                onClick={() => toggleTab(3)}
-              >
-                Ready {toggleState === 3 ? '(' + data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).length + ')' : null}
-              </s.TabHome>
-            </s.MenuTabsHome>
-            {data.allOwnerTruffles.length < 2 ? (
-            <>
-              {/* //Free */}
-              {!loading &&
-                <s.StyledButtonHome
-                  disabled={loading ? 1 : 0}
-                  style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {}}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFTFree(blockchain.account, nameFree);
-                  }}
-                >
-                  <CgAddR style={{paddingRight: "10px"}}/> Free truffle ({data.allOwnerTruffles.length}/4)
-                </s.StyledButtonHome>
-                }
-                {loading &&
-                <s.StyledButtonHome
-                  style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {pointerEvents: "none"}}
-                  disabled={loading ? 1 : 0}
-                >
-                  <s.StyledButtonLoading />
-                </s.StyledButtonHome>
-              }
-            </>
-            ) : (
-            <>
-              {data.allOwnerTruffles.length < 4 ? (
-                <>
-                {/* Fee */}
-                {!loading &&
-                  <s.StyledButtonHome
-                    disabled={loading ? 1 : 0}
-                    style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {}}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      mintNFT(blockchain.account, name);
-                    }}
-                  >
-                    <CgAddR style={{paddingRight: "10px"}}/> New truffle ({data.allOwnerTruffles.length}/4)
-                  </s.StyledButtonHome>
-                  }
-                  {loading &&
-                  <s.StyledButtonHome
-                    style={data.allOwnerTruffles.length === 0 ? {display: "none"} : {pointerEvents: "none"}}
-                    disabled={loading ? 1 : 0}
-                  >
-                    <s.StyledButtonLoading />
-                  </s.StyledButtonHome>
-                }
-                </>
-              ):(
-                <s.TextDescription
-                  style={{pointerEvents: "none"}}
-                >
-                  Total truffle in game: {data.allTruffles.length}/1000
-                </s.TextDescription>
-              )}
-            </>
-            )}
-          </s.ContainerTabBar>
-          {toggleState === 1 ? (
-          <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
-            {data.allOwnerTruffles.length === 0 ? (
-              <s.Container flex={1} ai={"center"} jc={"center"}>
-                {/* Kiểm tra xem owner có sở hữu nấm hay không ? nếu có thì getAllTruffle */}
-                <s.TextTitle>
-                  Hi, Welcome to the Truffles game (beta version 1.0)
-                </s.TextTitle>
-                <s.TextSubTitleHome>
-                  We noticed that you do not have any Truffle to start with.
-                </s.TextSubTitleHome>
-                <s.TextSubTitleHome>
-                  Start by creating your first Truffle. Make sure you take good care of your Truffle by sending it to school.
-                </s.TextSubTitleHome>
-                <s.TextSubTitleHome>
-                  Click on the CREATE button below to generate a Truffle.
-                </s.TextSubTitleHome>
-                <s.TextSubTitleHome>
-                  (You get the first two free CREATE, but will limit some things)
-                </s.TextSubTitleHome>
-                <s.SpacerSmall />
-                {!loading &&
-                <s.StyledButton
-                  disabled={loading ? 1 : 0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFTFree(blockchain.account, nameFree);
-                  }}
-                >
-                  Create
-                </s.StyledButton>
-                }
-                {loading &&
-                <s.StyledButton
-                  style={{pointerEvents: "none"}}
-                  disabled={loading ? 1 : 0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFT(blockchain.account, name);
-                  }}
-                >
-                  <s.StyledButtonLoading />
-                </s.StyledButton>
-                }
-                <s.SpacerMedium />
-              </s.Container>
-            ) : (
-            <>
-            <Pagination 
-              pageNumberLimit={pageNumberLimit} 
-              totalItems={data.allOwnerTruffles.length} 
-              paginate={paginate} currentPage={currentPage} 
-              handleNextbtn={handleNextbtn}
-              handlePrevbtn={handlePrevbtn}
-              maxPageNumberLimit={maxPageNumberLimit}
-              minPageNumberLimit={minPageNumberLimit}
-            />
-            <RenderAll data={currentItems} loading={loading}/>
-            </>
-          )}
-          </s.ContainerHome> 
-        ) : (null)}
-        {/* toggle 2 */}
-        {toggleState === 2 ? (
-          <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
-          {data.allOwnerTruffles.length === 0 ? (
+    <>
+        <s.Screen image={_bg}>
             <s.Container flex={1} ai={"center"} jc={"center"}>
-              {/* Kiểm tra xem owner có sở hữu nấm hay không ? nếu có thì getAllTruffle */}
-              <s.TextTitle>
-                Hi, Welcome to the Truffles game (beta version 1.0)
-              </s.TextTitle>
-              <s.TextSubTitleHome>
-                We noticed that you do not have any Truffle to start with.
-              </s.TextSubTitleHome>
-              <s.TextSubTitleHome>
-                Start by creating your first Truffle. Make sure you take good care of your Truffle by sending it to school.
-              </s.TextSubTitleHome>
-              <s.TextSubTitleHome>
-                Click on the CREATE button below to generate a Truffle.
-              </s.TextSubTitleHome>
-              <s.SpacerSmall />
-              {!loading &&
-              <s.StyledButton
-                disabled={loading ? 1 : 0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  mintNFT(blockchain.account, name);
-                }}
-              >
-                Create
-              </s.StyledButton>
-              }
-              {loading &&
-              <s.StyledButton
-                style={{pointerEvents: "none"}}
-                disabled={loading ? 1 : 0}
-                onClick={(e) => {
-                  e.preventDefault();
-                  mintNFT(blockchain.account, name);
-                }}
-              >
-                <s.StyledButtonLoading />
-              </s.StyledButton>
-              }
-              <s.SpacerMedium />
+                <s.BoxHome>
+                    <s.TextTitleHome>Collectible.</s.TextTitleHome>
+                    <s.TextTitleHome>Breedable.</s.TextTitleHome>
+                    <s.TextTitleHome>Adorable.</s.TextTitleHome> 
+                    <s.TextSubTitleHome>collect and breed digital truffles.</s.TextSubTitleHome>
+                    <s.SpacerSmall />
+                    <s.StyledButton 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            dispatch(connect());
+                        }}
+                    >
+                        <NavLink to="/mytruffle" >
+                            Start Collectible
+                        </NavLink>
+                    </s.StyledButton>
+                    <s.SpacerXSmall />
+                    {blockchain.errorMsg !== "" ? (
+                    <s.TextDescription>{blockchain.errorMsg}</s.TextDescription>
+                    ) : null}
+                </s.BoxHome>
             </s.Container>
-          ) : (
-          <>
-            <Pagination 
-              pageNumberLimit={pageNumberLimit1} 
-              totalItems={data.allOwnerTruffles.filter(item => item.sell > 0).length} 
-              paginate={paginate1} 
-              currentPage={currentPage1} 
-              handleNextbtn={handleNextbtn1}
-              handlePrevbtn={handlePrevbtn1}
-              maxPageNumberLimit={maxPageNumberLimit1}
-              minPageNumberLimit={minPageNumberLimit1}
-            />
-            {data.allOwnerTruffles.filter(item => item.sell > 0).length ? (
-              <RenderSell data={currentItemsSell} blockchain={blockchain} loading={loading}/>
-            ) : (
-              <s.Container ai={"center"}>
-                <div style={{height: "422px", marginTop: "50px"}}>
-                  <s.TextTitle>
-                    No items on sale. 
-                  </s.TextTitle>
-                </div>
-              </s.Container>
-            )}
-          </>
-          )}    
-          </s.ContainerHome> 
-        ) : (null)}
-        {/* toggle 3 */}
-        {toggleState === 3 ? (
-          <s.ContainerHome jc={"center"} ai={"center"} style={{flexWrap: "wrap", margin: "27px "}}>
-            {data.allOwnerTruffles.length === 0 ? (
-              <s.Container flex={1} ai={"center"} jc={"center"}>
-                {/* Kiểm tra xem owner có sở hữu nấm hay không ? nếu có thì getAllTruffle */}
-                <s.TextTitle>
-                  Hi, Welcome to the Truffles game (beta version 1.0)
-                </s.TextTitle>
-                <s.TextSubTitleHome>
-                  We noticed that you do not have any Truffle to start with.
-                </s.TextSubTitleHome>
-                <s.TextSubTitleHome>
-                  Start by creating your first Truffle. Make sure you take good care of your Truffle by sending it to school.
-                </s.TextSubTitleHome>
-                <s.TextSubTitleHome>
-                  Click on the CREATE button below to generate a Truffle.
-                </s.TextSubTitleHome>
-                <s.SpacerSmall />
-                {!loading &&
-                <s.StyledButton
-                  disabled={loading ? 1 : 0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFT(blockchain.account, name);
-                  }}
-                >
-                  Create
-                </s.StyledButton>
-                }
-                {loading &&
-                <s.StyledButton
-                  style={{pointerEvents: "none"}}
-                  disabled={loading ? 1 : 0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    mintNFT(blockchain.account, name);
-                  }}
-                >
-                  <s.StyledButtonLoading />
-                </s.StyledButton>
-                }
-                <s.SpacerMedium />
-              </s.Container>
-            ) : (
-            <>
-              <Pagination 
-                pageNumberLimit={pageNumberLimit2} 
-                totalItems={data.allOwnerTruffles.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).length} 
-                paginate={paginate2} 
-                currentPage={currentPage2} 
-                handleNextbtn={handleNextbtn2}
-                handlePrevbtn={handlePrevbtn2}
-                maxPageNumberLimit={maxPageNumberLimit2}
-                minPageNumberLimit={minPageNumberLimit2}
-              />
-              <RenderStatus data={currentItemsStatus} loading={loading}/>
-            </>
-          )}
-          </s.ContainerHome> 
-        ) : (null)}
-        </s.Container>
-        )}
-      </s.Screen>
-      </>
-    );
+            <s.Container ai={"center"}>
+                <s.ContainerHomeBox fd={"row"} jc={"space-around"} ai={"center"}>
+                    <s.BoxViewHome>
+                        <s.TextTitleHome>9,200</s.TextTitleHome>
+                        <s.TextTitle>Unique Editions</s.TextTitle>
+                    </s.BoxViewHome>
+                    <s.BoxViewHome>
+                        <s.TextTitleHome>140+</s.TextTitleHome>
+                        <s.TextTitle>Truffle Attributes</s.TextTitle>
+                    </s.BoxViewHome>
+                    <s.BoxViewHome>
+                        <s.TextTitleHome>10,000+</s.TextTitleHome>
+                        <s.TextTitle>Total Following</s.TextTitle>
+                    </s.BoxViewHome>
+                </s.ContainerHomeBox>
+            </s.Container>
+        </s.Screen>
+
+        <s.ContainerBoxHome test ai={"center"} style={{paddingTop: "2rem"}}>
+            <s.Container ai={"center"}>
+                <s.ImageToggleHome image={_truffle}/>
+            </s.Container>
+            <s.ContainerBoxHomev2 fd={"row"}ai={"center"} jc={"space-between"} style={{marginTop: "7rem"}}>
+                <s.TextBoxRight>
+                    <s.TextTitleHomev2>The Friendliest Troop on the Ethereum Blockchain</s.TextTitleHomev2>
+                    <s.TextSubTitleHomev2>Spawning a community of eternal wisdom. A sense of oneness flourishing everywhere in our discord. 
+                        The Magic Truffle Clubhouse is a collection of 9,200 AI-generated collectibles exploring the Ethereum Blockchain.
+                    </s.TextSubTitleHomev2>
+                    <s.StyledButtonv2 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            dispatch(connect());
+                        }}
+                    >
+                        <NavLink to="/mytruffle" >
+                            Buy Now
+                        </NavLink>
+                    </s.StyledButtonv2>
+                </s.TextBoxRight>
+                    <s.ImageToggleHomev2 image={_center}/>
+            </s.ContainerBoxHomev2>
+
+            <s.ContainerBoxHomev2 fd={"row"} ai={"center"} jc={"space-between"} style={{margin: "10rem 0"}}>
+                <s.TextBoxRight>
+                    <s.TextTitleHomev2>The Story</s.TextTitleHomev2>
+                    <s.TextSubTitleHomev2>A group of friends went camping in the Magic Forest to see what secrets they could uncover. 
+                        The glow of the full moon drew their attention to a field of colorful truffle under a canopy of trees. 
+                        They ate the deliciously colored truffle and were instantly transported from the Magic Forest to a new realm, 
+                        the biotic metaverse. The friends found the truffle held magical properties as they took a look at each other 
+                        and realized their bodies had slowly morphed into truffle - thus creating the Magic Truffle Clubhouse. 
+                        They now embark on adventures to spread the ancient powers of truffle, discover the secrets of their ancestors 
+                        and help others along the way!
+                    </s.TextSubTitleHomev2>
+                </s.TextBoxRight>
+                    <s.ImageToggleHomev3 image={_center1}/>
+            </s.ContainerBoxHomev2>
+
+            <s.ContainerBoxHomev2 fd={"row"} ai={"flex-end"} jc={"space-between"} style={{marginTop: "3rem"}}>
+                <s.TextBoxRight>
+                    <s.TextTitleHomev2>Featured Collection</s.TextTitleHomev2>
+                    <s.TextSubTitleHomev2>The Magic Truffle Clubhouse is a collection of 9,200 
+                        uniquely generated NFTs who were transported through the magic forest into the blockchain.
+                    </s.TextSubTitleHomev2>
+                </s.TextBoxRight>
+                <s.TextBoxLeft>
+                    <s.StyledButton 
+                        onClick={prevProduct}
+                        style={{marginRight: "1rem"}}
+                    >
+                        Prev
+                    </s.StyledButton>
+                    <s.StyledButton
+                        onClick={nextProduct}
+                    >
+                        Next
+                    </s.StyledButton>
+                </s.TextBoxLeft>
+            </s.ContainerBoxHomev2>
+
+
+            <s.ContainerBoxHomev2 fd={"row"} ai={"center"} jc={"center"} style={{margin: "3rem 0 10rem 0"}}>
+                   {firstFourProducts.map(item => 
+                        (<s.ImageToggleRenderv2 image={item}/>)
+                    )}     
+            </s.ContainerBoxHomev2> 
+
+            <s.ContainerBoxHomev3 ai={"center"}>
+                <s.ContainerBoxHomev2 fd={"row"} ai={"center"} jc={"space-between"}>
+                    <s.TextBoxRight>
+                        <s.TextTitleHomev2>Join The Magic Truffle Clubhouse</s.TextTitleHomev2>
+                        <s.TextSubTitleHomev2>Don't miss out on our limited collection of Magic Mushroom NFT's.</s.TextSubTitleHomev2>
+                    </s.TextBoxRight>
+                    <s.Container>
+                        <NavLink 
+                            style={{marginBottom: "10px"}}
+                            to={{ pathname: "https://www.facebook.com/mn.HoangEt" }} 
+                            target="_blank"
+                        >
+                            <s.StyledButtonActionv2>
+                                Contact Hoàng <FaFacebookSquare style={{marginLeft: "15px"}}/>
+                            </s.StyledButtonActionv2>
+                        </NavLink>
+                        <NavLink 
+                            to={{ pathname: "https://www.facebook.com/haj.pham.313" }} 
+                            target="_blank"
+                        >
+                            <s.StyledButtonActionv2>
+                                Contact Hải<FaFacebookSquare style={{marginLeft: "15px"}}/>
+                            </s.StyledButtonActionv2>
+                        </NavLink>
+                    </s.Container>
+                </s.ContainerBoxHomev2>
+            </s.ContainerBoxHomev3>
+        </s.ContainerBoxHome>                      
+    </>
+    )
 }
 
-export default Home;
+export const NavLink = styled(Link)`
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: #000000;
+  }
+`;
+
+export default Home

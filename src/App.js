@@ -2,11 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './componets/Navbar/index';
 import Home from './page/Home';
-import Marketplace from './page/Marketplace';
+import Mytruffle from "./page/Mytruffle";
 import Breed from './page/Breed';
-import Details from './page/Details';
+import Marketplace from './page/Marketplace';
 import Game from './page/Game';
 import Admin from "./page/Admin";
+import Details from './page/Details';
 import Footer from './componets/Footer';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Navbar />
     <Switch>
       <Route path='/' exact component={Home} />
+      <Route path='/mytruffle' component={Mytruffle} />
       <Route path='/breed' component={Breed} />
       <Route path='/marketplace' component={Marketplace} />
       <Route path='/game' component={Game} />

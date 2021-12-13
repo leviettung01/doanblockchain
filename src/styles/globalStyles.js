@@ -15,7 +15,7 @@ export const Screen = styled.div`
   z-index: 1;
 
   &.blur {
-    filter: blur(4px);
+    filter: blur(2px);
   }
 `;
 
@@ -27,12 +27,46 @@ export const ImageToggle = styled.div`
   height: 100px;
 `;
 
+export const ImageToggleHome = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 76%;
+  height: 400px;
+  opacity: 0.8;
+`;
+
+export const ImageToggleHomev2 = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 500px;
+  height: 500px;
+`;
+
+export const ImageToggleHomev3 = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 540px;
+  height: 630px;
+`;
+
 export const ImageToggleRender = styled.div`
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
   background-position: center;
   width: 200px;
   height: 200px;
+`;
+
+export const ImageToggleRenderv2 = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 255px;
+  height: 255px;
+  margin-right: 1.5rem;
 `;
 
 export const ImageToggleBreed = styled.div`
@@ -116,7 +150,7 @@ export const Containertoggle = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  z-index: 4;
   visibility: hidden;
   box-shadow: 2rem 0.5rem 2rem 1rem rgba(0, 0, 0, 0.3);
   
@@ -200,6 +234,64 @@ export const ContainerHome = styled.div`
   border-radius: 0.8rem;
 `;
 
+export const ContainerBoxHome = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#1A1A22" : "none")};
+  width: 100%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+`;
+
+export const ContainerBoxHomev2 = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#1A1A22" : "none")};
+  width: 70%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  transition: ease-in-out;
+`;
+
+export const ContainerBoxHomev3 = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#1A1A22" : "none")};
+  width: 100%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(255, 255, 255, 0.3)
+`;
+
+export const ContainerHomeBox = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : 0)};
+  flex-direction: ${({ fd }) => (fd ? fd : "column")};
+  justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
+  align-items: ${({ ai }) => (ai ? ai : "flex-start")};
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  width: 70%;
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+`;
+
 export const ContainerHomeProp = styled.div`
   display: flex;
   flex: ${({ flex }) => (flex ? flex : 0)};
@@ -226,6 +318,19 @@ export const Containerfooter = styled.div`
   background-position: center;
   box-sizing: border-box;
 `;
+
+export const BoxViewHome = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ test }) => (test ? "#373943" : "none")};
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+`;
+
 
 export const BoxHome = styled.div`
   display: flex;
@@ -355,6 +460,52 @@ export const StyledButtonAction = styled.button`
   align-items: center;
 `;
 
+export const StyledButtonActionv2 = styled.button`
+  width: 100%;
+  height: 50px;
+  border-radius: 0.4rem;
+  padding: 0 20px;
+  border: 1px solid #fff;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-family-Rubik);
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  border: 1px solid rgb(254, 22, 229);
+  background-color: rgb(254, 22, 229, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #fff;
+    background: #fff;
+    color: #000000;
+  }
+`;
+
+export const StyledButtonHomev2 = styled.button`
+  width: 30%;
+  height: 45px;
+  border-radius: 0.4rem;
+  border: 1px solid #fff;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-family-Rubik);
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+  border: 1px solid rgb(254, 22, 229);
+  background-color: rgb(254, 22, 229, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StyledButtonActionDetails = styled.button`
   width: auto;
   height: 45px;
@@ -464,6 +615,17 @@ export const BoxTab = styled.div`
   width: 50%;
 `;
 
+export const TextBoxRight = styled.div`
+  display: inline-block;  
+  width: 30%;
+`;
+
+export const TextBoxLeft = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 40%;
+`;
+
 export const BoxTimerCouter = styled.div`
   display: flex;
   justify-content: center;
@@ -548,11 +710,32 @@ export const TextTitleHome = styled.p`
   line-height: 0px;
 `;
 
+export const TextTitleHomev2 = styled.p`
+  color: #ffffff;
+  font-size: 29px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  font-family: var(--font-family-Sora);
+`;
+
 export const TextSubTitleHome = styled.p`
   color: rgb(255, 255, 255, 0.6);
   font-size: 18px;
   font-weight: 400;
   line-height: 2px;
+`;
+
+export const TextSubTitleHomev2 = styled.p`
+  color: rgb(255, 255, 255, 1);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+`;
+
+export const TextSubTitleHomev3 = styled.p`
+  color: rgb(255, 255, 255, 1);
+  font-size: 18px;
+  font-weight: 600;
 `;
 
 export const StyledButton = styled.span`
@@ -561,7 +744,34 @@ export const StyledButton = styled.span`
   align-items: center;
   border-radius: 0.4rem;
   height: 44px;
-  width: 15%;
+  width: 17%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  font-family: var( --font-family-Sora);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  border: 1px solid rgb(254, 22, 229);  
+  background-color: rgb(254, 22, 229, 0.2);
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #fff;
+    background: #fff;
+    color: #000000;
+  }
+`;
+
+export const StyledButtonv2 = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  height: 44px;
+  width: 40%;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -920,6 +1130,7 @@ export const TextTableEvent = styled.td`
 `;
 
 export const StyledTableRow = styled.tr`
+
   &:hover {
     cursor: pointer;
     background-color: rgb(254, 22, 229, 0.2);

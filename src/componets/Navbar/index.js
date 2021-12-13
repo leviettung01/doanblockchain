@@ -6,13 +6,13 @@ import { useEffect } from "react";
 import { fetchData } from "../../redux/data/dataActions"
 import { IoWalletOutline } from "react-icons/io5";
 import _logo from "../../assets/images/bg/_logo.png"
-import dataReducer from '../../redux/data/dataReducer';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
   const account = blockchain.account;
+  const isAdmin = blockchain.account === data.admin.toLowerCase();
 
     useEffect(() => {
       if (account !== "" && account !== null) {
@@ -20,28 +20,26 @@ const Navbar = () => {
       }
     }, [account, dispatch]);
   
-    // console.log(account);
-    
+    // only show nav links if there is a connected account
     const links = account !== null
     ? (
       <>
-        <NavLink to="/" exact activeStyle>My Truffle</NavLink>
+        <NavLink to="/" exact activeStyle>Home</NavLink>
+        <NavLink to="/mytruffle" activeStyle>My Truffle</NavLink>
         <NavLink to="/breed" activeStyle>Breed</NavLink>
         <NavLink to="/game" activeStyle>Game</NavLink>
         <NavLink to="/marketplace" activeStyle>Marketplace</NavLink>
       </>
     ) : null
-    const admin = account === data.admin.toLowerCase() 
+    // only show nav links if there is admin
+    const admin = isAdmin
     ? (
-      <>
         <NavLink to="/admin" activeStyle>Admin</NavLink>
-      </>
     ) : null
 
   return (
-    <>
     <Nav>
-      <NavLink to='/' exact>
+      <NavLink to='/'>
         <img src={_logo} alt="Logo" style={{height: "110px", backgroundSize: "cover", backgroundPosition: "cover"}} />
       </NavLink>
       <Bars />
@@ -51,7 +49,7 @@ const Navbar = () => {
         {blockchain.account !== null ? (
         <NavBtn>
           <NavBtnLink 
-            to="/"
+            to="/mytruffle"
             style={{pointerEvents: "none"}}
             onClick={(e) => {
               e.preventDefault();
@@ -64,7 +62,7 @@ const Navbar = () => {
         </NavBtn>
         ) : (
         <NavBtn>
-          <NavBtnLink to='/'  
+          <NavBtnLink to='/mytruffle'  
             onClick={(e) => {
               e.preventDefault();
               dispatch(connect());
@@ -76,7 +74,6 @@ const Navbar = () => {
         )}
       </NavMenu>
     </Nav>
-  </>
   );
 }
 

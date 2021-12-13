@@ -320,15 +320,15 @@ const Details = () => {
         width={1900}
     />
     <s.TextTitle>
-      Successful transfer of token ID:{id} to <span color={"#fe16e7"}>{data.allTruffles.filter(item => item.id === id).map(result => result.currentOwner)}</span>
-      , click Go Home go back home.
+      Successful transfer of truffleID <span style={{color: "#fe16e7", opacity: "0.6"}}>{id}</span> to <span style={{color: "#fe16e7", opacity: "0.6"}} >{data.allTruffles.filter(item => item.id === id).map(result => result.currentOwner)}</span>
+      , click Go home go back home.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
             style={{marginRight: "15px"}}
-            onClick={() => { history.push("/")}}
+            onClick={() => { history.push("/mytruffle")}}
         >
-            Go Home
+            Go home
         </s.StyledButton>
     </s.Container>
     </s.Containertoggle>
@@ -401,7 +401,7 @@ const Details = () => {
         width={1900}
     />
     <s.TextTitle>
-    Update Price successful. Click Close to return.
+      Update Price successful. Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButtonBreedShow
@@ -481,7 +481,7 @@ const Details = () => {
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
             style={{marginRight: "15px"}}
-            onClick={() => { history.push("/")}}
+            onClick={() => { history.push("/mytruffle")}}
         >
             Go to
         </s.StyledButton>
@@ -494,7 +494,7 @@ const Details = () => {
         </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
-      <s.Screen image={_color}>
+      <s.Screen image={_color} >
         {data.allTruffles.filter(item => item.id === id ).map((item)  => (
           <s.Container 
             key={item.id} 
@@ -507,7 +507,7 @@ const Details = () => {
                 Truffles ID: {item.id}
               </s.TextDescriptionDetail>
               <s.StyledButtonBack
-                onClick={() => history.push("/")}
+                onClick={() => history.push("/mytruffle")}
               >
                 <BiArrowBack style={{marginRight: "10px"}}/>
                 Back
@@ -555,16 +555,17 @@ const Details = () => {
                       >
                         Breed
                       </s.StyledButtonAction>
+                    {/* uplevel */}
                     {!loading &&
                     <s.StyledButtonAction 
                       disabled={loading ? 1: 0}
-                      style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
+                      style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0 && item.level < 20 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
                       onClick={(e) => {
                         e.preventDefault();
                         levelUpTruffle(blockchain.account, item.id);
                       }}
                     >
-                      Level Up
+                      {item.level < 20 ? 'Level Up' : 'Level Max'}
                     </s.StyledButtonAction>
                     }
                     {loading && 
@@ -702,39 +703,49 @@ const Details = () => {
                   <s.BoxTab>
                     {data.allOwnerTruffles.filter(item => item.id === id ).map(result => result.sell) <= 0 ? (
                       <form>
-                        <s.TextSubTitleDetail>Enter the amount you want to sell (ETH)</s.TextSubTitleDetail>
-                        <s.Container fd={"row"} ai={"center"} jc={"center"}>
-                          <s.InputTransferNumber
-                            required
-                            placeholder={"Price must be at least 1 wei"} 
-                            style={{marginRight: "10px"}}
-                            onChange={e => setSell(e.target.value)}
-                            value={sell}
-                          />
-                        <s.Container>
-                          {!loadingTabSell &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingTabSell ? 1: 0}
-                              style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && sell > 0 && sell <= 99 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
-                              onClick={() => {
-                                sellTruffle(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
-                                setSell('');
-                              }}
-                          >
-                            Sell
-                          </s.StyledButtonTransfer>
-                          }
-                          {loadingTabSell &&
-                          <s.StyledButtonTransfer
-                              disabled={loadingTabSell ? 1: 0}
-                              style={{pointerEvents: "none"}} 
-                          >
-                            <s.StyledButtonLoading/>
-                          </s.StyledButtonTransfer>
-                          }
-                        </s.Container>
-                        </s.Container>
-                        {sell > 99 ? (<s.TextDescription>Value exceeds the allowable limit !</s.TextDescription>) : (null)}
+                        {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) >= 10 ? (
+                          <>
+                          <s.TextSubTitleDetail>Enter the amount you want to sell (ETH)</s.TextSubTitleDetail>
+                          <s.Container fd={"row"} ai={"center"} jc={"center"}>
+                            <s.InputTransferNumber
+                              required
+                              placeholder={"Price must be at least 1 wei"} 
+                              style={{marginRight: "10px"}}
+                              onChange={e => setSell(e.target.value)}
+                              value={sell}
+                            />
+                            <s.Container>
+                              {!loadingTabSell &&
+                              <s.StyledButtonTransfer
+                                  disabled={loadingTabSell ? 1: 0}
+                                  style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && sell > 0 && sell <= 99 ? {} : {pointerEvents: "none", opacity: "0.5"}} 
+                                  onClick={() => {
+                                    sellTruffle(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
+                                    setSell('');
+                                  }}
+                              >
+                                Sell
+                              </s.StyledButtonTransfer>
+                              }
+                              {loadingTabSell &&
+                              <s.StyledButtonTransfer
+                                  disabled={loadingTabSell ? 1: 0}
+                                  style={{pointerEvents: "none"}} 
+                              >
+                                <s.StyledButtonLoading/>
+                              </s.StyledButtonTransfer>
+                              }
+                            </s.Container>
+                          </s.Container>
+                          {sell > 99 ? (<s.TextDescription>Value exceeds the allowable limit !</s.TextDescription>) : (null)}
+                          </>
+                        ) : (
+                          <s.Container ai={"center"}>
+                            <s.TextTitle>
+                              Require rarity ≥ 10
+                            </s.TextTitle>
+                          </s.Container>
+                        )}
                       </form>
                     ) : (
                       <form>
@@ -778,7 +789,7 @@ const Details = () => {
                 <s.Container  flex={1} fd={"column"} ai={"center"}  style={{margin: "6rem 0 3rem 0"}}>
                   <s.BoxTab>
                     <from>
-                      <s.TextSubTitleDetail>Change this truffle name</s.TextSubTitleDetail>
+                      <s.TextSubTitleDetail>Change this truffle name (Requires level ≥ 2)</s.TextSubTitleDetail>
                       <s.Container  fd={"row"} ai={"center"} jc={"center"}>
                         <s.InputTransfer 
                           required
@@ -819,38 +830,46 @@ const Details = () => {
                 <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                   <s.BoxTab>
                     <form>
-                      <s.TextSubTitleDetail>Transfer this Truffle to someone</s.TextSubTitleDetail>
-                      <s.Container  fd={"row"} ai={"center"} jc={"center"}>
-                        <s.InputTransfer 
-                          required
-                          placeholder={"0x92Da0E5C9D58AcCDCA6E280a2F632B23D9aA0705"} 
-                          style={{marginRight: "10px"}}
-                          value={transfer}
-                          onChange={(e) => 
-                            setTransfer(e.target.value)}
-                        />
-                        {!loadingTabTransfer &&
-                        <s.StyledButtonTransfer
-                          disabled={loadingTabTransfer ? 1: 0}
-                          style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0  && transfer.length > 0 && transfer.length <= 42 ? {marginRight: "5px"} : {marginRight: "5px", pointerEvents: "none", opacity: "0.5"}} 
-                          onClick={() => {
-                            transferToken(blockchain.account, blockchain.account, transfer, item.id);
-                            setTransfer('');
-                          }}
-                        >
-                          Transfer
-                        </s.StyledButtonTransfer>
-                        }
-                        {loadingTabTransfer &&
-                        <s.StyledButtonTransfer
-                          disabled={loadingTabTransfer ? 1: 0}
-                          style={{pointerEvents: "none"}} 
-                        >
-                          <s.StyledButtonLoading/>
-                        </s.StyledButtonTransfer>
-                        }
-                      </s.Container>
-                      {transfer.length > 42 ? (<s.TextDescription>wallet address does not exist !</s.TextDescription>) : (null)}
+                      {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) >= 10 ? (
+                      <>
+                        <s.TextSubTitleDetail>Transfer this Truffle to someone</s.TextSubTitleDetail>
+                        <s.Container  fd={"row"} ai={"center"} jc={"center"}>
+                          <s.InputTransfer 
+                            required
+                            placeholder={"0x92Da0E5C9D58AcCDCA6E280a2F632B23D9aA0705"} 
+                            style={{marginRight: "10px"}}
+                            value={transfer}
+                            onChange={(e) => 
+                              setTransfer(e.target.value)}
+                          />
+                          {!loadingTabTransfer &&
+                          <s.StyledButtonTransfer
+                            disabled={loadingTabTransfer ? 1: 0}
+                            style={parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && item.sell <= 0  && transfer.length > 0 && transfer.length <= 42 ? {marginRight: "5px"} : {marginRight: "5px", pointerEvents: "none", opacity: "0.5"}} 
+                            onClick={() => {
+                              transferToken(blockchain.account, blockchain.account, transfer, item.id);
+                              setTransfer('');
+                            }}
+                          >
+                            Transfer
+                          </s.StyledButtonTransfer>
+                          }
+                          {loadingTabTransfer &&
+                          <s.StyledButtonTransfer
+                            disabled={loadingTabTransfer ? 1: 0}
+                            style={{pointerEvents: "none"}} 
+                          >
+                            <s.StyledButtonLoading/>
+                          </s.StyledButtonTransfer>
+                          }
+                        </s.Container>
+                        {transfer.length > 42 ? (<s.TextDescription>wallet address does not exist !</s.TextDescription>) : (null)}
+                      </>
+                      ) : (
+                        <s.Container ai={"center"}>
+                          <s.TextTitle>Require rarity ≥ 10</s.TextTitle>
+                        </s.Container>
+                      ) }
                     </form>
                   </s.BoxTab>
                 </s.Container>

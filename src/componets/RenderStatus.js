@@ -17,10 +17,10 @@ const RenderStatus = ({data, loading}) => {
         </s.Container>
       )
     }
-
+    // console.log(data.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0) && data.filter(item => item.sell <= 0))
     return (
       <s.Container jc={"flex-start"} fd={"row"} style={{flexWrap: "wrap"}}>
-        {data.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map(item => ( 
+        {data.filter(item => parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0) && data.filter(item => item.sell <= 0).map(item => ( 
             <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
               <s.StyledImg>
                 <Link to={`/details/${item.id}`} >

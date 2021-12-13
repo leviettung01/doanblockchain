@@ -70,7 +70,7 @@ const Game = () => {
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
             style={{marginRight: "15px"}}
-            onClick={() => { history.push("/")}}
+            onClick={() => { history.push("/mytruffle")}}
         >
             Go to
         </s.StyledButton>
@@ -99,15 +99,17 @@ const Game = () => {
                   the community that there was more to this realm.</s.TextDescriptionGame>
               </s.ContainerGame>
               <s.ContentBreed jc={"center"} ai={"center"}>
-                {/* itemBreed */}
-                <s.TextSubTitle>Choose an item to get started</s.TextSubTitle>
+                {/* itemGame */}
+                <s.TextSubTitle>Choose a item to get started</s.TextSubTitle>
                 <s.CustomSelect 
-                    onChange={e => setItemCamp(e.target.value)}
+                    onClick={e => setItemCamp(e.target.value)}
                 >
-                {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
-                    <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
-                )}
+                  {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
+                      <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
+                  )}
                 </s.CustomSelect>
+
+                {console.log(itemCamp)}
                 {itemCamp !== undefined ? (
                 <>
                 {data.allOwnerTruffles.filter(item => item.id === itemCamp).map((item)  => (
@@ -168,9 +170,12 @@ const Game = () => {
               </s.ContentBreed >
             </s.Container>
             <s.ContainerRarityGame ai={"center"}>
-                <s.TextTitleHome>Level up</s.TextTitleHome>
-              <s.TextTitleDetails>Success rate depends on rarity</s.TextTitleDetails>
-              <s.TextTitleDetails>The higher the level, the shorter the cooldown</s.TextTitleDetails>
+                <s.TextTitleHome>Camping</s.TextTitleHome>
+              <s.Container ai={"flex-start"}>
+                <s.TextTitleDetails>Success rate depends on Rarity.</s.TextTitleDetails>
+                <s.TextTitleDetails>The higher the Level, the shorter the cooldown.</s.TextTitleDetails>
+                <s.TextTitleDetails>If the max level level (20), start increasing Rarity.</s.TextTitleDetails>
+              </s.Container>
               <s.StyledTable>
                   <s.StyledTableContent>
                     <s.TextTableName>Rarity</s.TextTableName>
@@ -179,7 +184,7 @@ const Game = () => {
                     <s.TextTableName>Rate</s.TextTableName>
                   </s.StyledTableContent>
                     <tr >
-                      <s.TextTableEvent>{'<= 10'}</s.TextTableEvent>
+                      <s.TextTableEvent>{'≤ 10'}</s.TextTableEvent>
                       <s.TextTableEvent>{'+ 1'}</s.TextTableEvent>
                       <s.TextTableEvent>{'24h'}</s.TextTableEvent>
                       <s.TextTableEvent>{'20%'}</s.TextTableEvent>

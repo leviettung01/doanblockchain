@@ -127,20 +127,13 @@ contract TruffleFactory is ERC721, Ownable {
         quantilyLimit = _tokenIds.current();
         require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
-        uint256 newDna = randDna - (randDna % 100) + randMod(4) + 1;
+        uint256 newDna = randDna - (randDna % 100) + randMod(5) + 1;
         _createTruffle(_name, newDna, 0, 0);
     }
 
     function createRandomTruffle(string memory _name) public payable{
         require(msg.sender != address(0));
         require(msg.value >= fee);
-        uint256 counter = 0;
-        for (uint256 i = 0; i < truffles.length; i++) {
-            if (ownerOf(i) == msg.sender) {
-                counter++;
-            }
-        }
-        require(counter < 4);
         quantilyLimit = _tokenIds.current();
         require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
@@ -280,8 +273,8 @@ contract TruffleFactory is ERC721, Ownable {
         uint8 dadId = uint8(myTruffle.id);
         uint8 mumId = uint8(myTargetDna.id);
 
-        uint8 valueRarity = uint8(myTruffle.dna % 100);
-        uint8 valueRarity2 = uint8(myTargetDna.dna % 100);
+        uint8 valueRarity = uint8(myTruffle.rarity);
+        uint8 valueRarity2 = uint8(myTargetDna.rarity);
         uint8 valueRarity3 = uint8(
             valueRarity +
                 randMod(valueRarity) +
@@ -366,6 +359,7 @@ contract TruffleFactory is ERC721, Ownable {
                 newDna = algorithm - algorithm % 100 + valueRarity3;
             }
         }
+        
 
         _createTruffle("New Truffle", newDna, dadId, mumId);
         _triggerCooldown(myTruffle);
@@ -479,31 +473,55 @@ contract TruffleFactory is ERC721, Ownable {
     function dailyMission(uint256 _tokenId ) external {
         require(msg.sender == ownerOf(_tokenId), "Not owner of this token");
         Truffle storage myTruffle = truffles[_tokenId];
-        require(myTruffle.level < 20);
+        require(myTruffle.rarity < 99);
         require(myTruffle.sell == 0);
         require(_isReady(myTruffle));
         uint8 valueRarity = uint8(myTruffle.dna % 100);
         uint rand = randMod(100);
-        if(valueRarity <= 10){
-            if(rand <= 20)
-                myTruffle.level++;
-        }else if(valueRarity > 10 && valueRarity <= 30){
-            if(rand <= 35)
-                myTruffle.level++;
-        }else if(valueRarity > 30 && valueRarity <= 50){
-            if(rand <= 40)
-                myTruffle.level++;
-        }else if(valueRarity > 50 && valueRarity <= 70){
-            if(rand <= 45)
-                myTruffle.level++;
-        }
-        else if(valueRarity > 70 && valueRarity <= 90){
-            if(rand <= 60)
-                myTruffle.level++;
-        }
-        else if(valueRarity > 90){
-            if(rand <= 70)
-                myTruffle.level++;
+        if(myTruffle.level < 20){
+            if(valueRarity <= 10){
+                if(rand <= 20)
+                    myTruffle.level++;
+            }else if(valueRarity > 10 && valueRarity <= 30){
+                if(rand <= 35)
+                    myTruffle.level++;
+            }else if(valueRarity > 30 && valueRarity <= 50){
+                if(rand <= 40)
+                    myTruffle.level++;
+            }else if(valueRarity > 50 && valueRarity <= 70){
+                if(rand <= 45)
+                    myTruffle.level++;
+            }
+            else if(valueRarity > 70 && valueRarity <= 90){
+                if(rand <= 60)
+                    myTruffle.level++;
+            }
+            else if(valueRarity > 90){
+                if(rand <= 70)
+                    myTruffle.level++;
+            }
+        }else{
+            if(valueRarity <= 10){
+                if(rand <= 20)
+                    myTruffle.rarity++;
+            }else if(valueRarity > 10 && valueRarity <= 30){
+                if(rand <= 35)
+                    myTruffle.rarity++;
+            }else if(valueRarity > 30 && valueRarity <= 50){
+                if(rand <= 40)
+                    myTruffle.rarity++;
+            }else if(valueRarity > 50 && valueRarity <= 70){
+                if(rand <= 45)
+                    myTruffle.rarity++;
+            }
+            else if(valueRarity > 70 && valueRarity <= 90){
+                if(rand <= 60)
+                    myTruffle.rarity++;
+            }
+            else if(valueRarity > 90){
+                if(rand <= 70)
+                    myTruffle.rarity++;
+            }
         }
 
         myTruffle.readyTime = uint32(myTruffle.readyTime + 1 days);

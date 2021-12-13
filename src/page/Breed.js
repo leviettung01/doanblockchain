@@ -75,9 +75,9 @@ const Breed = () => {
         <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
             <s.StyledButton
                 style={{marginRight: "15px"}}
-                onClick={() => { history.push("/")}}
+                onClick={() => { history.push("/mytruffle")}}
             >
-                Go to
+                Go home
             </s.StyledButton>
             <s.StyledButtonBreedShow
                 onClick={() => {
@@ -98,7 +98,7 @@ const Breed = () => {
                             <s.TextDescriptionBreed>Dame</s.TextDescriptionBreed>
                             <s.TextSubTitle>This Truffles will be preggers</s.TextSubTitle>
                             <s.CustomSelect 
-                                onChange={e => setItemBreed(e.target.value)}
+                                onClick={e => setItemBreed(e.target.value)}
                             >
                             {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
                                 <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
@@ -147,7 +147,7 @@ const Breed = () => {
                             <s.TextDescriptionBreed>Sire</s.TextDescriptionBreed>
                             <s.TextSubTitle>This Truffles will be the sire</s.TextSubTitle>
                             <s.CustomSelect 
-                                onChange={e => setItemTarget(e.target.value)}
+                                onClick={e => setItemTarget(e.target.value)}
                             >
                             {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
                                 <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
@@ -227,7 +227,9 @@ const Breed = () => {
                 {/* breed */}
                 <s.ContainerHome  ai={"center"} style={{marginTop: "30px", padding: "15px"}}>
                 <s.TextTitleHome>Breeding</s.TextTitleHome>
-                <s.TextTitleDetails>Success rate depends on rarity.</s.TextTitleDetails>
+                <s.Container ai={"flex-start"}>
+                    <s.TextTitleDetails>The success rate depends on the rarity of Dad and Mom.</s.TextTitleDetails>
+                </s.Container>
                 <s.StyledTable>
                     <s.StyledTableContent>
                         <s.TextTableName>Rarity</s.TextTableName>
@@ -264,7 +266,9 @@ const Breed = () => {
                 {/* cooldown    */}
                 <s.ContainerHome ai={"center"} style={{marginTop: "30px", padding: "15px"}}>
                     <s.TextTitleHome>Cooldown</s.TextTitleHome>
-                    <s.TextTitleDetails>Each level reduces cooldown by 30 minutes. </s.TextTitleDetails>
+                    <s.Container ai={"flex-start"}>
+                        <s.TextTitleDetails>Each level reduces cooldown by 30 minutes. </s.TextTitleDetails>
+                    </s.Container>
                     <s.StyledTable>
                     <s.StyledTableContent>
                         <s.TextTableName>Rarity</s.TextTableName>
