@@ -390,6 +390,14 @@ export const TextDescriptionDetail = styled.p`
   font-weight: 600;
 `;
 
+export const TextDescriptionBuy = styled.p`
+  color: #ffffff;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  line-height: 2px;
+`;
+
 
 export const TextSubTitleDetail = styled.p`
   color: rgb(255, 255, 255, 1);
@@ -601,6 +609,8 @@ export const Box = styled.div`
   transition: 0.2s;
   background-color: #272A34;
   box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: 0.2s;
 
   &:hover {
     transform: translateY(-0.5%);

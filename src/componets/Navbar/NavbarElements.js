@@ -21,23 +21,51 @@ export const Nav = styled.nav`
 `;
 
 export const NavLink = styled(Link)`
-  color: #ffffff;
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0 1.5rem;
+  margin: 0 1.5rem;
   height: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  position: relative;
 
   &.active {
-    color: rgb(254, 22, 229, 0.8);
+    color: #ffffff;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: rgb(254, 22, 229, 0.8);
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: 10px;
+    transition: 0.3s
   }
 
   &:hover {
-    transition: all 0.2s ease-in-out;
-    color: rgb(254, 22, 229, 0.8);
+    color: #ffffff;
   }
+
+  &:hover:after {
+    width: 100%;
+  }
+`;
+
+export const NavLinkLogo = styled(Link)`
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin: 0 1.5rem;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  
 `;
 
 export const Bars = styled(FaBars)`

@@ -19,7 +19,7 @@
  */
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const projectId = "68581572387f4e5d9504340fa813af6a"
+// const projectId = "68581572387f4e5d9504340fa813af6a"
 
 const fs = require('fs');
 const mnemonic = fs.readFileSync(".env").toString().trim();
@@ -58,21 +58,24 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    rinkeby: {
-      provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${projectId}`),
-      network_id: 4,       // Rinkeby's id
-      gas: 8500000,        
-      gasPrice: 1000000000,  // 1 gwei (in wei) (default: 100 gwei)
-      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    bsc: {
+      provider: () => new HDWalletProvider(
+        mnemonic, 
+        'https://bsc-dataseed.binance.org/'
+      ),
+      network_id: 56,
+      skipDryRun: true
     },
-    // Useful for private networks
-    // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-    // network_id: 2111,   // This network is yours, in the cloud.
-    // production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    testnet: {
+      provider: () => new HDWalletProvider(
+        mnemonic, 
+        'https://data-seed-prebsc-1-s1.binance.org:8545'
+      ),
+      network_id: 97,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    }
   },
 
   // Set default mocha options here, use special reporters etc.

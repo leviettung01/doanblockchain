@@ -24,6 +24,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 const Home = () => {
     const dispatch = useDispatch();
     const blockchain = useSelector((state) => state.blockchain);
+    const data = useSelector((state) => state.data);
 
     const [products] = useState([_m1, _m2, _m3, _m4, _m5, _m6, _m7, _m8, _m9, _m10]);
     const [productIndex, setProductIndex] = useState(0);
@@ -59,6 +60,7 @@ const Home = () => {
                     <s.TextTitleHome>Breedable.</s.TextTitleHome>
                     <s.TextTitleHome>Adorable.</s.TextTitleHome> 
                     <s.TextSubTitleHome>collect and breed digital truffles.</s.TextSubTitleHome>
+                    <s.TextSubTitleHome>Total in game: {data.allTruffles.length}/1000</s.TextSubTitleHome>
                     <s.SpacerSmall />
                     <s.StyledButton 
                         onClick={(e) => {
@@ -66,14 +68,13 @@ const Home = () => {
                             dispatch(connect());
                         }}
                     >
-                        <NavLink to="/mytruffle" >
-                            Start Collectible
-                        </NavLink>
+                        Start Collectible
                     </s.StyledButton>
                     <s.SpacerXSmall />
                     {blockchain.errorMsg !== "" ? (
                     <s.TextDescription>{blockchain.errorMsg}</s.TextDescription>
                     ) : null}
+
                 </s.BoxHome>
             </s.Container>
             <s.Container ai={"center"}>

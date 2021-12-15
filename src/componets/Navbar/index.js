@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, NavLink, Bars, NavMenu, NavBtn, NavBtnLink } from './NavbarElements';
+import { Nav, NavLink, NavLinkLogo, Bars, NavMenu, NavBtn, NavBtnLink } from './NavbarElements';
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from '../../redux/blockchain/blockchainActions';
 import { useEffect } from "react";
@@ -39,9 +39,9 @@ const Navbar = () => {
 
   return (
     <Nav>
-      <NavLink to='/'>
+      <NavLinkLogo to='/'>
         <img src={_logo} alt="Logo" style={{height: "110px", backgroundSize: "cover", backgroundPosition: "cover"}} />
-      </NavLink>
+      </NavLinkLogo>
       <Bars />
       <NavMenu>
         {admin}
@@ -49,7 +49,7 @@ const Navbar = () => {
         {blockchain.account !== null ? (
         <NavBtn>
           <NavBtnLink 
-            to="/mytruffle"
+            to="/"
             style={{pointerEvents: "none"}}
             onClick={(e) => {
               e.preventDefault();
@@ -62,7 +62,7 @@ const Navbar = () => {
         </NavBtn>
         ) : (
         <NavBtn>
-          <NavBtnLink to='/mytruffle'  
+          <NavBtnLink to='/'  
             onClick={(e) => {
               e.preventDefault();
               dispatch(connect());

@@ -37,7 +37,10 @@ export const connect = () => {
     dispatch(connectRequest());
     if (window.ethereum) {
       let web3 = new Web3(window.ethereum);
+      
       try {
+        await window.ethereum.enable(); 
+
         const accounts = await window.ethereum.request({
           method: "eth_accounts",
         });
@@ -50,12 +53,12 @@ export const connect = () => {
         
         console.log("NetworkID: ",networkId);
 
-        const truffleFactoryNetworkData = await TruffleFactory.networks[networkId];
-        
-        if (truffleFactoryNetworkData) {
+        // const truffleFactoryNetworkData = await TruffleFactory.networks[networkId];
+
+        if (networkId == 97) {
           const truffleFactory = new web3.eth.Contract(
             TruffleFactory.abi,
-            truffleFactoryNetworkData.address,
+            "0xF6619d99519E062df3DC24706afc124f4E966743"
           );
           
           dispatch( 
@@ -74,7 +77,7 @@ export const connect = () => {
           });
           // Add listeners end
         } else {
-          dispatch(connectFailed("Change network to Rinkeby."));
+          dispatch(connectFailed("Change network to bsc testnet."));
         }
       } catch (err) {
         dispatch(connectFailed("Something went wrong."));
