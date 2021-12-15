@@ -45,14 +45,14 @@ If the level max (20), start increasing Rarity.
 ### Adventure Truffle DNA
 | DNA Digits | Cattribute | Values |
 |---|---|---|
-|00-02 | Background | 01-99 |
-|02-04 | Body Color | 01-99 |
-|04-06 | Mouth | 01-99 |
-|06-08 | Truffle core | 01-99 |
-|08-10 | Hat | 01-99 |
-|10-12 | Border | 01-99 |
-|12-14 | Eyes |  01-99 |
-|14-16 | Jewels | 1-99 |
+| 00-02 | Background | 01-99 |
+| 02-04 | Body Color | 01-99 |
+| 04-06 | Mouth | 01-99 |
+| 06-08 | Truffle core | 01-99 |
+| 08-10 | Hat | 01-99 |
+| 10-12 | Border | 01-99 |
+| 12-14 | Eyes |  01-99 |
+| 14-16 | Jewels | 01-99 |
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
