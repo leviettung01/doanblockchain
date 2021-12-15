@@ -24,7 +24,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
 
 | Generation | Cooldown Time  |
-|---|---|---|
+|---|---|
 | 0, 49 | 24 hours |
 | 50, 74| 18 hours |
 | 75, 99 | 12 hours |
