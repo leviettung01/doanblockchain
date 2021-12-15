@@ -18,7 +18,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 2. You'll need some test BSC on the Binance network. Visit a <a href="https://testnet.binance.org/faucet-smart" target="_blank">faucet</a> to get some free test BSC. Make sure you've set your wallet network to Binance.
 3. Visit the <a href="https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/" target="_blank">Truffles NFT</a> website.
 4. Make sure your wallet is on the `Binance` test network. Press the "Connect" button. This will connect the wallet to the app so it can query the blockchain for your truffles.
-5. Go to mytruffle to make some truffles(The first 2 works are free)! Once you have have 2 truffles you can breed(fee 0.01 ETH) them and have baby truffles.
+5. Go to Mytruffle to make some truffles(The first 2 works are free)! Once you have have 2 truffles you can breed(fee 0.01 ETH) them and have baby truffles.
 
 ### Other features
 1. level up(fee 0.001 ETH): Each level reduces cooldown by 30 minutes, level max(20).
