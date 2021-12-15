@@ -24,7 +24,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 1. level up(fee 0.001 ETH): Each level reduces cooldown by 30 minutes, level max(20).
 2. Rename(required level ≥ 2).
 3. Gift: Truffles can be given to others, as a gift.
-4. Sell(fee 0.001 ETH): You can sell Truffle on the market.
+4. Sell(fee 0.001 ETH):required rarity ≥ 10, you can sell Truffle on the market.
 5. Update Price: Help you update the selling price.
 6. UnSell: Remove items from the market.
 7. Buy: After clicking buy proceed to transfer the amount to the seller, and update the Truffle owner.
