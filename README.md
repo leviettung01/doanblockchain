@@ -18,7 +18,29 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 2. You'll need some test BSC on the Binance network. Visit a <a href="https://testnet.binance.org/faucet-smart" target="_blank">faucet</a> to get some free test BSC. Make sure you've set your wallet network to Binance.
 3. Visit the <a href="https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/" target="_blank">Truffles NFT</a> website.
 4. Make sure your wallet is on the `Binance` test network. Press the "Connect" button. This will connect the wallet to the app so it can query the blockchain for your truffles.
-5. Go to mytruffle to make some truffles(first 2 is free)!Once you have have 2 truffles you can breed them and have baby truffles.
+5. Go to mytruffle to make some truffles(The first 2 works are free)!Once you have have 2 truffles you can breed(fee 0.01 ETH) them and have baby truffles.
+
+### Other features
+1. level up(fee 0.001 ETH): Each level reduces cooldown by 30 minutes, level max(20).
+2. Rename(required level ≥ 2).
+3. Gift: Truffles can be given to others, as a gift.
+4. Sell(fee 0.001 ETH): You can sell Truffle on the market.
+5. Update Price: Help you update the selling price.
+6. UnSell: Remove items from the market.
+
+### Game(Camping)
+The higher the Level, the shorter the cooldown.
+If the max level level (20), start increasing Rarity.
+
+| Raritys | Count | Cooldown Time | Rate |
+|---|---|---|---|
+|1, 10 | +1 | 24 hours | 20% |
+|11, 30 | +1 | 24 hours | 35% |
+|31, 50 | +1 | 24 hours | 40% |
+|51, 70 | +1 | 24 hours | 45% |
+|71, 90 | +1 | 24 hours | 60% |
+|91, 99 | +1 | 24 hours | 70% |
+
 ### Adventure Truffle DNA
 | DNA Digits | Cattribute | Values |
 |---|---|---|
@@ -33,7 +55,6 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
-
 | Rarity | Cooldown Time  |
 |---|---|
 | 0, 49 | 24 hours |
