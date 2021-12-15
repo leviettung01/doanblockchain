@@ -30,7 +30,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 
 ### Game(Camping)
 The higher the Level, the shorter the cooldown.
-If the max level level (20), start increasing Rarity.
+If the level max (20), start increasing Rarity.
 
 | Raritys | Count | Cooldown Time | Rate |
 |---|---|---|---|
