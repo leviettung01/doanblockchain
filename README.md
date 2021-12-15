@@ -29,7 +29,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 6. UnSell: Remove items from the market.
 7. Buy: After clicking buy proceed to transfer the amount to the seller, and update the Truffle owner.
 
-### Game(Camping)
+### Game (Camping)
 The higher the Level, the shorter the cooldown.
 If the level max (20), start increasing Rarity.
 
