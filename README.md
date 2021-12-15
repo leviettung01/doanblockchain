@@ -23,19 +23,26 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
 
-| Generation | Cooldown Time  |
+| Rarity | Cooldown Time  |
 |---|---|
 | 0, 49 | 24 hours |
 | 50, 74| 18 hours |
 | 75, 99 | 12 hours |
 
-### Installation local steps
-```
-npm install -g truffle
-npm install
-truffle migrate --reset
-npm run start
-```
+### Running the project locally
+
+1. Have node `16.x` installed
+2. Install the Truffle suite globally via `npm install -g truffle`
+3. `npm install` to install the project dependencies
+4. You'll need a local ETH blockchain like Ganache. Can use either the <a href="https://www.trufflesuite.com/ganache" target="_blank">graphical interface</a> or the CLI (`npm install -g ganache-cli`). If using the graphical app create a new workspace and link the truffle config file `/truffle-config.js` to the workspace.
+5. Deploy the contracts
+   ```
+   truffle console
+   migrate 
+   ```
+6. Copy the `KittyContract` and `KittyMarketPlace` contract deployed addresses into `/src/components/js/service.js` into the `static chainIdToAddress` variable with ID `0x539` (this is the chain ID for Ganache)
+7. Run the app with `npm start` and open a browser to `http://localhost:3000`
+8. 
 ### Running the project locally
 
 You'll need a local ETH blockchain like [Ganache](https://www.trufflesuite.com/ganache). Can use either the graphical interface or the CLI (npm install -g ganache-cli). If using the graphical app create a new workspace and link the truffle config file /truffle-config.js to the workspace.
