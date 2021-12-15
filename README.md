@@ -19,6 +19,19 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 3. Visit the <a href="https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/" target="_blank">Truffles NFT</a> website.
 4. Make sure your wallet is on the `Binance` test network. Press the "Connect" button. This will connect the wallet to the app so it can query the blockchain for your truffles.
 5. Go to mytruffle to make some truffles(first 2 is free)!Once you have have 2 truffles you can breed them and have baby truffles.
+### Adventure Truffle DNA
+| DNA Digits | Cattribute | Values |
+|---|---|---|
+|00-01 | Body Color | 10-99 |
+|02-03 | Accent Color | 10-99 |
+|04-05 | Eye Color | 10-99 |
+|06-07 | Ear Color | 10-99 |
+| 08 | Eye Shape | 0-7 |
+| 09 | Pattern | 0-3 |
+| 10-11 | Pattern Color|  10-99 |
+| 12-13 | Pattern Accent Color | 10-99 |
+| 14 | Animation | 0-4 |
+| 15 | Mysterious | 0-7 |
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
