@@ -15,7 +15,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 ### Usage 
 
 1. Requires an Etherem wallet like [MetaMask](https://metamask.io/)
-2. You'll need some test BSC on the Binance network. Visit a <a href="https://testnet.binance.org/faucet-smart" target="_blank">faucet</a> to get some free test BSC. Make sure you've set your wallet network to `Binance`.
+2. You'll need some test BSC on the Binance network. Visit a <a href="https://testnet.binance.org/faucet-smart" target="_blank">faucet</a> to get some free test BSC. Make sure you've set your wallet network to Binance.
 3. Visit the <a href="https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/" target="_blank">Truffles NFT</a> website.
 4. Make sure your wallet is on the `Binance` test network. Press the "Connect" button. This will connect the wallet to the app so it can query the blockchain for your truffles.
 5. Go to mytruffle to make some truffles(first 2 is free)!Once you have have 2 truffles you can breed them and have baby truffles.
@@ -41,11 +41,9 @@ When parent Truffles breed they need time to rest before breeding again. Breed c
    ```
 6. Run the app with `npm start` and open a browser to `http://localhost:3000`
 
-### Running the project locally
-
-You'll need a local ETH blockchain like [Ganache](https://www.trufflesuite.com/ganache). Can use either the graphical interface or the CLI (npm install -g ganache-cli). If using the graphical app create a new workspace and link the truffle config file /truffle-config.js to the workspace.
-(Open a new TERMINAL and run)
-
+## Deploy to Test Net
+Deploying the project contracts to a test net requires a `.env` config file which expects the following entries.
 ```
-ganache-cli -d --allowUnlimitedContractSize
+# 12 word seed phrase for the test net HD wallet provider
+Ex: select pupil crucial receive situate manage that argue wolf donkey business raven
 ```
