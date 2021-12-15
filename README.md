@@ -22,13 +22,13 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 ### Adventure Truffle DNA
 | DNA Digits | Cattribute | Values |
 |---|---|---|
-|00-02 | Background | 00-99 |
-|02-04 | Body Color | 00-99 |
-|04-06 | Mouth | 00-99 |
-|06-08 | Truffle core | 00-99 |
-|08-10 | Hat | 00-99 |
-|10-12 | Border | 00-99 |
-|12-14 | Eyes |  00-99 |
+|00-02 | Background | 01-99 |
+|02-04 | Body Color | 01-99 |
+|04-06 | Mouth | 01-99 |
+|06-08 | Truffle core | 01-99 |
+|08-10 | Hat | 01-99 |
+|10-12 | Border | 01-99 |
+|12-14 | Eyes |  01-99 |
 |14-16 | Jewels | 1-99 |
 
 ### Cooldown
