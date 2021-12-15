@@ -27,7 +27,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 |04-06 | Mouth | 00-99 |
 |06-08 | Truffle core | 00-99 |
 |08-10 | Hat | 00-99 |
-|10-12 | Border | 0-99 |
+|10-12 | Border | 00-99 |
 |12-14 | Eyes |  00-99 |
 |14-16 | Jewels | 1-99 |
 
