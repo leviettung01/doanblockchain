@@ -1,5 +1,7 @@
 # Crypto-Truffle
 
+Hosted on Netlify: (https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/)
+
 ### Installation local steps
 
 ```
