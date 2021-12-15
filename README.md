@@ -27,6 +27,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 4. Sell(fee 0.001 ETH): You can sell Truffle on the market.
 5. Update Price: Help you update the selling price.
 6. UnSell: Remove items from the market.
+7. Buy: After clicking buy proceed to transfer the amount to the seller, and update the Truffle owner.
 
 ### Game(Camping)
 The higher the Level, the shorter the cooldown.
