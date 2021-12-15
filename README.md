@@ -37,12 +37,10 @@ When parent Truffles breed they need time to rest before breeding again. Breed c
 4. You'll need a local ETH blockchain like Ganache. Can use either the <a href="https://www.trufflesuite.com/ganache" target="_blank">graphical interface</a> or the CLI (`npm install -g ganache-cli`). If using the graphical app create a new workspace and link the truffle config file `/truffle-config.js` to the workspace.
 5. Deploy the contracts
    ```
-   truffle console
-   migrate 
+   truffle migrate --reset
    ```
-6. Copy the `KittyContract` and `KittyMarketPlace` contract deployed addresses into `/src/components/js/service.js` into the `static chainIdToAddress` variable with ID `0x539` (this is the chain ID for Ganache)
-7. Run the app with `npm start` and open a browser to `http://localhost:3000`
-8. 
+6. Run the app with `npm start` and open a browser to `http://localhost:3000`
+
 ### Running the project locally
 
 You'll need a local ETH blockchain like [Ganache](https://www.trufflesuite.com/ganache). Can use either the graphical interface or the CLI (npm install -g ganache-cli). If using the graphical app create a new workspace and link the truffle config file /truffle-config.js to the workspace.
