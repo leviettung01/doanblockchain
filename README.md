@@ -52,7 +52,7 @@ If the level max (20), start increasing Rarity.
 | 08-10 | Hat | 01-99 |
 | 10-12 | Border | 01-99 |
 | 12-14 | Eyes |  01-99 |
-| 14-16 | Jewels | 01-99 |
+| 14-16 | Accessory | 01-99 |
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
