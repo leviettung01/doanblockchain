@@ -22,16 +22,14 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 ### Adventure Truffle DNA
 | DNA Digits | Cattribute | Values |
 |---|---|---|
-|00-01 | Body Color | 10-99 |
-|02-03 | Accent Color | 10-99 |
-|04-05 | Eye Color | 10-99 |
-|06-07 | Ear Color | 10-99 |
-| 08 | Eye Shape | 0-7 |
-| 09 | Pattern | 0-3 |
-| 10-11 | Pattern Color|  10-99 |
-| 12-13 | Pattern Accent Color | 10-99 |
-| 14 | Animation | 0-4 |
-| 15 | Mysterious | 0-7 |
+|00-02 | Background | 00-99 |
+|02-04 | Body Color | 00-99 |
+|04-06 | Mouth | 00-99 |
+|06-08 | Truffle core | 00-99 |
+|08-10 | Hat | 00-99 |
+|10-12 | Border | 0-99 |
+|12-14 | Eyes |  00-99 |
+|14-16 | Jewels | 1-99 |
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
