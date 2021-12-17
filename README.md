@@ -21,13 +21,15 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 5. Go to Mytruffle to make some truffles(The first 2 works are free)! Once you have have 2 truffles you can breed(fee 0.01 ETH) them and have baby truffles.
 
 ### Other features
-1. level up(fee 0.001 ETH): Each level reduces cooldown by 30 minutes, level max(20).
-2. Rename(required level ≥ 2).
+1. level up (fee 0.001 ETH): Each level reduces cooldown by 30 minutes, level max(20).
+2. Rename (required level ≥ 2).
 3. Gift: Required rarity ≥ 10, truffles can be given to others, as a gift.
-4. Sell(fee 0.001 ETH): Required rarity ≥ 10, you can sell Truffle on the market.
+4. Sell (fee 0.001 ETH): Required rarity ≥ 10, you can sell Truffle on the market.
 5. Update Price: Help you update the selling price.
 6. UnSell: Remove items from the market.
 7. Buy: After clicking buy proceed to transfer the amount to the seller, and update the Truffle owner.
+8. Admin: Update Fee (Create, breed, levelup, sell).
+
 
 ### Game (Camping)
 The higher the Level, the shorter the cooldown.
