@@ -327,7 +327,7 @@ const Marketplace = () => {
                           return (
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
                                 <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                                <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                                <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
                                 <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
                                 <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                                 <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
@@ -341,7 +341,7 @@ const Marketplace = () => {
                           return (
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
                               <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                              <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                              <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
                               <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
                               <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                               <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>

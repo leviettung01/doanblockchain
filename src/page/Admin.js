@@ -288,7 +288,7 @@ const Admin = () => {
                           return (
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
                                 <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                                <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                                <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
                                 <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
                                 <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                                 <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
@@ -302,7 +302,7 @@ const Admin = () => {
                           return (
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
                               <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                              <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                              <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
                               <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
                               <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                               <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
@@ -354,7 +354,7 @@ const Admin = () => {
                         <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                         <s.BoxTab>
                             <form style={{margin: "20px 0"}}>
-                                <s.TextSubTitleDetail>Enter the mint fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.TextSubTitleDetail>Enter the mint fee you want to change (BSC)</s.TextSubTitleDetail>
                                 <s.Container fd={"row"} ai={"center"} jc={"center"}>
                                     <s.InputTransferNumber
                                     required
@@ -396,7 +396,7 @@ const Admin = () => {
                         <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                         <s.BoxTab>
                             <form style={{margin: "20px 0"}}>
-                                <s.TextSubTitleDetail>Enter the levelup fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.TextSubTitleDetail>Enter the levelup fee you want to change (BSC)</s.TextSubTitleDetail>
                                 <s.Container fd={"row"} ai={"center"} jc={"center"}>
                                     <s.InputTransferNumber
                                     required
@@ -440,7 +440,7 @@ const Admin = () => {
                         <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                         <s.BoxTab>
                             <form style={{margin: "20px 0"}}>
-                                <s.TextSubTitleDetail>Enter the breed fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.TextSubTitleDetail>Enter the breed fee you want to change (BSC)</s.TextSubTitleDetail>
                                 <s.Container fd={"row"} ai={"center"} jc={"center"}>
                                     <s.InputTransferNumber
                                     required
@@ -484,7 +484,7 @@ const Admin = () => {
                         <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                         <s.BoxTab>
                             <form style={{margin: "20px 0"}}>
-                                <s.TextSubTitleDetail>Enter the sell fee you want to change (ETH)</s.TextSubTitleDetail>
+                                <s.TextSubTitleDetail>Enter the sell fee you want to change (BSC)</s.TextSubTitleDetail>
                                 <s.Container fd={"row"} ai={"center"} jc={"center"}>
                                     <s.InputTransferNumber
                                     required

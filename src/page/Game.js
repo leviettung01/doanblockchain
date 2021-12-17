@@ -109,7 +109,6 @@ const Game = () => {
                   )}
                 </s.CustomSelect>
 
-                {console.log(itemCamp)}
                 {itemCamp !== undefined ? (
                 <>
                 {data.allOwnerTruffles.filter(item => item.id === itemCamp).map((item)  => (
@@ -184,13 +183,13 @@ const Game = () => {
                     <s.TextTableName>Rate</s.TextTableName>
                   </s.StyledTableContent>
                     <tr >
-                      <s.TextTableEvent>{'≤ 10'}</s.TextTableEvent>
+                      <s.TextTableEvent>{'1 => 10'}</s.TextTableEvent>
                       <s.TextTableEvent>{'+ 1'}</s.TextTableEvent>
                       <s.TextTableEvent>{'24h'}</s.TextTableEvent>
                       <s.TextTableEvent>{'20%'}</s.TextTableEvent>
                     </tr>
                     <tr >
-                      <s.TextTableEvent>{'10 => 30'}</s.TextTableEvent>
+                      <s.TextTableEvent>{'11 => 30'}</s.TextTableEvent>
                       <s.TextTableEvent>{'+ 1'}</s.TextTableEvent>
                       <s.TextTableEvent>{'24h'}</s.TextTableEvent>
                       <s.TextTableEvent>{'35%'}</s.TextTableEvent>
@@ -214,7 +213,7 @@ const Game = () => {
                       <s.TextTableEvent>{'60%'}</s.TextTableEvent>
                     </tr>
                     <tr >
-                      <s.TextTableEvent>{'> 91'}</s.TextTableEvent>
+                      <s.TextTableEvent>{'91 => 99'}</s.TextTableEvent>
                       <s.TextTableEvent>{'+ 1'}</s.TextTableEvent>
                       <s.TextTableEvent>{'24h'}</s.TextTableEvent>
                       <s.TextTableEvent>{'70%'}</s.TextTableEvent>

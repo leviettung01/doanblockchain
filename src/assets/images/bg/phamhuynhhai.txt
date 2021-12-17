@@ -1,0 +1,16 @@
+Phạm Huỳnh Hải
+BE:
+tạo
+lai 
+view danh sách truffle chủ sở hữu
+level up
+lai
+thời gian cooldown
+thế hệ 
+id cha 
+id mẹ
+game (đào tạo)
+view danh sách truffle đang bán
+view danh sách truffle đang bán thuộc chủ sở hữu
+FE:
+đồ họa nhân vật, background, image

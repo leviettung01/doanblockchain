@@ -22,7 +22,7 @@ const RenderSell = ({data, blockchain,loading}) => {
                 <s.StyledTextBox>
                     <s.TextDescription>#{item.id}</s.TextDescription>
                     <s.StyledButtonPrice>
-                        <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} ETH</s.TextDescription>
+                        <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} BSC</s.TextDescription>
                     </s.StyledButtonPrice>
                 </s.StyledTextBox>  
                 <s.StyledTextBoxBoder>

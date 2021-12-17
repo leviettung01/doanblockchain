@@ -595,7 +595,7 @@ const Details = () => {
                   <s.TextSubTitleBuy>Price 
                     <s.StyledTextBox>
                       <s.TextTitleBuy>
-                      {blockchain.web3.utils.fromWei(item.sell,"ether")} ETH
+                      {blockchain.web3.utils.fromWei(item.sell,"ether")} BSC
                       </s.TextTitleBuy>
                       <s.TextSubTitleBuy>{fromNow(item.sellTime * 1000)}</s.TextSubTitleBuy>
                     </s.StyledTextBox>
@@ -643,7 +643,7 @@ const Details = () => {
                 <s.TextSubTitleBuy>Price 
                   <s.StyledTextBox>
                     <s.TextTitleBuy>
-                    {blockchain.web3.utils.fromWei(item.sell,"ether")} ETH
+                    {blockchain.web3.utils.fromWei(item.sell,"ether")} BSC
                     </s.TextTitleBuy>
                     <s.TextSubTitleBuy>{fromNow(item.sellTime * 1000)}</s.TextSubTitleBuy>
                   </s.StyledTextBox>
@@ -705,7 +705,7 @@ const Details = () => {
                       <form>
                         {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) >= 10 ? (
                           <>
-                          <s.TextSubTitleDetail>Enter the amount you want to sell (ETH)</s.TextSubTitleDetail>
+                          <s.TextSubTitleDetail>Enter the amount you want to sell (BSC)</s.TextSubTitleDetail>
                           <s.Container fd={"row"} ai={"center"} jc={"center"}>
                             <s.InputTransferNumber
                               required
@@ -749,7 +749,7 @@ const Details = () => {
                       </form>
                     ) : (
                       <form>
-                        <s.TextSubTitleDetail>Enter the amount you want to Change (ETH)</s.TextSubTitleDetail>
+                        <s.TextSubTitleDetail>Enter the amount you want to Change (BSC)</s.TextSubTitleDetail>
                         <s.Container fd={"row"} ai={"center"} jc={"center"}>
                           <s.InputTransferNumber
                             required
@@ -762,6 +762,7 @@ const Details = () => {
                           {!loadingChangPrice &&
                           <s.StyledButtonTransfer
                               disabled={loadingChangPrice ? 1: 0}
+                              style={blockchain.web3.utils.fromWei(item.sell, "ether") === sell ? {pointerEvents: "none", opacity: "0.5"} : {}} 
                               onClick={() => {
                                 ChangePrice(blockchain.account, item.id, blockchain.web3.utils.toWei(sell, "ether"));
                                 setSell('');
@@ -780,6 +781,7 @@ const Details = () => {
                           }
                           </s.Container>
                         </s.Container>
+                        {blockchain.web3.utils.fromWei(item.sell, "ether") === sell ? (<s.TextDescription>Rrice must be different !</s.TextDescription>) : (null)}
                       </form>
                     )}
                   </s.BoxTab>
@@ -890,7 +892,7 @@ const Details = () => {
                       <tbody>
                         <tr key={item.id}>
                           <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                          <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} ETH</s.TextTableEvent>
+                          <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
                           <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
                           <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                           <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>

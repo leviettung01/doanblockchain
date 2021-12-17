@@ -524,6 +524,6 @@ contract TruffleFactory is ERC721, Ownable {
             }
         }
 
-        myTruffle.readyTime = uint32(myTruffle.readyTime + 1 days);
+        myTruffle.readyTime = uint32(block.timestamp + 1 days);
     }
 }

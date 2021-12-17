@@ -198,7 +198,7 @@ const Breed = () => {
                     ): (
                         <s.TextDescription style={{color: "#eb4d4b", opacity: "0", lineHeight: "0"}}>Breeds cannot be the same</s.TextDescription>
                     )}
-                    <s.TextDescription>Birthing fee: 0.01 ETH</s.TextDescription>
+                    <s.TextDescription>Birthing fee: 0.01 BSC</s.TextDescription>
                     {!loadingBreed && 
                     <s.StyledButtonTransfer 
                         style={itemBreed !== itemTarget ? {} : {pointerEvents: "none", opacity: "0.5"}}
