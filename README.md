@@ -1,10 +1,10 @@
 # Crypto-Truffle
 
-Hosted on Vercal: (https://truffle-nft-game-p61smhd0l-hngovan.vercel.app/)
+Hosted on Vercal: (https://truffle-nft-game-kykudscft-hngovan.vercel.app/)
 
 ## Contracts
 
-Deployed on BSC: (https://testnet.bscscan.com/address/0xF6619d99519E062df3DC24706afc124f4E966743/)
+Deployed on BSC: (https://testnet.bscscan.com/address/0x18efB905993070c70d371DEa06efEd0ef95c7559)
 
 ### Tech Stack
 
