@@ -35,7 +35,7 @@ export const ImageToggleHome = styled.div`
   height: 400px;
   opacity: 0.8;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 92%;
     height: 390px;
   }
@@ -235,7 +235,7 @@ export const ContainerTabBar = styled.div`
   padding: 15px;
   /* border: 1px solid #ffffff; */
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 84.1%;
   }
 `;
@@ -255,7 +255,7 @@ export const ContainerHome = styled.div`
   background-color: #373943;
   border-radius: 0.8rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 84.1%;
   }
 `;
@@ -288,7 +288,7 @@ export const ContainerBoxHomev2 = styled.div`
   background-position: center;
   box-sizing: border-box;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 84.1%;
   }
 `;
@@ -321,7 +321,7 @@ export const ContainerHomeBox = styled.div`
   background-position: center;
   box-sizing: border-box;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 84.1%;
   }
 `;
@@ -372,7 +372,7 @@ export const BoxHome = styled.div`
   justify-content: center;
   width: 70%;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
     width: 84%;
   }
 `;
@@ -533,7 +533,7 @@ export const StyledButtonActionv2 = styled.button`
     color: #000000;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 1920px) {
   }
 `;
 
@@ -1035,7 +1035,7 @@ export const ContainerGame = styled.div`
   padding: 15px;
 
   
-  @media screen and (min-width: 1583px) {
+  @media screen and (max-width: 1920px) {
     width: 84%;
   }
 `;
