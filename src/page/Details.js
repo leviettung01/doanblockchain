@@ -11,7 +11,6 @@ import { RiWallet3Line } from "react-icons/ri";
 import { BiArrowBack } from 'react-icons/bi';
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { useHistory } from "react-router-dom";
-import Confetti from 'react-confetti'
 
 const Details = () => {
   const dispatch = useDispatch();
@@ -312,52 +311,42 @@ const Details = () => {
       ref={confettiRef}
       className={loadingShowTransfer === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>
-      Successful transfer of truffleID <span style={{color: "#fe16e7", opacity: "0.6"}}>{id}</span> to <span style={{color: "#fe16e7", opacity: "0.6"}} >{data.allTruffles.filter(item => item.id === id).map(result => result.currentOwner)}</span>
-      , click Go home go back home.
+      Successful transfer of truffleID <span style={{color: "#fe16e7", opacity: "0.6"}}>{id}</span> 
+    </s.TextTitle>
+    <s.TextTitle>
+      to <span style={{color: "#fe16e7", opacity: "0.6"}} >{data.allTruffles.filter(item => item.id === id).map(result => result.currentOwner)}</span>
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
-            style={{marginRight: "15px"}}
-            onClick={() => { history.push("/mytruffle")}}
+          style={{marginRight: "15px"}}
+          onClick={() => { history.push("/mytruffle")}}
         >
-            Go home
+          Go home
         </s.StyledButton>
     </s.Container>
     </s.Containertoggle>
     {/* handShow sell */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShow === true ? "active-tab" : null}
+      ref={confettiRef}
+      className={loadingShow === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>
-      Your item has been listed for sale on the market. click Go to view or Click Close to return.
+    </s.TextTitle>
+    <s.TextTitle>
+      Your item has been listed for sale on the market.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
-            style={{marginRight: "15px"}}
-            onClick={() => { history.push("/marketplace")}}
+          style={{marginRight: "15px"}}
+          onClick={() => { history.push("/marketplace")}}
         >
-            Go to
+            View
         </s.StyledButton>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShow(false);
-            }}
+          onClick={() => {
+            setLoadingShow(false);
+          }}
         >
             Close
         </s.StyledButtonBreedShow>
@@ -365,136 +354,104 @@ const Details = () => {
     </s.Containertoggle>
     {/* handShow Remove item */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShowRemove === true ? "active-tab" : null}
+      ref={confettiRef}
+      className={loadingShowRemove === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>
       Your item has been removed from the market. Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShowRemove(false);
-            }}
+          onClick={() => {
+            setLoadingShowRemove(false);
+          }}
         >
-            Close
+          Close
         </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
     {/* handShow Update Price */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShowUpdatePrice === true ? "active-tab" : null}
+      ref={confettiRef}
+      className={loadingShowUpdatePrice === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>
       Update Price successful. Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShowUpdatePrice(false);
-            }}
+          onClick={() => {
+            setLoadingShowUpdatePrice(false);
+          }}
         >
-            Close
+          Close
         </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
     {/* handShow Levelup */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShowLevelup === true ? "active-tab" : null}
+      ref={confettiRef}
+      className={loadingShowLevelup === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>    
       Update successful. click Go to view or Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShowLevelup(false);
-            }}
+          onClick={() => {
+            setLoadingShowLevelup(false);
+          }}
         >
-            Close
+          Close
         </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
     {/* handShow Update Name */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShowUpdateName === true ? "active-tab" : null}
+      ref={confettiRef}
+      className={loadingShowUpdateName === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>    
-      Update successful. click Go to view or Click Close to return.
+      Update successful. Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShowUpdateName(false);
-            }}
+          onClick={() => {
+            setLoadingShowUpdateName(false);
+          }}
         >
-            Close
-        </s.StyledButtonBreedShow>
+          Close
+      </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
-     {/* handShow Buy */}
-     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShowBuy === true ? "active-tab" : null}
+    {/* handShow Buy */}
+    <s.Containertoggle 
+      ref={confettiRef}
+      className={loadingShowBuy === true ? "active-tab" : null}
     >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
     <s.TextTitle>    
       Successfully purchase. click Go to view or Click Close to return.
     </s.TextTitle>
     <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
         <s.StyledButton
-            style={{marginRight: "15px"}}
-            onClick={() => { history.push("/mytruffle")}}
+          style={{marginRight: "15px"}}
+          onClick={() => { history.push("/mytruffle")}}
         >
-            Go to
+          Go to
         </s.StyledButton>
         <s.StyledButtonBreedShow
-            onClick={() => {
-              setLoadingShowBuy(false);
-            }}
+          onClick={() => {
+            setLoadingShowBuy(false);
+          }}
         >
-            Close
+          Close
         </s.StyledButtonBreedShow>
     </s.Container>
     </s.Containertoggle>
-      <s.Screen image={_color} >
+      <s.Screen 
+        image={_color} 
+        className={loadingShow === true || loadingShowRemove === true || loadingShowBuy === true || loadingShowLevelup === true || loadingShowTransfer || loadingShowUpdateName || loadingShowUpdatePrice ? "blur" : null}
+      >
         {data.allTruffles.filter(item => item.id === id ).map((item)  => (
           <s.Container 
             key={item.id} 
@@ -510,10 +467,10 @@ const Details = () => {
                 onClick={() => history.push("/mytruffle")}
               >
                 <BiArrowBack style={{marginRight: "10px"}}/>
-                Back
+                  Back
               </s.StyledButtonBack>
             </s.StyledTextBoxNameDetails>
-            <s.Container jc={"space-between"} ai={"flex-start"} fd={"row"}> 
+            <s.Container jc={"space-between"} ai={"center"} fd={"row"}> 
               <s.StyledImgDetails>       
                 <TruffleRenderer truffle={item} style={{height: "400px", with: "400px"}} />
               </s.StyledImgDetails>

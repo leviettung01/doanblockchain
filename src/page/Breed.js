@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import TruffleRenderer from "../componets/TruffleRenderer";
 import { BiDna } from "react-icons/bi";
 import {Link} from "react-router-dom";
-import Confetti from 'react-confetti'
 
 const Breed = () => {
     const dispatch = useDispatch();
@@ -53,31 +52,24 @@ const Breed = () => {
             dispatch(fetchData(blockchain.account));
         }
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
-
+    const newTruffle = data.allOwnerTruffles.filter(item => item.id >= (data.allTruffles.length - 1)).map(item => item.id)
     return (
         <>
         {/* handShow */}
         <s.Containertoggle 
-        ref={confettiRef}
-        className={loadingShow === true ? "active-tab" : null}
+            ref={confettiRef}
+            className={loadingShow === true ? "active-tab" : null}
         >
-        <Confetti 
-            style={{position: "absolute", top: "-200px", zIndex: 1}}
-            recycle={true}
-            numberOfPieces={200}
-            height={900}
-            width={1900}
-        />
         <s.ImageToggleBreed image={_breed} />
         <s.TextTitle>
-            Congratulations, you have breeding a new breed. click Go to view or Click Close to return.
+            Congratulations, you have breeding a new breed.
         </s.TextTitle>
         <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
             <s.StyledButton
                 style={{marginRight: "15px"}}
-                onClick={() => { history.push("/mytruffle")}}
+                onClick={() => { history.push(`/details/${newTruffle}`)}}
             >
-                Go home
+                View
             </s.StyledButton>
             <s.StyledButtonBreedShow
                 onClick={() => {
@@ -88,7 +80,7 @@ const Breed = () => {
             </s.StyledButtonBreedShow>
         </s.Container>
         </s.Containertoggle>
-        <s.Screen image={_bg}>
+        <s.Screen image={_bg} className={loadingShow === true ? "blur" : null}>
             <s.Container ai={"center"} style={{margin: "1.9rem 0 1rem 0"}}>
                 <s.ContainerBreed ai={"center"} style={{margin: "5.6rem 0 0 0"}}>
                     <s.TextDescriptionDetail>Breeding</s.TextDescriptionDetail>
@@ -212,7 +204,7 @@ const Breed = () => {
                     }
                     {loadingBreed &&
                     <s.StyledButtonTransfer 
-                        style={{marginTop: "20px", pointerEvents: "none"}}
+                        style={{pointerEvents: "none"}}
                         disabled={loadingBreed ? 1: 0}
                     >
                         <s.StyledButtonLoading/>
@@ -226,7 +218,7 @@ const Breed = () => {
             <s.Container ai={"center"}>
                 {/* breed */}
                 <s.ContainerHome  ai={"center"} style={{marginTop: "30px", padding: "15px"}}>
-                <s.TextTitleHome>Breeding</s.TextTitleHome>
+                <s.TextTitleHomev3>Breeding</s.TextTitleHomev3>
                 <s.Container ai={"flex-start"}>
                     <s.TextTitleDetails>The success rate depends on the rarity of Dad and Mom.</s.TextTitleDetails>
                 </s.Container>
@@ -265,7 +257,7 @@ const Breed = () => {
                 </s.ContainerHome> 
                 {/* cooldown    */}
                 <s.ContainerHome ai={"center"} style={{marginTop: "30px", padding: "15px"}}>
-                    <s.TextTitleHome>Cooldown</s.TextTitleHome>
+                    <s.TextTitleHomev3>Cooldown</s.TextTitleHomev3>
                     <s.Container ai={"flex-start"}>
                         <s.TextTitleDetails>Each level reduces cooldown by 30 minutes. </s.TextTitleDetails>
                     </s.Container>

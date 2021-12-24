@@ -34,6 +34,11 @@ export const ImageToggleHome = styled.div`
   width: 76%;
   height: 400px;
   opacity: 0.8;
+
+  @media screen and (min-width: 1583px) {
+    width: 92%;
+    height: 390px;
+  }
 `;
 
 export const ImageToggleHomev2 = styled.div`
@@ -52,6 +57,14 @@ export const ImageToggleHomev3 = styled.div`
   height: 630px;
 `;
 
+export const ImageToggleHomev4 = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 500px;
+  height: 500px;
+`;
+
 export const ImageToggleRender = styled.div`
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
@@ -67,6 +80,10 @@ export const ImageToggleRenderv2 = styled.div`
   width: 255px;
   height: 255px;
   margin-right: 1.5rem;
+
+  &:last-child {
+    margin: 0;
+  }
 `;
 
 export const ImageToggleBreed = styled.div`
@@ -141,8 +158,8 @@ export const Containertoggle = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #272A34;
-  width: 100%;
-  height: 40vh;
+  width: 60%;
+  height: 45vh;
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
@@ -152,7 +169,8 @@ export const Containertoggle = styled.div`
   transform: translate(-50%, -50%);
   z-index: 4;
   visibility: hidden;
-  box-shadow: 2rem 0.5rem 2rem 1rem rgba(0, 0, 0, 0.3);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border-radius: 0.8rem;
   
   &.active-tab {
     visibility: visible;
@@ -216,6 +234,10 @@ export const ContainerTabBar = styled.div`
   border-radius: 0.8rem;
   padding: 15px;
   /* border: 1px solid #ffffff; */
+
+  @media screen and (min-width: 1583px) {
+    width: 84.1%;
+  }
 `;
 
 export const ContainerHome = styled.div`
@@ -232,6 +254,10 @@ export const ContainerHome = styled.div`
   box-sizing: border-box;
   background-color: #373943;
   border-radius: 0.8rem;
+
+  @media screen and (min-width: 1583px) {
+    width: 84.1%;
+  }
 `;
 
 export const ContainerBoxHome = styled.div`
@@ -246,6 +272,7 @@ export const ContainerBoxHome = styled.div`
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
+  
 `;
 
 export const ContainerBoxHomev2 = styled.div`
@@ -260,7 +287,10 @@ export const ContainerBoxHomev2 = styled.div`
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
-  transition: ease-in-out;
+
+  @media screen and (min-width: 1583px) {
+    width: 84.1%;
+  }
 `;
 
 export const ContainerBoxHomev3 = styled.div`
@@ -290,6 +320,10 @@ export const ContainerHomeBox = styled.div`
   background-size: cover;
   background-position: center;
   box-sizing: border-box;
+
+  @media screen and (min-width: 1583px) {
+    width: 84.1%;
+  }
 `;
 
 export const ContainerHomeProp = styled.div`
@@ -337,6 +371,10 @@ export const BoxHome = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 70%;
+
+  @media screen and (min-width: 1583px) {
+    width: 84%;
+  }
 `;
 
 export const InputTransfer = styled.input.attrs({type: "text"})`
@@ -424,6 +462,7 @@ export const StyledTextBoxAround = styled.div`
 
 export const StyledImgDetails = styled.div`
   width: 400px;
+  height: 400px;
   border-radius: 0.8rem;
   box-shadow: 0 0 1em 20px rgba(255, 255, 255, 0.7);
   cursor: pointer;
@@ -469,7 +508,7 @@ export const StyledButtonAction = styled.button`
 `;
 
 export const StyledButtonActionv2 = styled.button`
-  width: 100%;
+  width: 210px;
   height: 50px;
   border-radius: 0.4rem;
   padding: 0 20px;
@@ -484,7 +523,7 @@ export const StyledButtonActionv2 = styled.button`
   border: 1px solid rgb(254, 22, 229);
   background-color: rgb(254, 22, 229, 0.2);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   &:hover {
@@ -492,6 +531,9 @@ export const StyledButtonActionv2 = styled.button`
     border: 1px solid #fff;
     background: #fff;
     color: #000000;
+  }
+
+  @media screen and (min-width: 1583px) {
   }
 `;
 
@@ -688,6 +730,13 @@ export const TextTitle = styled.p`
   font-weight: 600;
 `;
 
+export const TextTitleGameV2 = styled.p`
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 600;
+`;
+
+
 export const TextSubTitle = styled.p`
   color: rgb(255, 255, 255, 0.4);
   font-size: 14px;
@@ -713,7 +762,16 @@ export const TextDescription = styled.p`
 
 export const TextTitleHome = styled.p`
   color: #ffffff;
-  font-size: 40px;
+  font-size: 48px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  font-family: var(--font-family-Sora);
+  line-height: 0px;
+`;
+
+export const TextTitleHomev3 = styled.p`
+  color: #ffffff;
+  font-size: 38px;
   letter-spacing: 0.8px;
   font-weight: 600;
   font-family: var(--font-family-Sora);
@@ -975,6 +1033,11 @@ export const ContainerGame = styled.div`
   box-sizing: border-box;
   border-radius: 0.8rem;
   padding: 15px;
+
+  
+  @media screen and (min-width: 1583px) {
+    width: 84%;
+  }
 `;
 
 export const ContainerRarityGame = styled.div`

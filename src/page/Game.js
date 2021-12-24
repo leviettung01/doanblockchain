@@ -8,7 +8,6 @@ import {Link} from "react-router-dom";
 import TruffleRenderer from "../componets/TruffleRenderer";
 import { BiDna } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
-import Confetti from 'react-confetti'
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -53,37 +52,30 @@ const Game = () => {
     <>
     {/* handShow */}
     <s.Containertoggle 
-    ref={confettiRef}
-    className={loadingShow === true ? "active-tab" : null}
-    >
-    <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-    />
-    <s.ImageToggle image={_camping} />
-    <s.TextTitle>
-        Congratulations, Your truffle has been trained. click Go to view or Click Close to return.
-    </s.TextTitle>
-    <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
-        <s.StyledButton
-            style={{marginRight: "15px"}}
-            onClick={() => { history.push("/mytruffle")}}
-        >
-            Go to
-        </s.StyledButton>
-        <s.StyledButtonBreedShow
-            onClick={() => {
-            setLoadingShow(false);
-            }}
-        >
-            Close
-        </s.StyledButtonBreedShow>
-    </s.Container>
+        ref={confettiRef}
+        className={loadingShow === true ? "active-tab" : null}
+      >
+      <s.ImageToggle image={_camping} />
+      <s.TextTitleGameV2>
+        Congratulations, Your truffle has been trained.
+      </s.TextTitleGameV2>
+      <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
+          <s.StyledButton
+              style={{marginRight: "15px"}}
+              onClick={() => { history.push(`/details/${itemCamp}`)}}
+          >
+              View
+          </s.StyledButton>
+          <s.StyledButtonBreedShow
+              onClick={() => {
+              setLoadingShow(false);
+              }}
+          >
+              Close
+          </s.StyledButtonBreedShow>
+      </s.Container>
     </s.Containertoggle>
-    <s.Screen >
+    <s.Screen className={loadingShow === true ? "blur" : null}>
       <s.Container ai={"center"} style={{margin: "1.9rem 0 1rem 0"}}>
           <s.ContainerGame ai={"center"} style={{margin: "5.6rem 0 0 0"}}>
             <s.TextTitleHome>Welcome to the Shroom Scouts Adventure</s.TextTitleHome>
@@ -160,7 +152,7 @@ const Game = () => {
                 }
                 {loadingCamp &&
                 <s.StyledButtonTransfer 
-                    style={{marginTop: "20px", pointerEvents: "none"}}
+                    style={{marginTop: "15px", pointerEvents: "none"}}
                     disabled={loadingCamp ? 1: 0}
                 >
                     <s.StyledButtonLoading/>
@@ -169,7 +161,7 @@ const Game = () => {
               </s.ContentBreed >
             </s.Container>
             <s.ContainerRarityGame ai={"center"}>
-                <s.TextTitleHome>Camping</s.TextTitleHome>
+                <s.TextTitleHomev3>Camping</s.TextTitleHomev3>
               <s.Container ai={"flex-start"}>
                 <s.TextTitleDetails>Success rate depends on Rarity.</s.TextTitleDetails>
                 <s.TextTitleDetails>The higher the Level, the shorter the cooldown.</s.TextTitleDetails>

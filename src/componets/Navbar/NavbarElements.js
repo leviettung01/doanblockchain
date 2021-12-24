@@ -6,7 +6,7 @@ export const Nav = styled.nav`
   height: 60px;
   display: flex;
   justify-content: space-between;
-  padding: 1rem calc((100vw - 1400px) / 2);
+  padding: 1rem calc((100vw - 1630px) / 2);
   z-index: 10;
   font-family: var( --font-family-Sora);
   font-weight: 500;
@@ -18,6 +18,10 @@ export const Nav = styled.nav`
   bottom: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background-color: #1A1A22;
+
+  @media screen and (min-width: 1583px) {
+    padding: 1rem calc((100vw - 1400px) / 2);
+  }
 `;
 
 export const NavLink = styled(Link)`

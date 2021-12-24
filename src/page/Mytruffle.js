@@ -5,7 +5,6 @@ import * as s from "../styles/globalStyles";
 import _bg from "../assets/images/bg/_bg.png"
 import _reveal from "../assets/images/bg/reveal.png";
 import { CgAddR } from "react-icons/cg";
-import Confetti from 'react-confetti'
 import RenderSell from "../componets/RenderSell";
 import RenderAll from "../componets/RenderAll";
 import RenderStatus from "../componets/RenderStatus";
@@ -182,29 +181,22 @@ const Mytruffle = () => {
       <>
       {/* handShow */}
       <s.Containertoggle 
-      ref={confettiRef}
-      className={loadingShow === true ? "active-tab" : null}
-      >
-      <Confetti 
-        style={{position: "absolute", top: "-200px", zIndex: 1}}
-        recycle={true}
-        numberOfPieces={200}
-        height={900}
-        width={1900}
-      />
-      <s.ImageToggle image={_reveal} />
-      <s.TextTitle>
-        Congratulations, you now own a Truffle. Click Close to return.
-      </s.TextTitle>
-      <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
-        <s.StyledButton
-          onClick={() => {
-            setLoadingShow(false);
-          }}
+          ref={confettiRef}
+          className={loadingShow === true ? "active-tab" : null}
         >
-          Close
-        </s.StyledButton>
-      </s.Container>
+        <s.ImageToggle image={_reveal} />
+        <s.TextTitle>
+          Congratulations, you now own a Truffle. Click Close to return.
+        </s.TextTitle>
+        <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
+          <s.StyledButton
+            onClick={() => {
+              setLoadingShow(false);
+            }}
+          >
+            Close
+          </s.StyledButton>
+        </s.Container>
       </s.Containertoggle>
       
       <s.Screen image={_bg} className={loadingShow === true ? "blur" : null} >

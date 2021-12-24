@@ -4,7 +4,6 @@ import { fetchData } from "../redux/data/dataActions";
 import { connect } from "../redux/blockchain/blockchainActions";
 import * as s from "../styles/globalStyles";
 import _bg from "../assets/images/bg/_bg.png";
-import _truffle from "../assets/images/bg/truffle.png";
 import _center from "../assets/images/bg/center.png";
 import _center1 from "../assets/images/bg/center1.png";
 import _m1 from "../assets/images/bg/m1.png";
@@ -29,7 +28,7 @@ const Home = () => {
     const [products] = useState([_m1, _m2, _m3, _m4, _m5, _m6, _m7, _m8, _m9, _m10]);
     const [productIndex, setProductIndex] = useState(0);
 
-    let firstFourProducts = products.slice(productIndex, productIndex + 4);
+    let firstFourProducts = products.slice(productIndex, productIndex + 5);
 
     const nextProduct = () => {
         const lastProductIndex = products.length - 1;
@@ -77,8 +76,11 @@ const Home = () => {
 
                 </s.BoxHome>
             </s.Container>
+        </s.Screen>
+
+        <s.ContainerBoxHome test ai={"center"} style={{paddingTop: "4rem"}}>
             <s.Container ai={"center"}>
-                <s.ContainerHomeBox fd={"row"} jc={"space-around"} ai={"center"}>
+                <s.ContainerHomeBox fd={"row"} jc={"space-between"} ai={"center"}>
                     <s.BoxViewHome>
                         <s.TextTitleHome>9,200</s.TextTitleHome>
                         <s.TextTitle>Unique Editions</s.TextTitle>
@@ -93,12 +95,7 @@ const Home = () => {
                     </s.BoxViewHome>
                 </s.ContainerHomeBox>
             </s.Container>
-        </s.Screen>
-
-        <s.ContainerBoxHome test ai={"center"} style={{paddingTop: "2rem"}}>
-            <s.Container ai={"center"}>
-                <s.ImageToggleHome image={_truffle}/>
-            </s.Container>
+ 
             <s.ContainerBoxHomev2 fd={"row"}ai={"center"} jc={"space-between"} style={{marginTop: "7rem"}}>
                 <s.TextBoxRight>
                     <s.TextTitleHomev2>The Friendliest Troop on the Ethereum Blockchain</s.TextTitleHomev2>
@@ -170,7 +167,7 @@ const Home = () => {
                         <s.TextSubTitleHomev2>Don't miss out on our limited collection of Magic Mushroom NFT's.</s.TextSubTitleHomev2>
                     </s.TextBoxRight>
                     <s.Container>
-                        <NavLink 
+                        <NavLink1 
                             style={{marginBottom: "10px"}}
                             to={{ pathname: "https://www.facebook.com/mn.HoangEt" }} 
                             target="_blank"
@@ -178,15 +175,15 @@ const Home = () => {
                             <s.StyledButtonActionv2>
                                 Contact Hoàng <FaFacebookSquare style={{marginLeft: "15px"}}/>
                             </s.StyledButtonActionv2>
-                        </NavLink>
-                        <NavLink 
+                        </NavLink1>
+                        <NavLink1 
                             to={{ pathname: "https://www.facebook.com/haj.pham.313" }} 
                             target="_blank"
                         >
                             <s.StyledButtonActionv2>
                                 Contact Hải<FaFacebookSquare style={{marginLeft: "15px"}}/>
                             </s.StyledButtonActionv2>
-                        </NavLink>
+                        </NavLink1>
                     </s.Container>
                 </s.ContainerBoxHomev2>
             </s.ContainerBoxHomev3>
@@ -201,6 +198,23 @@ export const NavLink = styled(Link)`
   align-items: center;
   text-decoration: none;
   padding: 0 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: #000000;
+  }
+
+  @media screen and (min-width: 1583px) {
+    padding: 0 0rem;
+  }
+`;
+
+export const NavLink1 = styled(Link)`
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   cursor: pointer;
 
   &:hover {
