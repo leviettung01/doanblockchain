@@ -4,7 +4,7 @@ Hosted on Vercal: (https://truffle-nft-game-kykudscft-hngovan.vercel.app/)
 
 ## Contracts
 
-Deployed on BSC: (https://testnet.bscscan.com/address/0x18efB905993070c70d371DEa06efEd0ef95c7559)
+Deployed on BSC: (https://testnet.bscscan.com/address/0x0999C5e6e7E1cCF5A7DcdFef61e192476ad2Adf4)
 
 ### Tech Stack
 
