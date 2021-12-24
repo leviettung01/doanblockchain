@@ -19,7 +19,7 @@ export const Nav = styled.nav`
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   background-color: #1A1A22;
 
-  @media screen and (max-width: 1920px) {
+  @media screen and (max-width: 1600px) {
     padding: 1rem calc((100vw - 1400px) / 2);
   }
 `;

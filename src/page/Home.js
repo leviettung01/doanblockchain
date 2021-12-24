@@ -205,7 +205,7 @@ export const NavLink = styled(Link)`
     color: #000000;
   }
 
-  @media screen and (max-width: 1920px) {
+  @media screen and (max-width: 1600px) {
     padding: 0 0rem;
   }
 `;
