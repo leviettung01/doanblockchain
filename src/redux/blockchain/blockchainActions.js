@@ -58,7 +58,7 @@ export const connect = () => {
         if (networkId == 97) {
           const truffleFactory = new web3.eth.Contract(
             TruffleFactory.abi,
-            '0x0999C5e6e7E1cCF5A7DcdFef61e192476ad2Adf4'
+            '0x33aFA16a10d184741b103385dFA4859eae80d77A'
           );
           
           dispatch( 

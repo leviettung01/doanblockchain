@@ -31,6 +31,7 @@ const RenderStatus = ({data, loading}) => {
                   <s.TextDescription>{item.name}</s.TextDescription>
                 <s.Container>
                 <s.TextDescription>#{item.id}</s.TextDescription>
+                <s.TextDescription><BiDna/> Gen {item.gen0}</s.TextDescription>
                   {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
                     <s.TextSubTitle style={{color: "#ffd32a"}}>
                       Not Ready
@@ -40,7 +41,6 @@ const RenderStatus = ({data, loading}) => {
                       Breed ready
                     </s.TextSubTitle>
                   )}
-                  <s.TextSubTitle><BiDna/> {item.dna}</s.TextSubTitle>
                 </s.Container>
                 <s.StyledTextBoxBoder>
                   <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>

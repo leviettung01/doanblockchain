@@ -3,6 +3,7 @@ import * as s from "../styles/globalStyles";
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 import TruffleRenderer from "./TruffleRenderer";
+import { BiDna } from "react-icons/bi";
 import revealtruffle from "../assets/images/bg/_revealtruffle.png";
 
 const RenderSell = ({data, blockchain,loading}) => {
@@ -62,17 +63,20 @@ const RenderSell = ({data, blockchain,loading}) => {
                     </s.StyledTextBox>
                     <s.StyledTextBox>
                         <s.TextDescription>#{item.id}</s.TextDescription>
-                        <s.StyledButtonPrice>
-                            <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} BSC</s.TextDescription>
-                        </s.StyledButtonPrice>
+                        <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} BSC</s.TextDescription>
                     </s.StyledTextBox>  
                     <s.StyledTextBox>
+                        <s.TextDescription><BiDna/> Gen {item.gen0}</s.TextDescription>
+                        <s.StyledButtonPrice>
+                            <s.TextDescriptionBuy>
+                                {blockchain.account === item.currentOwner.toLowerCase() ? "View" : "Buy now"}
+                            </s.TextDescriptionBuy> 
+                        </s.StyledButtonPrice>
+                    </s.StyledTextBox>
+                    <s.StyledTextBox  style={{justifyContent: "flex-end"}}>
                         <s.TextSubTitle>
                             {fromNow(item.sellTime * 1000)}
                         </s.TextSubTitle> 
-                        <s.TextDescriptionBuy>
-                            {blockchain.account === item.currentOwner.toLowerCase() ? "" : "Buy now"}
-                        </s.TextDescriptionBuy> 
                     </s.StyledTextBox>
                     <s.StyledTextBoxBoder>
                         <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>

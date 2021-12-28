@@ -53,6 +53,7 @@ const Breed = () => {
         }
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
     const newTruffle = data.allOwnerTruffles.filter(item => item.id >= (data.allTruffles.length - 1)).map(item => item.id)
+    console.log(newTruffle)
     return (
         <>
         {/* handShow */}
@@ -109,6 +110,7 @@ const Breed = () => {
                                     <s.TextDescription>{item.name}</s.TextDescription>
                                 <s.Container>
                                     <s.TextDescription>#{item.id}</s.TextDescription>
+                                    <s.TextDescription><BiDna/> Gen {item.gen0}</s.TextDescription>
                                     {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
                                     <s.TextSubTitle style={{color: "#ffd32a"}}>
                                         Not Ready
@@ -118,7 +120,6 @@ const Breed = () => {
                                         Breed ready
                                     </s.TextSubTitle>
                                     )}
-                                    <s.TextSubTitle><BiDna/> {item.dna}</s.TextSubTitle>
                                 </s.Container>
                                 <s.StyledTextBoxBoder>
                                     <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
@@ -158,6 +159,7 @@ const Breed = () => {
                                     <s.TextDescription>{item.name}</s.TextDescription>
                                 <s.Container>
                                     <s.TextDescription>#{item.id}</s.TextDescription>
+                                    <s.TextDescription><BiDna/> Gen {item.gen0}</s.TextDescription>
                                     {parseInt((item.readyTime - Date.now() / 1000) / 3600) !== 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) > 0 ? (
                                     <s.TextSubTitle style={{color: "#ffd32a"}}>
                                         Not Ready
@@ -167,7 +169,6 @@ const Breed = () => {
                                         Breed ready
                                     </s.TextSubTitle>
                                     )}
-                                    <s.TextSubTitle><BiDna/> {item.dna}</s.TextSubTitle>
                                 </s.Container>
                                 <s.StyledTextBoxBoder>
                                     <s.TextSubTitle>Rarity: <span style={{color: "#ffffff"}}>{item.rarity}</span></s.TextSubTitle>
@@ -225,7 +226,7 @@ const Breed = () => {
                 <s.StyledTable>
                     <s.StyledTableContent>
                         <s.TextTableName>Rarity</s.TextTableName>
-                        <s.TextTableName>Count</s.TextTableName>
+                        <s.TextTableName>Incement</s.TextTableName>
                         <s.TextTableName>Rate</s.TextTableName>
                     </s.StyledTableContent>
                         <tr >
@@ -263,20 +264,24 @@ const Breed = () => {
                     </s.Container>
                     <s.StyledTable>
                     <s.StyledTableContent>
-                        <s.TextTableName>Rarity</s.TextTableName>
+                        <s.TextTableName>Gen</s.TextTableName>
                         <s.TextTableName>Cooldown</s.TextTableName>
                     </s.StyledTableContent>
                         <tr >
-                        <s.TextTableEvent>{'0 => 49'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'> 10'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'48h'}</s.TextTableEvent>
+                        </tr>
+                        <tr >
+                        <s.TextTableEvent>{'6 => 10'}</s.TextTableEvent>
                         <s.TextTableEvent>{'24h'}</s.TextTableEvent>
                         </tr>
                         <tr >
-                        <s.TextTableEvent>{'50 => 74'}</s.TextTableEvent>
-                        <s.TextTableEvent>{'18h'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'1 => 5'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'12h'}</s.TextTableEvent>
                         </tr>
                         <tr >
-                        <s.TextTableEvent>{'75 => 99'}</s.TextTableEvent>
-                        <s.TextTableEvent>{'12h'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'0'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'8h'}</s.TextTableEvent>
                         </tr>
                     </s.StyledTable>
                 </s.ContainerHome>   

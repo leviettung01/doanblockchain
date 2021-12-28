@@ -20,10 +20,11 @@ contract TruffleFactory is ERC721, Ownable {
     uint256 randNonce = 0;
     uint256 lostTime = 30 minutes;
     uint256 quantilyLimit;
-    uint32[3] public cooldowns = [
+    uint32[4] public cooldowns = [
+        uint32(8 hours),
         uint32(12 hours),
-        uint32(18 hours),
-        uint32(1 days)
+        uint32(1 days),
+        uint32(2 days)
     ];
 
     mapping(uint256 => uint256) public tokenIdToPrice;
@@ -40,12 +41,12 @@ contract TruffleFactory is ERC721, Ownable {
         uint8 level;
         uint8 rarity;
         address currentOwner;
-        address previousOwner;
         uint32 readyTime;
         uint8 dadId;
         uint8 mumId;
         uint256 sell;
         uint32 sellTime;
+        uint gen0;
     }
 
     Truffle[] public truffles;
@@ -87,8 +88,9 @@ contract TruffleFactory is ERC721, Ownable {
     function _createTruffle(
         string memory _name,
         uint256 _dna,
-        uint8 dadId,
-        uint8 mumId
+        uint8 _dadId,
+        uint8 _mumId,
+        uint _gen0
     ) internal {
         uint8 randRarity = uint8(_dna % 100);
 
@@ -101,12 +103,12 @@ contract TruffleFactory is ERC721, Ownable {
             0,
             randRarity,
             msg.sender,
-            address(0),
             uint32(block.timestamp),
-            dadId,
-            mumId,
+            _dadId,
+            _mumId,
             0,
-            0
+            0,
+            _gen0
         );
         truffles.push(newTruffle);
         _safeMint(msg.sender, newId);
@@ -128,7 +130,7 @@ contract TruffleFactory is ERC721, Ownable {
         require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
         uint256 newDna = randDna - (randDna % 100) + randMod(5) + 1;
-        _createTruffle(_name, newDna, 0, 0);
+        _createTruffle(_name, newDna, 0, 0, 0);
     }
 
     function createRandomTruffle(string memory _name) public payable{
@@ -138,7 +140,7 @@ contract TruffleFactory is ERC721, Ownable {
         require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
         uint256 newDna = randDna - randDna % 100 + randMod(20) + 10;
-        _createTruffle(_name, newDna, 0, 0);
+        _createTruffle(_name, newDna, 0, 0, 0);
         payable(admin).transfer(fee);
     }
 
@@ -219,7 +221,7 @@ contract TruffleFactory is ERC721, Ownable {
     function _triggerCooldown(Truffle storage _truffle) internal {
         //hàm kich hoat cooldown
         uint8 levels = _truffle.level;
-        if (_truffle.rarity >= 75) {
+        if (_truffle.gen0 == 0) {
             for (uint8 i = 0; i <= 20; i++) {
                 if (i == levels) {
                     _truffle.readyTime = uint32(
@@ -229,7 +231,7 @@ contract TruffleFactory is ERC721, Ownable {
                 }
             }
         }
-        if (_truffle.rarity >= 50 && _truffle.rarity < 75) {
+        if (_truffle.gen0 > 0 && _truffle.gen0 <= 5) {
             for (uint8 i = 0; i <= 20; i++) {
                 if (i == levels) {
                     _truffle.readyTime = uint32(
@@ -239,7 +241,7 @@ contract TruffleFactory is ERC721, Ownable {
                 }
             }
         }
-        if (_truffle.rarity < 50) {
+        if (_truffle.gen0 > 5 && _truffle.gen0 <= 10) {
             for (uint8 i = 0; i <= 20; i++) {
                 if (i == levels) {
                     _truffle.readyTime = uint32(
@@ -249,6 +251,28 @@ contract TruffleFactory is ERC721, Ownable {
                 }
             }
         }
+
+        if (_truffle.gen0 > 10) {
+            for (uint8 i = 0; i <= 20; i++) {
+                if (i == levels) {
+                    _truffle.readyTime = uint32(
+                        block.timestamp + cooldowns[3] - (lostTime * i)
+                    );
+                    break;
+                }
+            }
+        }
+    }
+
+    function _getTruffleGen(Truffle memory _dadId, Truffle memory _mumId)
+        internal
+        view
+        returns (uint)
+    {
+        if(_dadId.gen0 > _mumId.gen0){
+            return _dadId.gen0 += 1;
+        }
+        return _mumId.gen0 += 1;
     }
 
     function _isReady(Truffle storage _truffle) internal view returns (bool) {
@@ -359,9 +383,9 @@ contract TruffleFactory is ERC721, Ownable {
                 newDna = algorithm - algorithm % 100 + valueRarity3;
             }
         }
-        
+        uint newGen = _getTruffleGen(myTruffle, myTargetDna);
 
-        _createTruffle("New Truffle", newDna, dadId, mumId);
+        _createTruffle("New Truffle", newDna, dadId, mumId, newGen);
         _triggerCooldown(myTruffle);
         _triggerCooldown(myTargetDna);
         payable(admin).transfer(breedFee); 
@@ -373,7 +397,6 @@ contract TruffleFactory is ERC721, Ownable {
         myTruffle.sell = 0;
         myTruffle.sellTime = 0;
         // update the token's previous owner
-        myTruffle.previousOwner = myTruffle.currentOwner;
         // update the token's current owner
         myTruffle.currentOwner = _to;
     }
@@ -415,8 +438,6 @@ contract TruffleFactory is ERC721, Ownable {
         myTruffle.sellTime = 0;
         payable(seller).transfer(msg.value); // send the ETH to the seller
         payable(admin).transfer(sellFee); 
-        // update the token's previous owner
-        myTruffle.previousOwner = myTruffle.currentOwner;
         // update the token's current owner
         myTruffle.currentOwner = msg.sender;
 
@@ -473,55 +494,31 @@ contract TruffleFactory is ERC721, Ownable {
     function dailyMission(uint256 _tokenId ) external {
         require(msg.sender == ownerOf(_tokenId), "Not owner of this token");
         Truffle storage myTruffle = truffles[_tokenId];
-        require(myTruffle.rarity < 99);
+        require(myTruffle.level < 20);
         require(myTruffle.sell == 0);
         require(_isReady(myTruffle));
         uint8 valueRarity = uint8(myTruffle.dna % 100);
         uint rand = randMod(100);
-        if(myTruffle.level < 20){
-            if(valueRarity <= 10){
-                if(rand <= 20)
-                    myTruffle.level++;
-            }else if(valueRarity > 10 && valueRarity <= 30){
-                if(rand <= 35)
-                    myTruffle.level++;
-            }else if(valueRarity > 30 && valueRarity <= 50){
-                if(rand <= 40)
-                    myTruffle.level++;
-            }else if(valueRarity > 50 && valueRarity <= 70){
-                if(rand <= 45)
-                    myTruffle.level++;
-            }
-            else if(valueRarity > 70 && valueRarity <= 90){
-                if(rand <= 60)
-                    myTruffle.level++;
-            }
-            else if(valueRarity > 90){
-                if(rand <= 70)
-                    myTruffle.level++;
-            }
-        }else{
-            if(valueRarity <= 10){
-                if(rand <= 20)
-                    myTruffle.rarity++;
-            }else if(valueRarity > 10 && valueRarity <= 30){
-                if(rand <= 35)
-                    myTruffle.rarity++;
-            }else if(valueRarity > 30 && valueRarity <= 50){
-                if(rand <= 40)
-                    myTruffle.rarity++;
-            }else if(valueRarity > 50 && valueRarity <= 70){
-                if(rand <= 45)
-                    myTruffle.rarity++;
-            }
-            else if(valueRarity > 70 && valueRarity <= 90){
-                if(rand <= 60)
-                    myTruffle.rarity++;
-            }
-            else if(valueRarity > 90){
-                if(rand <= 70)
-                    myTruffle.rarity++;
-            }
+        if(valueRarity <= 10){
+            if(rand <= 20)
+                myTruffle.level++;
+        }else if(valueRarity > 10 && valueRarity <= 30){
+            if(rand <= 35)
+                myTruffle.level++;
+        }else if(valueRarity > 30 && valueRarity <= 50){
+            if(rand <= 40)
+                myTruffle.level++;
+        }else if(valueRarity > 50 && valueRarity <= 70){
+            if(rand <= 45)
+                myTruffle.level++;
+        }
+        else if(valueRarity > 70 && valueRarity <= 90){
+            if(rand <= 60)
+                myTruffle.level++;
+        }
+        else if(valueRarity > 90){
+            if(rand <= 70)
+                myTruffle.level++;
         }
 
         myTruffle.readyTime = uint32(block.timestamp + 1 days);

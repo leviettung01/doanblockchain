@@ -488,7 +488,10 @@ export const ContainerDetails = styled.div`
   width: 70%;
   box-sizing: border-box;
   border-radius: 0.8rem;
-  /* background-color: #373943; */
+
+  @media screen and (max-width: 1600px) {
+    width: 84.1%;
+  }
   ;
 `;
 
@@ -1136,7 +1139,7 @@ export const BoxBreed = styled.div`
   justify-content: center;
   align-items: center;
   width: 232px;
-  height: 427px;
+  height: 431px;
   border: 2px dashed rgba(255, 255, 255, 1);
   background-color: transparent;
   border-radius: 0.8rem;

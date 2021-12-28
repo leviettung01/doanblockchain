@@ -395,7 +395,7 @@ const Mytruffle = () => {
               <RenderSell data={currentItemsSell} blockchain={blockchain} loading={loading}/>
             ) : (
               <s.Container ai={"center"}>
-                <div style={{height: "422px", marginTop: "50px"}}>
+                <div style={{height: "426px", marginTop: "50px"}}>
                   <s.TextTitle>
                     No items on sale. 
                   </s.TextTitle>
@@ -462,7 +462,17 @@ const Mytruffle = () => {
                 maxPageNumberLimit={maxPageNumberLimit2}
                 minPageNumberLimit={minPageNumberLimit2}
               />
-              <RenderStatus data={currentItemsStatus} loading={loading}/>
+              {kq !== 0 ? (
+                <RenderStatus data={currentItemsStatus} loading={loading}/>
+              ) : (
+              <s.Container ai={"center"}>
+                <div style={{height: "426px", marginTop: "50px"}}>
+                  <s.TextTitle>
+                    No items ready !
+                  </s.TextTitle>
+                </div>
+              </s.Container>
+              )}
             </>
           )}
           </s.ContainerHome> 

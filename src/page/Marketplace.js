@@ -144,8 +144,6 @@ const Marketplace = () => {
       setPriceList(sorted);
     };
 
-    console.log(priceList)
-
     //sort
     useEffect(() => {
         sortByPrice()
@@ -317,8 +315,8 @@ const Marketplace = () => {
                         <s.StyledTableContent>
                           <s.TextTableName>Item</s.TextTableName>
                           <s.TextTableName>Price</s.TextTableName>
-                          <s.TextTableName>Current Owner</s.TextTableName>
-                          <s.TextTableName>Previous Owner</s.TextTableName>
+                          <s.TextTableName>Gen</s.TextTableName>
+                          <s.TextTableName>Owner</s.TextTableName>
                           <s.TextTableName>Time</s.TextTableName>
                         </s.StyledTableContent>
                         {searchResults != null ? (
@@ -328,8 +326,8 @@ const Marketplace = () => {
                             <s.StyledTableRow key={item.id} onClick={() => history.push(`/details/${item.id}`)}> 
                                 <s.TextTableEvent>{item.id}</s.TextTableEvent>
                                 <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
+                                <s.TextTableEvent>{item.gen0}</s.TextTableEvent>
                                 <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
-                                <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                                 <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
                             </s.StyledTableRow>
                           )

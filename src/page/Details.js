@@ -11,6 +11,7 @@ import { RiWallet3Line } from "react-icons/ri";
 import { BiArrowBack } from 'react-icons/bi';
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Details = () => {
   const dispatch = useDispatch();
@@ -56,28 +57,34 @@ const Details = () => {
     setToggleState(index);
   };
 
-  //cooldownsLevel(endurance)
+  const DadId = data.allTruffles.filter(item => item.id === id).map(result => result.dadId)
+  const MumId = data.allTruffles.filter(item => item.id === id).map(result => result.mumId)
+
   useEffect(() => {
-    const Rarity  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
-      result.rarity
+    const Gen  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
+      result.gen0
     )
 
     const levelUp  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
       result.level
     )
 
-    if(Rarity < 50 && levelUp <=0 ) 
-      setEndurance(24)
-    else if(Rarity < 50 && levelUp > 0 )
-      setEndurance(24 - (0.5*levelUp))  
-    else if(Rarity >= 50 && Rarity < 75 )
-      setEndurance(18)
-    else if(Rarity >= 50 && Rarity < 75 && levelUp > 0)
-      setEndurance(18 - (0.5*levelUp))
-    else if(Rarity >= 75)
+    if(Gen == 0 && levelUp <= 0 ) 
+      setEndurance(8)
+    else if(Gen == 0 && levelUp > 0 )
+      setEndurance(8 - (0.5*levelUp))  
+    else if(Gen > 0 && Gen <= 5 && levelUp <= 0)
       setEndurance(12)
-    else if(Rarity >= 75 && levelUp > 0)
-    setEndurance(12 - (0.5*levelUp))
+    else if(Gen > 0 && Gen <= 5 && levelUp > 0)
+      setEndurance(12 - (0.5*levelUp))
+    else if(Gen > 5 && Gen <= 10 && levelUp <= 0)
+      setEndurance(24)
+    else if(Gen > 5 && Gen <= 10 && levelUp > 0)
+      setEndurance(24 - (0.5*levelUp))
+    else if(Gen > 10 && levelUp <= 0)
+      setEndurance(48)
+    else if(Gen > 10 && levelUp > 0)
+      setEndurance(48 - (0.5*levelUp))
   },[data.allOwnerTruffles, id])
 
   //readyTimer
@@ -478,7 +485,7 @@ const Details = () => {
               {blockchain.account === item.currentOwner.toLowerCase() ? (
               <s.BoxDetails>
                   <s.TextName>{item.name}</s.TextName>  
-                <s.TextTitleDetails><BiDna/> {item.dna}</s.TextTitleDetails> 
+                <s.TextTitleDetails><BiDna/> {item.dna} (Gen {item.gen0})</s.TextTitleDetails> 
                 {/* check view */}
                 {item.sell <= 0 ? (
                   <>
@@ -584,7 +591,7 @@ const Details = () => {
               ) : (
                 <s.BoxDetails>
                   <s.TextName>{item.name}</s.TextName>  
-                  <s.TextTitleDetails><BiDna/> {item.dna}</s.TextTitleDetails> 
+                  <s.TextTitleDetails><BiDna/> {item.dna} (Gen {item.gen0})</s.TextTitleDetails> 
                 <s.BoxBuy>
                   <s.StyledTextBoxAround>
                     <s.TextTitleDetails>Rarity</s.TextTitleDetails>
@@ -840,8 +847,8 @@ const Details = () => {
                   <s.StyledTableContent>
                     <s.TextTableName>Item</s.TextTableName>
                     <s.TextTableName>Price</s.TextTableName>
+                    <s.TextTableName>Gen</s.TextTableName>
                     <s.TextTableName>Current Owner</s.TextTableName>
-                    <s.TextTableName>Previous Owner</s.TextTableName>
                     <s.TextTableName>Time</s.TextTableName>
                   </s.StyledTableContent>
                   {data.allTruffles.filter(item => item.id === id ).map((item) => {
@@ -850,14 +857,35 @@ const Details = () => {
                         <tr key={item.id}>
                           <s.TextTableEvent>{item.id}</s.TextTableEvent>
                           <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
+                          <s.TextTableEvent>{item.gen0}</s.TextTableEvent>
                           <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
-                          <s.TextTableEvent>{item.previousOwner.substring(0, 6)}...{item.previousOwner.substring(item.previousOwner.length - 4)}</s.TextTableEvent>
                           <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
                         </tr>
                       </tbody>
                     )
                   })}
                 </s.StyledTable>
+                
+                {data.allTruffles.filter(item => item.id === DadId[0] ).map((item ) => (
+                  <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
+                      <s.StyledImg>
+                      <Link to={`/details/${item.id}`} >
+                          <TruffleRenderer truffle={item}/>
+                      </Link>
+                      </s.StyledImg>
+                  </s.Box>
+                ))}
+
+                {data.allTruffles.filter(item => item.id === MumId[0] ).map((item ) => (
+                  <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
+                      <s.StyledImg>
+                      <Link to={`/details/${item.id}`} >
+                          <TruffleRenderer truffle={item}/>
+                      </Link>
+                      </s.StyledImg>
+                  </s.Box>
+                ))} 
+
               </s.Container>
             )}  
             </s.ContainerDetails>
