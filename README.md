@@ -1,6 +1,6 @@
 # Crypto-Truffle
 
-Hosted on Vercal: (https://truffle-nft-game-kykudscft-hngovan.vercel.app/)
+Hosted on Vercal: (https://nft-game-nine-mauve.vercel.app/)
 
 ## Contracts
 
