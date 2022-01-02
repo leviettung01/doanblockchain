@@ -32,8 +32,7 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 
 
 ### Game (Camping)
-If the level max (20), start increasing Rarity.
-
+level max (20)
 | Raritys | Count | Cooldown Time | Rate |
 |---|---|---|---|
 |1, 10 | +1 | 24 hours | 20% |
