@@ -4,7 +4,7 @@ Hosted on Vercal: (https://truffle-nft-game-kykudscft-hngovan.vercel.app/)
 
 ## Contracts
 
-Deployed on BSC: (https://testnet.bscscan.com/address/0x18efB905993070c70d371DEa06efEd0ef95c7559)
+Deployed on BSC: (https://testnet.bscscan.com/address/0x012fb1b604dBc5ae558a9ceabE0Eb91fF6d910C9)
 
 ### Tech Stack
 
@@ -57,11 +57,12 @@ If the level max (20), start increasing Rarity.
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
-| Rarity | Cooldown Time  |
+| Gen | Cooldown Time  |
 |---|---|
-| 0, 49 | 24 hours |
-| 50, 74| 18 hours |
-| 75, 99 | 12 hours |
+| > 10 | 2 days |
+| 6, 10| 1 days |
+| 1, 5 | 18 hours |
+| 0 | 12 hours |
 
 ### Running the project locally
 
