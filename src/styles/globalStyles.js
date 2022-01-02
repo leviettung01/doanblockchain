@@ -73,6 +73,16 @@ export const ImageToggleRender = styled.div`
   height: 200px;
 `;
 
+export const ImageToggleRenderHome = styled.div`
+  background-image: ${({ image }) => (image ? `url(${image})` : "none")};
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid rgb(255, 255, 255, 0.2);
+`;
+
 export const ImageToggleRenderv2 = styled.div`
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;

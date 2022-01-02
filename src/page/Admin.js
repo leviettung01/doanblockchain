@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as s from "../styles/globalStyles";
 import _bg from "../assets/images/bg/_bg.png"
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ const Admin = () => {
     const [loadingLevelFee, setLoadingLevelFee] = useState(false);
     const [loadingBreedFee, setLoadingBreedFee] = useState(false);
     const [loadingSellFee, setLoadingSellFee] = useState(false);
+    const [loadingShow, setLoadingShow] = useState(false);
 
     const [updateMintFee, setUpdateMintFee] = useState();
     const [updateLevelFee, setUpdateLevelFee] = useState();
@@ -36,6 +37,8 @@ const Admin = () => {
     const toggleTabUpdate = (index) => {
         setToggleStateUpdate(index);
     }
+
+    const confettiRef = useRef(null);
 
     console.log(data.mintFee)
 
@@ -72,6 +75,7 @@ const Admin = () => {
     //UpdateMintFee
     const UpdateMintFee = (_account, _fee) => {
         setLoadingMintFee(true);
+        setLoadingShow(false);
         blockchain.truffleFactory.methods
         .updateFee( _fee)
         .send({
@@ -85,12 +89,14 @@ const Admin = () => {
             setLoadingMintFee(false);
             console.log(receipt);
             dispatch(fetchData(blockchain.account));
+            setLoadingShow(true);
         });
     };
 
     //UpdateLevelFee
     const UpdateLevelFee = (_account, _fee) => {
         setLoadingLevelFee(true);
+        setLoadingShow(false);
         blockchain.truffleFactory.methods
         .updateFeeLevelUp( _fee)
         .send({
@@ -104,12 +110,14 @@ const Admin = () => {
             setLoadingLevelFee(false);
             console.log(receipt);
             dispatch(fetchData(blockchain.account));
+            setLoadingShow(true);
         });
     };
 
     //UpdateFee
     const UpdateBreedFee = (_account, _fee) => {
         setLoadingBreedFee(true);
+        setLoadingShow(false);
         blockchain.truffleFactory.methods
         .updateFeeBreed( _fee)
         .send({
@@ -123,12 +131,14 @@ const Admin = () => {
             setLoadingBreedFee(false);
             console.log(receipt);
             dispatch(fetchData(blockchain.account));
+            setLoadingShow(true);
         });
     };
 
     //UpdateFee
     const UpdateSellFee = (_account, _fee) => {
         setLoadingSellFee(true);
+        setLoadingShow(false);
         blockchain.truffleFactory.methods
         .updateFeeSell( _fee)
         .send({
@@ -142,6 +152,7 @@ const Admin = () => {
             setLoadingSellFee(false);
             console.log(receipt);
             dispatch(fetchData(blockchain.account));
+            setLoadingShow(true);
         });
     };
 
@@ -167,6 +178,28 @@ const Admin = () => {
     }, [blockchain.account, blockchain.truffleFactory, dispatch]);
 
     return (
+        <>
+        {/* handShow sell */}
+        <s.Containertoggle 
+            ref={confettiRef}
+            className={loadingShow === true ? "active-tab" : null}
+        >
+        <s.TextTitle>
+        </s.TextTitle>
+        <s.TextTitle>
+            Update successful. Click Close to return.
+        </s.TextTitle>
+        <s.Container fd={"row"} jc={"center"} ai={"center"} style={{marginTop: "50px"}}>
+            <s.StyledButtonBreedShow
+                onClick={() => {
+                    setLoadingShow(false);
+                }}
+            >
+                Close
+            </s.StyledButtonBreedShow>
+        </s.Container>
+        </s.Containertoggle>
+
         <s.Screen image={_bg}>
             <s.Container ai={"center"} jc={"flex-start"} style={{paddingTop: "3rem", marginTop: "4.5rem"}}>
             <s.ContainerTabBar>
@@ -527,6 +560,7 @@ const Admin = () => {
                 ) : (null)}
             </s.Container>
         </s.Screen>
+        </>
     );
 };
 

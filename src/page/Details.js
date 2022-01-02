@@ -59,9 +59,10 @@ const Details = () => {
 
   const DadId = data.allTruffles.filter(item => item.id === id).map(result => result.dadId)
   const MumId = data.allTruffles.filter(item => item.id === id).map(result => result.mumId)
+  const Children = data.allTruffles.filter(item => item.dadId === id || item.mumId === id).map(result => result.id)
 
   useEffect(() => {
-    const Gen  = data.allOwnerTruffles.filter(item => item.id === id ).map(result => 
+    const Gen  = data.allOwnerTruffles.filter(item => item.id === id && item).map(result => 
       result.gen0
     )
 
@@ -477,7 +478,8 @@ const Details = () => {
                   Back
               </s.StyledButtonBack>
             </s.StyledTextBoxNameDetails>
-            <s.Container jc={"space-between"} ai={"center"} fd={"row"}> 
+            <s.Container> 
+              <s.Container ai={"center"} jc={"space-between"} fd={"row"}>
               <s.StyledImgDetails>       
                 <TruffleRenderer truffle={item} style={{height: "400px", with: "400px"}} />
               </s.StyledImgDetails>
@@ -545,21 +547,21 @@ const Details = () => {
                 ) : (
                   <>
                   <s.BoxBuy>
-                  <s.StyledTextBoxAround>
-                    <s.TextTitleDetails>Rarity</s.TextTitleDetails>
-                    <s.TextTitleDetails>Endurance </s.TextTitleDetails>
-                    <s.TextTitleDetails>Level</s.TextTitleDetails>
-                  </s.StyledTextBoxAround>
-                  <s.StyledTextBoxAround >
-                    <s.TextTitle>{item.rarity}</s.TextTitle>
-                    <s.TextTitle>{Endurance} Hrs</s.TextTitle>
-                    <s.TextTitle>{item.level}</s.TextTitle>
-                  </s.StyledTextBoxAround>
+                    <s.StyledTextBoxAround>
+                      <s.TextTitleDetails>Rarity</s.TextTitleDetails>
+                      <s.TextTitleDetails>Endurance </s.TextTitleDetails>
+                      <s.TextTitleDetails>Level</s.TextTitleDetails>
+                    </s.StyledTextBoxAround>
+                    <s.StyledTextBoxAround >
+                      <s.TextTitle>{item.rarity}</s.TextTitle>
+                      <s.TextTitle>{Endurance} Hrs</s.TextTitle>
+                      <s.TextTitle>{item.level}</s.TextTitle>
+                    </s.StyledTextBoxAround>
                   </s.BoxBuy>
                   <s.TextSubTitleBuy>Price 
                     <s.StyledTextBox>
                       <s.TextTitleBuy>
-                      {blockchain.web3.utils.fromWei(item.sell,"ether")} BSC
+                      {blockchain.web3.utils.fromWei(item.sell,"ether")} BNB
                       </s.TextTitleBuy>
                       <s.TextSubTitleBuy>{fromNow(item.sellTime * 1000)}</s.TextSubTitleBuy>
                     </s.StyledTextBox>
@@ -607,7 +609,7 @@ const Details = () => {
                 <s.TextSubTitleBuy>Price 
                   <s.StyledTextBox>
                     <s.TextTitleBuy>
-                    {blockchain.web3.utils.fromWei(item.sell,"ether")} BSC
+                    {blockchain.web3.utils.fromWei(item.sell,"ether")} BNB
                     </s.TextTitleBuy>
                     <s.TextSubTitleBuy>{fromNow(item.sellTime * 1000)}</s.TextSubTitleBuy>
                   </s.StyledTextBox>
@@ -635,6 +637,65 @@ const Details = () => {
                 </s.Container>
               </s.BoxDetails>
               )}
+              </s.Container>
+              {blockchain.account === item.currentOwner.toLowerCase() ? (
+                <s.Container jc={"center"} ai={"center"} style={{paddingTop: "6rem"}}>
+                  {/* parents */}
+                    <s.Container>
+                      <s.TextName>Parents</s.TextName>
+                      {DadId[0] !== "0" && MumId[0] !== "0" ? (
+                      <s.Container fd={"row"}>
+                      {data.allTruffles.filter(item => item.id === DadId[0] ).map((item ) => (
+                        <s.Container style={{marginRight: "20px"}}>
+                          <s.TextDescription>Father</s.TextDescription>
+                          <s.Box key={item.id}>
+                              <s.StyledImg>
+                              <Link to={`/details/${item.id}`} >
+                                  <TruffleRenderer truffle={item}/>
+                              </Link>
+                              </s.StyledImg>
+                          </s.Box>
+                        </s.Container>
+                      ))}
+                      {/* mother */}
+                      {data.allTruffles.filter(item => item.id === MumId[0] ).map((item ) => (
+                        <s.Container>
+                          <s.TextDescription>Mother</s.TextDescription>
+                          <s.Box key={item.id} >
+                              <s.StyledImg>
+                              <Link to={`/details/${item.id}`} >
+                                <TruffleRenderer truffle={item}/>
+                              </Link>
+                              </s.StyledImg>
+                          </s.Box>
+                        </s.Container>
+                      ))} 
+                      </s.Container>
+                      ): ( 
+                        <s.TextDescription>{item.gen0 === "0" ? "First generation" : "Un mated"}</s.TextDescription>
+                      )}
+                    </s.Container>
+                  {/* Chidren */}
+                  <s.Container style={{marginTop: "40px"}}>
+                    <s.TextName>Children</s.TextName>
+                    {Children.length !== 0 ? (
+                      <s.Container fd={"row"} style={{flexWrap: "wrap"}}>
+                        {data.allTruffles.filter(item => (item.dadId === id || item.mumId === id)).map((item ) => (
+                          <s.Box key={item.id} style={{margin: "20px 20px 0 0"}}>
+                            <s.StyledImg>
+                              <Link to={`/details/${item.id}`}>
+                                <TruffleRenderer truffle={item}/>
+                              </Link>
+                            </s.StyledImg>
+                          </s.Box>
+                        ))} 
+                      </s.Container>
+                    ) : (
+                      <s.TextDescription>Un mated</s.TextDescription>
+                    )}
+                  </s.Container>   
+                </s.Container>
+              ): ( null )}
             </s.Container>
             {/* Tabbar    */}
             <s.SpacerSuperLarge/>
@@ -667,9 +728,9 @@ const Details = () => {
                   <s.BoxTab>
                     {data.allOwnerTruffles.filter(item => item.id === id ).map(result => result.sell) <= 0 ? (
                       <form>
-                        {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) >= 10 ? (
+                        {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) > 5 ? (
                           <>
-                          <s.TextSubTitleDetail>Enter the amount you want to sell (BSC)</s.TextSubTitleDetail>
+                          <s.TextSubTitleDetail>Enter the amount you want to sell (BNB)</s.TextSubTitleDetail>
                           <s.Container fd={"row"} ai={"center"} jc={"center"}>
                             <s.InputTransferNumber
                               required
@@ -706,14 +767,14 @@ const Details = () => {
                         ) : (
                           <s.Container ai={"center"}>
                             <s.TextTitle>
-                              Require rarity ≥ 10
+                              Require rarity > 5
                             </s.TextTitle>
                           </s.Container>
                         )}
                       </form>
                     ) : (
                       <form>
-                        <s.TextSubTitleDetail>Enter the amount you want to Change (BSC)</s.TextSubTitleDetail>
+                        <s.TextSubTitleDetail>Enter the amount you want to Change (BNB)</s.TextSubTitleDetail>
                         <s.Container fd={"row"} ai={"center"} jc={"center"}>
                           <s.InputTransferNumber
                             required
@@ -796,7 +857,7 @@ const Details = () => {
                 <s.Container  ai={"center"} style={{margin: "6rem 0 3rem 0"}}>
                   <s.BoxTab>
                     <form>
-                      {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) >= 10 ? (
+                      {data.allOwnerTruffles.filter(item => item.id === id).map(result => result.rarity) > 5 ? (
                       <>
                         <s.TextSubTitleDetail>Transfer this Truffle to someone</s.TextSubTitleDetail>
                         <s.Container  fd={"row"} ai={"center"} jc={"center"}>
@@ -833,7 +894,7 @@ const Details = () => {
                       </>
                       ) : (
                         <s.Container ai={"center"}>
-                          <s.TextTitle>Require rarity ≥ 10</s.TextTitle>
+                          <s.TextTitle>Require rarity > 5 </s.TextTitle>
                         </s.Container>
                       ) }
                     </form>
@@ -843,53 +904,64 @@ const Details = () => {
               </>
             ) : (
               <s.Container jc={"center"} ai={"center"} style={{paddingTop: "6rem"}}>
-                <s.StyledTable>
-                  <s.StyledTableContent>
-                    <s.TextTableName>Item</s.TextTableName>
-                    <s.TextTableName>Price</s.TextTableName>
-                    <s.TextTableName>Gen</s.TextTableName>
-                    <s.TextTableName>Current Owner</s.TextTableName>
-                    <s.TextTableName>Time</s.TextTableName>
-                  </s.StyledTableContent>
-                  {data.allTruffles.filter(item => item.id === id ).map((item) => {
-                    return (
-                      <tbody>
-                        <tr key={item.id}>
-                          <s.TextTableEvent>{item.id}</s.TextTableEvent>
-                          <s.TextTableEvent>{blockchain.web3.utils.fromWei(item.sell, "ether")} BSC</s.TextTableEvent>
-                          <s.TextTableEvent>{item.gen0}</s.TextTableEvent>
-                          <s.TextTableEvent>{item.currentOwner.substring(0, 6)}...{item.currentOwner.substring(item.currentOwner.length - 4)}</s.TextTableEvent>
-                          <s.TextTableEvent>{fromNow(item.sellTime * 1000)}</s.TextTableEvent>
-                        </tr>
-                      </tbody>
-                    )
-                  })}
-                </s.StyledTable>
-                
-                {data.allTruffles.filter(item => item.id === DadId[0] ).map((item ) => (
-                  <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
-                      <s.StyledImg>
-                      <Link to={`/details/${item.id}`} >
-                          <TruffleRenderer truffle={item}/>
-                      </Link>
-                      </s.StyledImg>
-                  </s.Box>
-                ))}
-
-                {data.allTruffles.filter(item => item.id === MumId[0] ).map((item ) => (
-                  <s.Box key={item.id} style={{ padding: "18px", margin:"15px"}}>
-                      <s.StyledImg>
-                      <Link to={`/details/${item.id}`} >
-                          <TruffleRenderer truffle={item}/>
-                      </Link>
-                      </s.StyledImg>
-                  </s.Box>
-                ))} 
-
+                {/* parents */}
+                  <s.Container>
+                    <s.TextName>Parents</s.TextName>
+                    {DadId[0] !== "0" && MumId[0] !== "0" ? (
+                    <s.Container fd={"row"}>
+                    {data.allTruffles.filter(item => item.id === DadId[0] ).map((item ) => (
+                      <s.Container style={{marginRight: "20px"}}>
+                        <s.TextDescription>Father</s.TextDescription>
+                        <s.Box key={item.id}>
+                            <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                                <TruffleRenderer truffle={item}/>
+                            </Link>
+                            </s.StyledImg>
+                        </s.Box>
+                      </s.Container>
+                    ))}
+                    
+                    {data.allTruffles.filter(item => item.id === MumId[0] ).map((item ) => (
+                      <s.Container>
+                        <s.TextDescription>Mother</s.TextDescription>
+                        <s.Box key={item.id} >
+                            <s.StyledImg>
+                            <Link to={`/details/${item.id}`} >
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                            </s.StyledImg>
+                        </s.Box>
+                      </s.Container>
+                    ))} 
+                    </s.Container>
+                    ) : (
+                      <s.TextDescription> First generation</s.TextDescription>
+                    )}
+                  </s.Container>
+                {/* Chidren */}
+                <s.Container style={{marginTop: "40px"}}>
+                  <s.TextName>Children</s.TextName>
+                  {Children.length !== 0 && DadId[0] !== "0" && MumId[0] !== "0" ? (
+                    <s.Container fd={"row"}>
+                      {data.allTruffles.filter(item => item.dadId === id || item.mumId === id).map((item ) => (
+                        <s.Box key={item.id} style={{margin: "20px 20px 0 0"}}>
+                          <s.StyledImg>
+                            <Link to={`/details/${item.id}`}>
+                              <TruffleRenderer truffle={item}/>
+                            </Link>
+                          </s.StyledImg>
+                        </s.Box>
+                      ))} 
+                    </s.Container>
+                  ) : (
+                    <s.TextDescription>Un mated</s.TextDescription>
+                  )}
+                </s.Container>   
               </s.Container>
             )}  
             </s.ContainerDetails>
-            </s.Container>
+           </s.Container>
         ))}
       </s.Screen>
     </>

@@ -75,6 +75,7 @@ const Game = () => {
           </s.StyledButtonBreedShow>
       </s.Container>
     </s.Containertoggle>
+
     <s.Screen className={loadingShow === true ? "blur" : null}>
       <s.Container ai={"center"} style={{margin: "1.9rem 0 1rem 0"}}>
           <s.ContainerGame ai={"center"} style={{margin: "5.6rem 0 0 0"}}>
@@ -96,7 +97,7 @@ const Game = () => {
                 <s.CustomSelect 
                     onClick={e => setItemCamp(e.target.value)}
                 >
-                  {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0).map((item, index) => 
+                  {data.allOwnerTruffles.filter(item => item.sell <= 0 && parseInt((item.readyTime - Date.now() / 1000) / 3600) <= 0 && data.allOwnerTruffles.filter(item => item.level < 20)).map((item, index) => 
                       <s.CustomOption key={index} value={item.id}>{item.id}</s.CustomOption>
                   )}
                 </s.CustomSelect>

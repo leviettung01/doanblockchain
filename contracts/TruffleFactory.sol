@@ -117,7 +117,7 @@ contract TruffleFactory is ERC721, Ownable {
         emit NewTruffle(msg.sender, newId, _dna);
     }
 
-    function createRandomTruffleFree(string memory _name) public payable {
+    function createRandomTruffleFree(string memory _name) public {
         require(msg.sender != address(0));
         uint256 counter = 0;
         for (uint256 i = 0; i < truffles.length; i++) {
@@ -497,7 +497,7 @@ contract TruffleFactory is ERC721, Ownable {
         require(myTruffle.level < 20);
         require(myTruffle.sell == 0);
         require(_isReady(myTruffle));
-        uint8 valueRarity = uint8(myTruffle.dna % 100);
+        uint8 valueRarity = uint8(myTruffle.rarity);
         uint rand = randMod(100);
         if(valueRarity <= 10){
             if(rand <= 20)
@@ -520,7 +520,6 @@ contract TruffleFactory is ERC721, Ownable {
             if(rand <= 70)
                 myTruffle.level++;
         }
-
         myTruffle.readyTime = uint32(block.timestamp + 1 days);
     }
 }

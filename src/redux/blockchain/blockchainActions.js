@@ -55,12 +55,11 @@ export const connect = () => {
 
         // const truffleFactoryNetworkData = await TruffleFactory.networks[networkId];
 
-        if (networkId == 97) {
+        if (networkId === "97") {
           const truffleFactory = new web3.eth.Contract(
             TruffleFactory.abi,
-            '0x33aFA16a10d184741b103385dFA4859eae80d77A'
+            '0x93FB411394875B4685AA392abD08C19A89A278ed'
           );
-          
           dispatch( 
             connectSuccess({
               account: accounts[0],

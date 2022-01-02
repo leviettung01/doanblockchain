@@ -6,6 +6,9 @@ import * as s from "../styles/globalStyles";
 import _bg from "../assets/images/bg/_bg.png";
 import _center from "../assets/images/bg/center.png";
 import _center1 from "../assets/images/bg/center1.png";
+import _badge_1 from "../assets/images/bg/badge_1.gif";
+import _badge_3 from "../assets/images/bg/badge_3.gif";
+import _badge_4 from "../assets/images/bg/badge_4.gif";
 import _m1 from "../assets/images/bg/m1.png";
 import _m2 from "../assets/images/bg/m2.png";
 import _m3 from "../assets/images/bg/m3.png";
@@ -55,10 +58,11 @@ const Home = () => {
         <s.Screen image={_bg}>
             <s.Container flex={1} ai={"center"} jc={"center"}>
                 <s.BoxHome>
+                    <s.TextTitleHome>CryptoTruffles.</s.TextTitleHome>
                     <s.TextTitleHome>Collectible.</s.TextTitleHome>
                     <s.TextTitleHome>Breedable.</s.TextTitleHome>
                     <s.TextTitleHome>Adorable.</s.TextTitleHome> 
-                    <s.TextSubTitleHome>collect and breed digital truffles.</s.TextSubTitleHome>
+                    <s.TextSubTitleHome>collect and breed furrever friends !</s.TextSubTitleHome>
                     <s.TextSubTitleHome>Total in game: {data.allTruffles.length}/1000</s.TextSubTitleHome>
                     <s.SpacerSmall />
                     <s.StyledButton 
@@ -82,25 +86,28 @@ const Home = () => {
             <s.Container ai={"center"}>
                 <s.ContainerHomeBox fd={"row"} jc={"space-between"} ai={"center"}>
                     <s.BoxViewHome>
-                        <s.TextTitleHome>9,200</s.TextTitleHome>
-                        <s.TextTitle>Unique Editions</s.TextTitle>
+                        <s.ImageToggleRenderHome image={_badge_3}/>
+                        <s.TextTitle>Current Holders</s.TextTitle>
+                        <s.TextTitleHome>+126k</s.TextTitleHome>
                     </s.BoxViewHome>
                     <s.BoxViewHome>
-                        <s.TextTitleHome>140+</s.TextTitleHome>
-                        <s.TextTitle>Truffle Attributes</s.TextTitle>
+                        <s.ImageToggleRenderHome image={_badge_1}/>
+                        <s.TextTitle>CryptoTruffles</s.TextTitle>
+                        <s.TextTitleHome>+2 million</s.TextTitleHome>
                     </s.BoxViewHome>
                     <s.BoxViewHome>
-                        <s.TextTitleHome>10,000+</s.TextTitleHome>
-                        <s.TextTitle>Total Following</s.TextTitle>
+                        <s.ImageToggleRenderHome image={_badge_4}/>
+                        <s.TextTitle>Total Volume</s.TextTitle>
+                        <s.TextTitleHome>Ξ67.060</s.TextTitleHome>
                     </s.BoxViewHome>
                 </s.ContainerHomeBox>
             </s.Container>
  
             <s.ContainerBoxHomev2 fd={"row"}ai={"center"} jc={"space-between"} style={{marginTop: "7rem"}}>
                 <s.TextBoxRight>
-                    <s.TextTitleHomev2>The Friendliest Troop on the Ethereum Blockchain</s.TextTitleHomev2>
-                    <s.TextSubTitleHomev2>Spawning a community of eternal wisdom. A sense of oneness flourishing everywhere in our discord. 
-                        The Magic Truffle Clubhouse is a collection of 9,200 AI-generated collectibles exploring the Ethereum Blockchain.
+                    <s.TextTitleHomev2>What is CryptoTruffles ?</s.TextTitleHomev2>
+                    <s.TextSubTitleHomev2>CryptoTruffle is a game centered around breedable, collectible, and oh-so-adorable creatures 
+                        we call CryptoTruffles! Each truffle is one-of-a-kind and 100% owned by you; it cannot be replicated, taken away, or destroyed.
                     </s.TextSubTitleHomev2>
                     <s.StyledButtonv2 
                         onClick={(e) => {
@@ -134,7 +141,7 @@ const Home = () => {
             <s.ContainerBoxHomev2 fd={"row"} ai={"flex-end"} jc={"space-between"} style={{marginTop: "3rem"}}>
                 <s.TextBoxRight>
                     <s.TextTitleHomev2>Featured Collection</s.TextTitleHomev2>
-                    <s.TextSubTitleHomev2>The Magic Truffle Clubhouse is a collection of 9,200 
+                    <s.TextSubTitleHomev2>The Magic Truffle Clubhouse is a collection of 2 million 
                         uniquely generated NFTs who were transported through the magic forest into the blockchain.
                     </s.TextSubTitleHomev2>
                 </s.TextBoxRight>
