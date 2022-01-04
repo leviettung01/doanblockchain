@@ -4,7 +4,7 @@ Hosted on Vercal: (https://nft-game-hngovan.vercel.app/)
 
 ## Contracts
 
-Deployed on BSC: (https://testnet.bscscan.com/address/0x012fb1b604dBc5ae558a9ceabE0Eb91fF6d910C9)
+Deployed on BSC: (https://testnet.bscscan.com/address/0x67A174b957dAc79fa566bE3B3C0dfc1F4213d729)
 
 ### Tech Stack
 
