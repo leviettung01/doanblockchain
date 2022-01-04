@@ -21,10 +21,10 @@ contract TruffleFactory is ERC721, Ownable {
     uint256 lostTime = 30 minutes;
     uint256 quantilyLimit;
     uint32[4] public cooldowns = [
-        uint32(8 hours),
         uint32(12 hours),
-        uint32(1 days),
-        uint32(2 days)
+        uint32(18 hours),
+        uint32(24 hours),
+        uint32(48 hours)
     ];
 
     mapping(uint256 => uint256) public tokenIdToPrice;
@@ -46,7 +46,7 @@ contract TruffleFactory is ERC721, Ownable {
         uint8 mumId;
         uint256 sell;
         uint32 sellTime;
-        uint gen0;
+        uint256 gen0;
     }
 
     Truffle[] public truffles;
@@ -70,9 +70,9 @@ contract TruffleFactory is ERC721, Ownable {
         return sellFee;
     }
 
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
-        _tokenURIs[tokenId] = _tokenURI;
-    }
+    // function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
+    //     _tokenURIs[tokenId] = _tokenURI;
+    // }
 
     function _createRandomDna(string memory _mod)
         internal
@@ -90,7 +90,7 @@ contract TruffleFactory is ERC721, Ownable {
         uint256 _dna,
         uint8 _dadId,
         uint8 _mumId,
-        uint _gen0
+        uint256 _gen0
     ) internal {
         uint8 randRarity = uint8(_dna % 100);
 
@@ -133,13 +133,13 @@ contract TruffleFactory is ERC721, Ownable {
         _createTruffle(_name, newDna, 0, 0, 0);
     }
 
-    function createRandomTruffle(string memory _name) public payable{
+    function createRandomTruffle(string memory _name) public payable {
         require(msg.sender != address(0));
         require(msg.value >= fee);
         quantilyLimit = _tokenIds.current();
         require(quantilyLimit < 1000);
         uint256 randDna = _createRandomDna(_name);
-        uint256 newDna = randDna - randDna % 100 + randMod(20) + 10;
+        uint256 newDna = randDna - (randDna % 100) + randMod(20) + 10;
         _createTruffle(_name, newDna, 0, 0, 0);
         payable(admin).transfer(fee);
     }
@@ -172,19 +172,19 @@ contract TruffleFactory is ERC721, Ownable {
         return randomNum2 % _modulus;
     }
 
-    function updateFee(uint256 _fee) external onlyOwner{
+    function updateFee(uint256 _fee) external onlyOwner {
         fee = _fee;
     }
 
-    function updateFeeLevelUp(uint256 _feeLevelUp) external onlyOwner{
+    function updateFeeLevelUp(uint256 _feeLevelUp) external onlyOwner {
         levelUpFee = _feeLevelUp;
     }
 
-    function updateFeeBreed(uint256 _feeBreed) external onlyOwner{
+    function updateFeeBreed(uint256 _feeBreed) external onlyOwner {
         breedFee = _feeBreed;
     }
 
-    function updateFeeSell(uint256 _feeSell) external onlyOwner{
+    function updateFeeSell(uint256 _feeSell) external onlyOwner {
         sellFee = _feeSell;
     }
 
@@ -205,7 +205,7 @@ contract TruffleFactory is ERC721, Ownable {
         require(truffle.level < 20);
         require(truffle.sell == 0);
         truffle.level++;
-        payable(admin).transfer(levelUpFee); 
+        payable(admin).transfer(levelUpFee);
     }
 
     function updateName(uint256 _TruffleId, string calldata _newName)
@@ -267,9 +267,9 @@ contract TruffleFactory is ERC721, Ownable {
     function _getTruffleGen(Truffle memory _dadId, Truffle memory _mumId)
         internal
         view
-        returns (uint)
+        returns (uint256)
     {
-        if(_dadId.gen0 > _mumId.gen0){
+        if (_dadId.gen0 > _mumId.gen0) {
             return _dadId.gen0 += 1;
         }
         return _mumId.gen0 += 1;
@@ -289,108 +289,181 @@ contract TruffleFactory is ERC721, Ownable {
         require(_truffleId != _targetDna);
         require(ownerOf(_truffleId) == msg.sender);
         require(ownerOf(_targetDna) == msg.sender);
-        require(_isReady(myTruffle),"Breed not ready !");
-        require(_isReady(myTargetDna),"Breed not ready !");
-        require(myTruffle.sell == 0,"The product being sold cannot be mated!");
-        require(myTargetDna.sell == 0, "The product being sold cannot be mated!");
-        
+        require(_isReady(myTruffle));
+        require(_isReady(myTargetDna));
+        require(myTruffle.sell == 0);
+        require(myTargetDna.sell == 0);
+
         uint8 dadId = uint8(myTruffle.id);
         uint8 mumId = uint8(myTargetDna.id);
 
-        uint8 valueRarity = uint8(myTruffle.rarity);
-        uint8 valueRarity2 = uint8(myTargetDna.rarity);
-        uint8 valueRarity3 = uint8(
+        uint valueRarity = uint(myTruffle.rarity);
+        uint valueRarity2 = uint(myTargetDna.rarity);
+        uint valueRarity3 = uint(
             valueRarity +
                 randMod(valueRarity) +
                 valueRarity2 -
                 randMod(valueRarity2)
         ) / 2;
-        uint8 valueRarity4 = uint8((valueRarity3 * 15) / 100);
+        uint valueRarity4 = uint((valueRarity3 * 15) / 100);
 
-        uint256 number = valueRarity % 10;
-        uint256 number2 = valueRarity2 % 10;
-        uint256 newDna;
-        uint256 rand = randMod(100);
+        uint number = valueRarity % 10;
+        uint number2 = valueRarity2 % 10;
+        uint newDna;
+        uint rand = randMod(100);
         require(valueRarity < 99 && valueRarity2 < 99);
-        if(valueRarity <= 60 && valueRarity2 <= 60){
-            if(valueRarity <= 30 && valueRarity2 <= 30){
-                if(rand >= 50){
-                    if(valueRarity>= valueRarity2){
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                        newDna = algorithm - algorithm % 100 + valueRarity + randMod(10);
-                    }else{
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                        newDna = algorithm - algorithm % 100 + valueRarity2 + randMod(10);
+        if (valueRarity <= 60 && valueRarity2 <= 60) {
+            if (valueRarity <= 30 && valueRarity2 <= 30) {
+                if (rand >= 50) {
+                    if (valueRarity >= valueRarity2) {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number)) / (5**number);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity +
+                            randMod(10);
+                    } else {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number2)) / (5**number2);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity2 +
+                            randMod(10);
                     }
-                }else{
-                    uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                    newDna = algorithm - algorithm % 100 + valueRarity3;
-                }
-            }if(valueRarity > 30 && valueRarity2 > 30){
-                if(rand >= 55){
-                    if(valueRarity>= valueRarity2){
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                        newDna = algorithm - algorithm % 100 + valueRarity + randMod(10);
-                    }else{
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                        newDna = algorithm - algorithm % 100 + valueRarity2 + randMod(10);
-                    }
-                }else{
-                    uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                    newDna = algorithm - algorithm % 100 + valueRarity3 + valueRarity4;
-                }
-            }else{
-                if(rand >= 60){
-                    if(valueRarity>= valueRarity2){
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                        newDna = algorithm - algorithm % 100 + valueRarity + randMod(10);
-                    }else{
-                        uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                        newDna = algorithm - algorithm % 100 + valueRarity2 + randMod(10);
-                    }
-                }else{
-                    uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                    newDna = algorithm - algorithm % 100 + valueRarity3 + valueRarity4;
+                } else {
+                    uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                        (4**number)) / (5**number);
+                    newDna = algorithm - (algorithm % 100) + valueRarity3;
                 }
             }
-        }if(valueRarity > 60 && valueRarity2 > 60){
-            if(rand >= 70){
-                if(valueRarity>= valueRarity2){
-                    uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                    newDna = algorithm - algorithm % 100 + valueRarity + randMod(8);
-                }else{
-                    uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                    newDna = algorithm - algorithm % 100 + valueRarity2 + randMod(8);
+            if (valueRarity > 30 && valueRarity2 > 30) {
+                if (rand >= 55) {
+                    if (valueRarity >= valueRarity2) {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number)) / (5**number);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity +
+                            randMod(10);
+                    } else {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number2)) / (5**number2);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity2 +
+                            randMod(10);
+                    }
+                } else {
+                    uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                        (4**number)) / (5**number);
+                    newDna =
+                        algorithm -
+                        (algorithm % 100) +
+                        valueRarity3 +
+                        valueRarity4;
                 }
-            }else{
-                uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                newDna = algorithm - algorithm % 100 + valueRarity3;
-            }
-        }if(valueRarity > 60 && valueRarity2 <= 60){
-            if(rand >= 80){
-                uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                newDna = algorithm - algorithm % 100 + valueRarity + randMod(7);
-            }else{
-                uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number)/(5**number);
-                newDna = algorithm - algorithm % 100 + valueRarity3;
-            }
-        }if(valueRarity <= 60 && valueRarity2 > 60){
-            if(rand >= 80){
-                uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                newDna = algorithm - algorithm % 100 + valueRarity2 + randMod(7);
-            }else{
-                uint algorithm = (myTruffle.dna + myTargetDna.dna)*(4**number2)/(5**number2);
-                newDna = algorithm - algorithm % 100 + valueRarity3;
+            } else {
+                if (rand >= 60) {
+                    if (valueRarity >= valueRarity2) {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number)) / (5**number);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity +
+                            randMod(10);
+                    } else {
+                        uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                            (4**number2)) / (5**number2);
+                        newDna =
+                            algorithm -
+                            (algorithm % 100) +
+                            valueRarity2 +
+                            randMod(10);
+                    }
+                } else {
+                    uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                        (4**number)) / (5**number);
+                    newDna =
+                        algorithm -
+                        (algorithm % 100) +
+                        valueRarity3 +
+                        valueRarity4;
+                }
             }
         }
-        uint newGen = _getTruffleGen(myTruffle, myTargetDna);
+        if (valueRarity > 60 && valueRarity2 > 60) {
+            if (rand >= 70) {
+                if (valueRarity >= valueRarity2) {
+                    uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                        (4**number)) / (5**number);
+                    newDna =
+                        algorithm -
+                        (algorithm % 100) +
+                        valueRarity +
+                        randMod(8);
+                } else {
+                    uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                        (4**number2)) / (5**number2);
+                    newDna =
+                        algorithm -
+                        (algorithm % 100) +
+                        valueRarity2 +
+                        randMod(8);
+                }
+            } else {
+                uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                    (4**number)) / (5**number);
+                newDna = algorithm - (algorithm % 100) + valueRarity3;
+            }
+        }
+        if (valueRarity > 60 && valueRarity2 <= 60) {
+            if (rand >= 80) {
+                uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                    (4**number)) / (5**number);
+                newDna =
+                    algorithm -
+                    (algorithm % 100) +
+                    valueRarity +
+                    randMod(7);
+            } else {
+                uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                    (4**number)) / (5**number);
+                newDna = algorithm - (algorithm % 100) + valueRarity3;
+            }
+        }
+        if (valueRarity <= 60 && valueRarity2 > 60) {
+            if (rand >= 80) {
+                uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                    (4**number2)) / (5**number2);
+                newDna =
+                    algorithm -
+                    (algorithm % 100) +
+                    valueRarity2 +
+                    randMod(7);
+            } else {
+                uint algorithm = ((myTruffle.dna + myTargetDna.dna) *
+                    (4**number2)) / (5**number2);
+                newDna = algorithm - (algorithm % 100) + valueRarity3;
+            }
+        }
+        uint256 newGen = _getTruffleGen(myTruffle, myTargetDna);
 
         _createTruffle("New Truffle", newDna, dadId, mumId, newGen);
         _triggerCooldown(myTruffle);
         _triggerCooldown(myTargetDna);
-        payable(admin).transfer(breedFee); 
+        payable(admin).transfer(breedFee);
     }
-    function GiftToken(address _from, address _to, uint256 _tokenId) external {
+
+    function GiftToken(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) external {
         _transfer(_from, _to, _tokenId);
         tokenIdToPrice[_tokenId] = 0; // not for sale anymore
         Truffle storage myTruffle = truffles[_tokenId];
@@ -403,7 +476,7 @@ contract TruffleFactory is ERC721, Ownable {
 
     function allowBuy(uint256 _tokenId, uint256 _price) external payable {
         require(msg.sender == ownerOf(_tokenId), "Not owner of this token");
-        require(msg.value >= sellFee,"Price must be equal to listing price");
+        require(msg.value >= sellFee, "Price must be equal to listing price");
         require(_price > 0, "Price must be at least 1 wei");
         Truffle storage myTokenID = truffles[_tokenId];
         require(_isReady(myTokenID), "Breed not reedy");
@@ -437,7 +510,7 @@ contract TruffleFactory is ERC721, Ownable {
         myTruffle.sell = 0;
         myTruffle.sellTime = 0;
         payable(seller).transfer(msg.value); // send the ETH to the seller
-        payable(admin).transfer(sellFee); 
+        payable(admin).transfer(sellFee);
         // update the token's current owner
         myTruffle.currentOwner = msg.sender;
 
@@ -473,53 +546,46 @@ contract TruffleFactory is ERC721, Ownable {
         return truffleSell;
     }
 
-    function getOwnerTrufflesSell(address _owner) public view returns (Truffle[] memory) {
-        uint256 counter = 0;
-        uint itemCount = 0;
-        for (uint i = 0; i < truffles.length; i++) {
-          if (ownerOf(i) == _owner && truffles[i].sell > 0) {
-                itemCount += 1;
-            }
-        }
-        Truffle[] memory result = new Truffle[](itemCount);
-        for (uint256 i = 0; i < truffles.length; i++) {
-            if (ownerOf(i) == _owner && truffles[i].sell > 0) {
-                result[counter] = truffles[i];
-                counter++;
-            }
-        }
-        return result;
-    }
+    // function getOwnerTrufflesSell(address _owner) public view returns (Truffle[] memory) {
+    //     uint256 counter = 0;
+    //     uint itemCount = 0;
+    //     for (uint i = 0; i < truffles.length; i++) {
+    //       if (ownerOf(i) == _owner && truffles[i].sell > 0) {
+    //             itemCount += 1;
+    //         }
+    //     }
+    //     Truffle[] memory result = new Truffle[](itemCount);
+    //     for (uint256 i = 0; i < truffles.length; i++) {
+    //         if (ownerOf(i) == _owner && truffles[i].sell > 0) {
+    //             result[counter] = truffles[i];
+    //             counter++;
+    //         }
+    //     }
+    //     return result;
+    // }
 
-    function dailyMission(uint256 _tokenId ) external {
+    function dailyMission(uint256 _tokenId) external {
         require(msg.sender == ownerOf(_tokenId), "Not owner of this token");
         Truffle storage myTruffle = truffles[_tokenId];
         require(myTruffle.level < 20);
         require(myTruffle.sell == 0);
         require(_isReady(myTruffle));
-        uint8 valueRarity = uint8(myTruffle.rarity);
-        uint rand = randMod(100);
-        if(valueRarity <= 10){
-            if(rand <= 20)
-                myTruffle.level++;
-        }else if(valueRarity > 10 && valueRarity <= 30){
-            if(rand <= 35)
-                myTruffle.level++;
-        }else if(valueRarity > 30 && valueRarity <= 50){
-            if(rand <= 40)
-                myTruffle.level++;
-        }else if(valueRarity > 50 && valueRarity <= 70){
-            if(rand <= 45)
-                myTruffle.level++;
+        uint8 valueRarity = uint8(myTruffle.dna % 100);
+        uint256 rand = randMod(100);
+        if (valueRarity <= 10) {
+            if (rand <= 20) myTruffle.level++;
+        } else if (valueRarity > 10 && valueRarity <= 30) {
+            if (rand <= 35) myTruffle.level++;
+        } else if (valueRarity > 30 && valueRarity <= 50) {
+            if (rand <= 40) myTruffle.level++;
+        } else if (valueRarity > 50 && valueRarity <= 70) {
+            if (rand <= 45) myTruffle.level++;
+        } else if (valueRarity > 70 && valueRarity <= 90) {
+            if (rand <= 60) myTruffle.level++;
+        } else if (valueRarity > 90) {
+            if (rand <= 70) myTruffle.level++;
         }
-        else if(valueRarity > 70 && valueRarity <= 90){
-            if(rand <= 60)
-                myTruffle.level++;
-        }
-        else if(valueRarity > 90){
-            if(rand <= 70)
-                myTruffle.level++;
-        }
+
         myTruffle.readyTime = uint32(block.timestamp + 1 days);
     }
 }

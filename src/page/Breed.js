@@ -191,7 +191,7 @@ const Breed = () => {
                     ): (
                         <s.TextDescription style={{color: "#eb4d4b", opacity: "0", lineHeight: "0"}}>Breeds cannot be the same</s.TextDescription>
                     )}
-                    <s.TextDescription>Birthing fee: 0.01 BSC</s.TextDescription>
+                    <s.TextDescription>Birthing fee: 0.01 BNB</s.TextDescription>
                     {!loadingBreed && 
                     <s.StyledButtonTransfer 
                         style={itemBreed !== itemTarget ? {} : {pointerEvents: "none", opacity: "0.5"}}
@@ -257,7 +257,7 @@ const Breed = () => {
                     </s.StyledTable>
                 </s.ContainerHome> 
                 {/* cooldown    */}
-                <s.ContainerHome ai={"center"} style={{marginTop: "30px", padding: "15px"}}>
+                <s.ContainerHome ai={"center"} style={{margin: "30px 0", padding: "15px"}}>
                     <s.TextTitleHomev3>Cooldown</s.TextTitleHomev3>
                     <s.Container ai={"flex-start"}>
                         <s.TextTitleDetails>Each level reduces cooldown by 30 minutes. </s.TextTitleDetails>
@@ -277,11 +277,11 @@ const Breed = () => {
                         </tr>
                         <tr >
                         <s.TextTableEvent>{'1 => 5'}</s.TextTableEvent>
-                        <s.TextTableEvent>{'12h'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'18h'}</s.TextTableEvent>
                         </tr>
                         <tr >
                         <s.TextTableEvent>{'0'}</s.TextTableEvent>
-                        <s.TextTableEvent>{'8h'}</s.TextTableEvent>
+                        <s.TextTableEvent>{'12h'}</s.TextTableEvent>
                         </tr>
                     </s.StyledTable>
                 </s.ContainerHome>   

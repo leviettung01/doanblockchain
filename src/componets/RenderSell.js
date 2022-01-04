@@ -63,7 +63,7 @@ const RenderSell = ({data, blockchain,loading}) => {
                     </s.StyledTextBox>
                     <s.StyledTextBox>
                         <s.TextDescription>#{item.id}</s.TextDescription>
-                        <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} BSC</s.TextDescription>
+                        <s.TextDescription>{blockchain.web3.utils.fromWei(item.sell,"ether")} BNB</s.TextDescription>
                     </s.StyledTextBox>  
                     <s.StyledTextBox>
                         <s.TextDescription><BiDna/> Gen {item.gen0}</s.TextDescription>

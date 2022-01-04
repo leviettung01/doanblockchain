@@ -1,10 +1,10 @@
 # Crypto-Truffle
 
-Hosted on Vercal: (https://nft-game-hngovan.vercel.app/)
+Hosted on Vercal: (https://truffle-nft-game-kykudscft-hngovan.vercel.app/)
 
 ## Contracts
 
-Deployed on BSC: (https://testnet.bscscan.com/address/0x67A174b957dAc79fa566bE3B3C0dfc1F4213d729)
+Deployed on BSC: (https://testnet.bscscan.com/address/0x18efB905993070c70d371DEa06efEd0ef95c7559)
 
 ### Tech Stack
 
@@ -32,7 +32,8 @@ Front End: react, redux, javascript, react-redux, redux-thunk, react-router, sty
 
 
 ### Game (Camping)
-level max (20)
+If the level max (20), start increasing Rarity.
+
 | Raritys | Count | Cooldown Time | Rate |
 |---|---|---|---|
 |1, 10 | +1 | 24 hours | 20% |
@@ -56,12 +57,11 @@ level max (20)
 
 ### Cooldown
 When parent Truffles breed they need time to rest before breeding again. Breed cooldowns are defined below.
-| Gen | Cooldown Time  |
+| Rarity | Cooldown Time  |
 |---|---|
-| > 10 | 2 days |
-| 6, 10| 1 days |
-| 1, 5 | 18 hours |
-| 0 | 12 hours |
+| 0, 49 | 24 hours |
+| 50, 74| 18 hours |
+| 75, 99 | 12 hours |
 
 ### Running the project locally
 
